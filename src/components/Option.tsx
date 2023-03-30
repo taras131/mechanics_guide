@@ -1,12 +1,21 @@
 import React, {FC} from 'react';
-import {IOption} from "../models/guideInterface";
+import {IOption, IQuestion} from "../models/guideInterface";
+import Button from "@mui/material/Button";
 
-const Answer: FC<IOption> = ({text, nextQuestionId}) => {
+
+interface IProps extends IOption {
+    handleSelectOption: (nextQuestionId: number) => void
+}
+
+const Option: FC<IProps> = ({text, nextQuestionId, handleSelectOption}) => {
+    const handleClick = () => {
+        handleSelectOption(nextQuestionId)
+    }
     return (
-        <div>
+        <Button  variant="contained" onClick={handleClick}>
             {text}
-        </div>
+        </Button>
     );
 };
 
-export default Answer;
+export default Option;
