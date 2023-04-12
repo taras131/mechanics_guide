@@ -7,7 +7,6 @@ import {Link} from "react-router-dom";
 
 const Main = () => {
     const guidesOverview = guides.map(item => {
-
         return (
             <Grid item xs={3}>
                 <Link to={`/guide/${item.id}`}>
@@ -23,7 +22,7 @@ const Main = () => {
         )
     })
     return (
-        <Grid container spacing={2} mt={"40px"}>
+        <Grid container spacing={2}>
             {guidesOverview}
         </Grid>
     );
