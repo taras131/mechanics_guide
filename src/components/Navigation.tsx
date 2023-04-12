@@ -1,6 +1,7 @@
 import React, {FC} from 'react';
 import {Menu, MenuItem} from "@mui/material";
 import {Link} from "react-router-dom";
+import {routes} from "../utils/routes";
 
 interface INavigation {
     anchorEl: null | HTMLElement,
@@ -20,12 +21,17 @@ const Navigation: FC<INavigation> = ({anchorEl, handleClose, open}) => {
             }}
         >
             <MenuItem onClick={handleClose}>
-                <Link to={"/"}>
-                    Main
+                <Link to={routes.main}>
+                    Главная
                 </Link>
             </MenuItem>
             <MenuItem onClick={handleClose}>
-                <Link to={"/auth"}>
+                <Link to={routes.new_guide}>
+                    Новый гайд
+                </Link>
+            </MenuItem>
+            <MenuItem onClick={handleClose}>
+                <Link to={routes.auth}>
                     Auth
                 </Link>
             </MenuItem>
