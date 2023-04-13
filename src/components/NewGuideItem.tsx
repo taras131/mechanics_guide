@@ -9,14 +9,12 @@ import NewGuideAddOptionModal from "./NewGuideAddOptionModal";
 import NewGuideOptionList from "./NewGuideOptionList";
 
 interface NewGuideItemProps {
-    id: number
+    id: number,
 }
 
 const NewGuideItem: FC<NewGuideItemProps> = ({id}) => {
-    console.log(id)
     const dispatch = useAppDispatch()
     const currentItem = useAppSelector(state => getNewGuideItemById(state, id))
-
     const handleTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         dispatch(updateText({id: currentItem.id, text: e.target.value}))
     }
@@ -66,7 +64,7 @@ const NewGuideItem: FC<NewGuideItemProps> = ({id}) => {
             />
             {currentItem.type === "question" && (
                 <>
-                    <NewGuideOptionList id={currentItem.id}/>
+                    <NewGuideOptionList id={currentItem.id} questionText={currentItem.text}/>
                     <NewGuideAddOptionModal id={currentItem.id}/>
                 </>
             )}
