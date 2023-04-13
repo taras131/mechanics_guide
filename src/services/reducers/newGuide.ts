@@ -13,7 +13,6 @@ interface INewGuideState {
     breadCrumbs: IBreadCrumb [] | []
 }
 
-
 export const initialState: INewGuideState = {
     isLoading: false,
     newGuide:
