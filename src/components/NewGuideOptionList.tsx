@@ -1,21 +1,25 @@
 import React, {FC} from 'react';
-import {useAppSelector} from "../hooks/redux";
+import {useAppDispatch, useAppSelector} from "../hooks/redux";
 import {getOptionsById} from "../services/selectors/newGuideSelectors";
 import Button from "@mui/material/Button";
 import {Grid} from "@mui/material";
 import {useLocation, useNavigate} from "react-router-dom";
 import {routes} from "../utils/routes";
+import {addBreadCrumb} from "../services/reducers/newGuide";
 
 interface INewGuideOptionListProps {
-    id: number
+    id: number,
+    questionText: string
 }
 
-const NewGuideOptionList: FC<INewGuideOptionListProps> = ({id}) => {
+const NewGuideOptionList: FC<INewGuideOptionListProps> = ({id, questionText}) => {
+    const dispatch = useAppDispatch()
     const location: any = useLocation()
     const navigate = useNavigate()
     const options = useAppSelector(state => getOptionsById(state, id))
     const optionsList = options.map(item => {
         const handleOptionClick = () => {
+            dispatch(addBreadCrumb({text: questionText, answer: item.text, prevItemId: id}))
             navigate(routes.new_guide + '/' + item.nextId, {
                 state: {
                     from: location.pathname,

@@ -51,7 +51,6 @@ const Guide = () => {
                             Начать заново
                         </Button>
                     </Box>
-
                 </CardContent>
             </Card>
         );

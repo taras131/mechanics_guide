@@ -1,9 +1,16 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {INewGuide, INewGuideItem} from "../../models/newGuideInterface";
 
+export interface IBreadCrumb {
+    text: string
+    answer: string
+    prevItemId: number
+}
+
 interface INewGuideState {
     isLoading: boolean,
-    newGuide: INewGuide
+    newGuide: INewGuide,
+    breadCrumbs: IBreadCrumb [] | []
 }
 
 
@@ -13,8 +20,8 @@ export const initialState: INewGuideState = {
         {
             title: "",
             items: [{id: 0, text: "", type: "question", options: []}]
-        }
-
+        },
+    breadCrumbs: []
 }
 
 export const AuthSlice = createSlice({
@@ -53,10 +60,26 @@ export const AuthSlice = createSlice({
             })]
             tempItems = [...tempItems, {id: newItemId, text: "", type: "question", options: []}]
             state.newGuide = {...state.newGuide, items: tempItems}
-        }
+        },
+        addBreadCrumb: (state, action: PayloadAction<IBreadCrumb>) => {
+            state.breadCrumbs = [...state.breadCrumbs, action.payload]
+        },
+        removeLastBreadCrumb: (state) => {
+            const tempState = [...state.breadCrumbs]
+            tempState.pop()
+            state.breadCrumbs = tempState
+        },
     },
     extraReducers: {}
 })
 
-export const {addItem, updateTitle, updateText, updateItemType, addOption} = AuthSlice.actions
+export const {
+    addItem,
+    updateTitle,
+    updateText,
+    updateItemType,
+    addOption,
+    addBreadCrumb,
+    removeLastBreadCrumb
+} = AuthSlice.actions
 export default AuthSlice.reducer;
