@@ -13,3 +13,6 @@ export const getNewGuide = (state: RootState): INewGuide => {
 export const getNewGuideItemById = (state: RootState, id: number): INewGuideItem => {
     return state.newGuide.newGuide.items.filter(item => item.id === id)[0]
 }
+export const getOptionsById = (state: RootState, id: number): INewGuideItemOption[] | [] => {
+    return state.newGuide.newGuide.items.filter(item => item.id === id)[0].options
+}
