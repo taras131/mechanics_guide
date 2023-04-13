@@ -17,7 +17,7 @@ const App = () => {
             <Box mt={"40px"}>
                 <Routes>
                     <Route path={routes.main} element={<Main/>}/>
-                    <Route path={routes.new_guide} element={<NewGuide/>}/>
+                    <Route path={`${routes.new_guide}/:itemId`} element={<NewGuide/>}/>
                     <Route path={routes.auth} element={<Auth/>}/>
                     <Route path={routes.guide} element={<Guide/>}/>
                     <Route path={routes.not_found} element={<NotFound/>}/>

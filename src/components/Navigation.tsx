@@ -26,7 +26,7 @@ const Navigation: FC<INavigation> = ({anchorEl, handleClose, open}) => {
                 </Link>
             </MenuItem>
             <MenuItem onClick={handleClose}>
-                <Link to={routes.new_guide}>
+                <Link to={routes.new_guide+"/0"}>
                     Новый гайд
                 </Link>
             </MenuItem>
