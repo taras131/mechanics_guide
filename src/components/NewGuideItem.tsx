@@ -1,12 +1,14 @@
 import React, {FC, useState} from 'react';
 import {FormControl, FormControlLabel, FormLabel, Grid, Radio, RadioGroup, TextField} from "@mui/material";
 import Button from "@mui/material/Button";
-import {getNewGuideItemById} from "../services/selectors/newGuideSelectors";
+import {getBreadCrumbs, getNewGuideItemById} from "../services/selectors/newGuideSelectors";
 import {useAppDispatch, useAppSelector} from "../hooks/redux";
-import {updateItemType, updateText} from "../services/reducers/newGuide";
+import {removeLastBreadCrumb, updateItemType, updateText} from "../services/reducers/newGuide";
 import Typography from "@mui/material/Typography";
 import NewGuideAddOptionModal from "./NewGuideAddOptionModal";
 import NewGuideOptionList from "./NewGuideOptionList";
+import {routes} from "../utils/routes";
+import {useNavigate} from "react-router-dom";
 
 interface NewGuideItemProps {
     id: number,
@@ -14,9 +16,17 @@ interface NewGuideItemProps {
 
 const NewGuideItem: FC<NewGuideItemProps> = ({id}) => {
     const dispatch = useAppDispatch()
+    const navigate = useNavigate()
+    const bredCrumbs = useAppSelector(state => getBreadCrumbs(state))
     const currentItem = useAppSelector(state => getNewGuideItemById(state, id))
     const handleTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         dispatch(updateText({id: currentItem.id, text: e.target.value}))
+    }
+    let prevItemId = 0
+    if (bredCrumbs.length) prevItemId = bredCrumbs[bredCrumbs.length - 1].prevItemId
+    const handleBackClick = () => {
+        navigate(routes.new_guide + "/" + prevItemId)
+        dispatch(removeLastBreadCrumb())
     }
     const handleTypeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.value === "question" || e.target.value === "result") {
@@ -33,10 +43,24 @@ const NewGuideItem: FC<NewGuideItemProps> = ({id}) => {
             spacing={2}
             sx={{
                 width: '100%',
-                marginTop: "40px"
+                marginTop: "20px"
             }}
         >
-            <Typography variant="h5" component="h2"> Этап № {currentItem.id + 1}</Typography>
+            <Grid
+                container
+                justifyContent="space-between"
+                alignItems="center"
+                spacing={2}
+                sx={{
+                    width: '100%',
+                    marginTop: "40px"
+                }}
+            >
+                <Typography variant="h5" component="h2"> Этап № {currentItem.id + 1}</Typography>
+                {bredCrumbs && bredCrumbs.length > 0 && (
+                    <Button variant="outlined" onClick={handleBackClick}>Назад</Button>
+                )}
+            </Grid>
             <FormControl sx={{
                 width: '100%',
                 marginTop: "40px"
