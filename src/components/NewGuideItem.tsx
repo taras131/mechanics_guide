@@ -9,6 +9,7 @@ import NewGuideAddOptionModal from "./NewGuideAddOptionModal";
 import NewGuideOptionList from "./NewGuideOptionList";
 import {routes} from "../utils/routes";
 import {useNavigate} from "react-router-dom";
+import {GUIDE_ITEM_TYPE} from "../utils/const";
 
 interface NewGuideItemProps {
     id: number,
@@ -29,7 +30,7 @@ const NewGuideItem: FC<NewGuideItemProps> = ({id}) => {
         dispatch(removeLastBreadCrumb())
     }
     const handleTypeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.value === "question" || e.target.value === "result") {
+        if (e.target.value === GUIDE_ITEM_TYPE.question || e.target.value === GUIDE_ITEM_TYPE.result) {
             dispatch(updateItemType({id: currentItem.id, type: e.target.value}))
         }
     }

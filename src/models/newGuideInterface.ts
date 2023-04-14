@@ -1,17 +1,20 @@
-export interface INewGuideItemOption {
+import {GUIDE_ITEM_TYPE} from "../utils/const";
+
+export interface IGuideItemOption {
     id: number
     text: string,
     nextId: number
 }
 
-export interface INewGuideItem {
+export interface IGuideItem {
     id: number,
     text: string,
-    type: "result" | "question",
-    options: INewGuideItemOption[] | []
+    type: GUIDE_ITEM_TYPE,
+    options: IGuideItemOption[] | []
 }
 
 export interface INewGuide {
     title: string
-    items: INewGuideItem[]
+    category: string
+    items: IGuideItem[]
 }

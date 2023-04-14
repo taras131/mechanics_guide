@@ -1,29 +1,17 @@
-import React from 'react';
-import {guides} from "../utils/const";
-import {Card, CardContent, Grid, Stack} from "@mui/material";
-import Typography from "@mui/material/Typography";
-import {Link} from "react-router-dom";
+import React, {useEffect} from 'react';
+import { Grid} from "@mui/material";
+import GuidesList from "../components/GuidesList";
+import {useAppSelector} from "../hooks/redux";
+import {geiIsGuidesLoading} from "../services/selectors/guidesSelectors";
 
 
 const Main = () => {
-    const guidesOverview = guides.map(item => {
-        return (
-            <Grid item xs={3}>
-                <Link to={`/guide/${item.id}`}>
-                    <Card sx={{minWidth: 275}}>
-                        <CardContent>
-                            <Typography fontSize={"16px"}>
-                                {item.title}
-                            </Typography>
-                        </CardContent>
-                    </Card>
-                </Link>
-            </Grid>
-        )
-    })
+    useEffect(()=> {
+
+    }, [])
     return (
         <Grid container spacing={2}>
-            {guidesOverview}
+            <GuidesList/>
         </Grid>
     );
 };
