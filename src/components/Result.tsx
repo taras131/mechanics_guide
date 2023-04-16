@@ -1,12 +1,17 @@
 import React, {FC} from 'react';
-import {IResult} from "../models/guideInterface";
 import Typography from "@mui/material/Typography";
+import {IGuideItem} from "../models/newGuideInterface";
 
-const Result: FC<IResult> = ({id, text}) => {
+const Result: FC<IGuideItem> = ({id, text}) => {
     return (
-        <Typography fontSize={"20px"} mt={"30px"}>
-            {text}
-        </Typography>
+        <>
+            <Typography fontSize={"25px"} mt={"30px"}>
+                Результат
+            </Typography>
+            <Typography fontSize={"20px"} mt={"30px"}>
+                {text}
+            </Typography>
+        </>
     );
 };
 

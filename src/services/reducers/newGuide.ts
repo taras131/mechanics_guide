@@ -1,5 +1,6 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {INewGuide, INewGuideItem} from "../../models/newGuideInterface";
+import {INewGuide, IGuideItem} from "../../models/newGuideInterface";
+import {GUIDE_ITEM_TYPE} from "../../utils/const";
 
 export interface IBreadCrumb {
     text: string
@@ -18,16 +19,17 @@ export const initialState: INewGuideState = {
     newGuide:
         {
             title: "",
-            items: [{id: 0, text: "", type: "question", options: []}]
+            category: "",
+            items: [{id: 0, text: "", type: GUIDE_ITEM_TYPE.question, options: []}]
         },
     breadCrumbs: []
 }
 
-export const AuthSlice = createSlice({
+export const NewGuideSlice = createSlice({
     name: 'new_guide',
     initialState,
     reducers: {
-        addItem: (state, action: PayloadAction<INewGuideItem>) => {
+        addItem: (state, action: PayloadAction<IGuideItem>) => {
             state.newGuide.items = [...state.newGuide.items, action.payload]
         },
         updateTitle: (state, action: PayloadAction<string>) => {
@@ -39,7 +41,7 @@ export const AuthSlice = createSlice({
                 return item
             })]
         },
-        updateItemType: (state, action: PayloadAction<{ id: number, type: "result" | "question" }>) => {
+        updateItemType: (state, action: PayloadAction<{ id: number, type: GUIDE_ITEM_TYPE }>) => {
             state.newGuide.items = [...state.newGuide.items.map(item => {
                 if (item.id === action.payload.id) return {...item, type: action.payload.type}
                 return item
@@ -57,7 +59,7 @@ export const AuthSlice = createSlice({
                 }
                 return item
             })]
-            tempItems = [...tempItems, {id: newItemId, text: "", type: "question", options: []}]
+            tempItems = [...tempItems, {id: newItemId, text: "", type: GUIDE_ITEM_TYPE.question, options: []}]
             state.newGuide = {...state.newGuide, items: tempItems}
         },
         addBreadCrumb: (state, action: PayloadAction<IBreadCrumb>) => {
@@ -80,5 +82,5 @@ export const {
     addOption,
     addBreadCrumb,
     removeLastBreadCrumb
-} = AuthSlice.actions
-export default AuthSlice.reducer;
+} = NewGuideSlice.actions
+export default NewGuideSlice.reducer;

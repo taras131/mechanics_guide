@@ -1,9 +1,9 @@
 import React, {FC} from 'react';
-import {IQuestion} from "../models/guideInterface";
 import Option from "./Option";
 import {Stack} from "@mui/material";
+import {IGuideItem} from "../models/newGuideInterface";
 
-interface IProps extends IQuestion {
+interface IProps extends IGuideItem {
     handleSelectOption: (nextQuestionId: number) => void
 }
 

@@ -1,49 +1,41 @@
 import React, {useState} from 'react';
 import {useParams} from 'react-router-dom';
-import {guides} from "../utils/const";
-import {IGuide} from "../models/guideInterface";
 import Question from "../components/Question";
 import Result from "../components/Result";
 import {Card, CardContent} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
+import {useAppSelector} from "../hooks/redux";
+import {getGuideById} from "../services/selectors/guidesSelectors";
+import {IGuide} from "../models/guideInterface";
+import {GUIDE_ITEM_TYPE} from "../utils/const";
 
 const Guide = () => {
         const {guideId} = useParams();
-        const guideData = guides.filter(item => item.id + "" === guideId)[0]
-        const [isShowResult, setIsShowResult] = useState(false)
-        const [currentQuestion, setCurrentQuestion] = useState(guideData.questions[0])
-        const [currentResult, setCurrentResult] = useState({id: 0, text: ""})
-        const getQuestionById = (id: number) => {
-            return guideData.questions.find((question) => question.id === id);
-        }
-        const getResultById = (id: number) => {
-            return guideData.results.find((result) => result.id === id);
+        let id = 0
+        if (guideId) id = +guideId
+        const guide = useAppSelector(state => getGuideById(state, id))
+        const [currentStep, setCurrentStep] = useState(guide.items[0])
+        const getGuideItemById = (itemId: number) => {
+            return guide.items.filter(item => item.id === itemId)[0]
         }
         const handleSelectOption = (nextQuestionId: number) => {
-            const nextQuestion = getQuestionById(nextQuestionId);
-            if (nextQuestion) {
-                setCurrentQuestion(nextQuestion);
-            } else {
-                const result = getResultById(nextQuestionId)
-                if (result) setCurrentResult(result)
-                setIsShowResult(true)
-            }
+            const nextGuideItem = getGuideItemById(nextQuestionId);
+            setCurrentStep(nextGuideItem)
         }
         const handleBackClick = () => {
-            setCurrentQuestion(guideData.questions[0])
-            setIsShowResult(false)
+            setCurrentStep(guide.items[0])
         }
         return (
             <Card>
                 <CardContent>
                     <Typography>
-                        {guideData.title}
+                        {guide.title}
                     </Typography>
-                    {isShowResult
-                        ? (<Result {...currentResult}/>)
-                        : (<Question {...currentQuestion}
+                    {currentStep.type === GUIDE_ITEM_TYPE.result
+                        ? (<Result {...currentStep}/>)
+                        : (<Question {...currentStep}
                                      handleSelectOption={handleSelectOption}/>)
                     }
                     <Box mt={"50px"}>
