@@ -1,6 +1,6 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {IGuide} from "../../models/guideInterface";
-import {fetchAllGuides} from "../actions/guidesActionsCreators";
+import {fetchAllGuides, fetchNewGuide} from "../actions/guidesActionsCreators";
 
 interface IGuideState {
     isLoading: boolean,
@@ -28,6 +28,18 @@ export const GuidesSlice = createSlice({
             state.errorMessage = '';
         },
         [fetchAllGuides.rejected.type]: (state, action: PayloadAction<string>) => {
+            state.isLoading = false;
+            state.errorMessage = action.payload;
+        },
+        [fetchNewGuide.fulfilled.type]: (state, action: PayloadAction<IGuide>) => {
+            state.guides = [...state.guides, action.payload]
+            state.isLoading = false;
+        },
+        [fetchNewGuide.pending.type]: (state) => {
+            state.isLoading = true
+            state.errorMessage = '';
+        },
+        [fetchNewGuide.rejected.type]: (state, action: PayloadAction<string>) => {
             state.isLoading = false;
             state.errorMessage = action.payload;
         },

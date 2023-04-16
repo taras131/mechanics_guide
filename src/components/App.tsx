@@ -11,6 +11,7 @@ import {routes} from "../utils/routes";
 import Box from "@mui/material/Box";
 
 const App = () => {
+    console.log(process.env.REACT_APP_FIREBASE_APP_ID)
     return (
         <Container>
             <Header/>
