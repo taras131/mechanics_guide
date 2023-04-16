@@ -52,7 +52,7 @@ export const guides = [
                 options: []
             },
             {
-                id: 6,
+                id: 7,
                 text: "Солёный тосол пить вредно",
                 type: GUIDE_ITEM_TYPE.result,
                 options: []
