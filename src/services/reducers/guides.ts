@@ -1,6 +1,7 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {IGuide} from "../../models/guideInterface";
 import {fetchAllGuides, fetchNewGuide} from "../actions/guidesActionsCreators";
+import {IGuideItem, INewGuide} from "../../models/newGuideInterface";
 
 interface IGuideState {
     isLoading: boolean,
@@ -17,7 +18,11 @@ export const initialState: IGuideState = {
 export const GuidesSlice = createSlice({
     name: 'guides',
     initialState,
-    reducers: {},
+    reducers: {
+        pushNewGuide: (state, action: PayloadAction<INewGuide>) => {
+            state.guides = [...state.guides, {...action.payload, id: Date.now()} ]
+        }
+    },
     extraReducers: {
         [fetchAllGuides.fulfilled.type]: (state, action: PayloadAction<IGuide[]>) => {
             state.guides = action.payload
@@ -46,5 +51,5 @@ export const GuidesSlice = createSlice({
     }
 })
 
-export const {} = GuidesSlice.actions
+export const {pushNewGuide} = GuidesSlice.actions
 export default GuidesSlice.reducer;

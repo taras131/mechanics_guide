@@ -5,11 +5,13 @@ import Button from "@mui/material/Button";
 import {useAppDispatch, useAppSelector} from "../hooks/redux";
 import {fetchNewGuide} from "../services/actions/guidesActionsCreators";
 import {getNewGuide} from "../services/selectors/newGuideSelectors";
+import {pushNewGuide} from "../services/reducers/guides";
 
 const NewGuideHeader = () => {
     const dispatch = useAppDispatch()
     const newGuide = useAppSelector(state => getNewGuide(state))
     const handleSaveClick = () => {
+        dispatch(pushNewGuide(newGuide))
         dispatch(fetchNewGuide(newGuide))
     }
     return (
