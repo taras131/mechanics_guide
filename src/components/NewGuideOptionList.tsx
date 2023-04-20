@@ -5,7 +5,7 @@ import Button from "@mui/material/Button";
 import {Grid} from "@mui/material";
 import {useLocation, useNavigate} from "react-router-dom";
 import {routes} from "../utils/routes";
-import {addBreadCrumb} from "../services/reducers/newGuide";
+import {addBreadCrumb} from "../services/reducers/breadCrumbs";
 
 interface INewGuideOptionListProps {
     id: number,

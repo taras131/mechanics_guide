@@ -6,7 +6,7 @@ import Box from "@mui/material/Box";
 import {useAppDispatch} from "../hooks/redux";
 import {addOption} from "../services/reducers/newGuide";
 
-const style = {
+export const modalStyle = {
     position: 'absolute' as 'absolute',
     top: '50%',
     left: '50%',
@@ -50,7 +50,7 @@ const NewGuideAddOptionModal: FC<INewGuideAddOptionModalProps> = ({id}) => {
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
-                <Box sx={style}>
+                <Box sx={modalStyle}>
                     <Typography id="modal-modal-title" variant="h6" component="h2">
                         Добавить вариант ответа
                     </Typography>

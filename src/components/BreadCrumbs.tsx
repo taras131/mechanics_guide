@@ -1,6 +1,6 @@
 import React from 'react';
 import {useAppSelector} from "../hooks/redux";
-import {getBreadCrumbs} from "../services/selectors/newGuideSelectors";
+import {getBreadCrumbs} from "../services/selectors/breadCrumbsSelectors";
 import {
     Paper,
     Table, TableBody,
@@ -11,8 +11,9 @@ import {
 } from "@mui/material";
 
 
-const NewGuideBreadCrumbs = () => {
+const BreadCrumbs = () => {
     const breadCrumbs = useAppSelector(state => getBreadCrumbs(state))
+    console.log(breadCrumbs)
     const breadCrumbsList = breadCrumbs.map(item => (
         <TableRow
             key={item.text}
@@ -42,4 +43,4 @@ const NewGuideBreadCrumbs = () => {
     );
 };
 
-export default NewGuideBreadCrumbs;
+export default BreadCrumbs;

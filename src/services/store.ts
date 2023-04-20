@@ -2,10 +2,12 @@ import {combineReducers} from 'redux';
 import {configureStore} from '@reduxjs/toolkit';
 import newGuideReducer from './reducers/newGuide';
 import guidesReducer from './reducers/guides';
+import breadCrumbsReducer from './reducers/breadCrumbs';
 
 const rootReducer = combineReducers({
     newGuide: newGuideReducer,
-    guides: guidesReducer
+    guides: guidesReducer,
+    breadCrumbs: breadCrumbsReducer,
 });
 export const setupStore = () => {
     return configureStore({

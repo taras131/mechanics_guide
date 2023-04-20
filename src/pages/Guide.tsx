@@ -1,50 +1,28 @@
-import React, {useState} from 'react';
+import React, {useEffect} from 'react';
 import {useParams} from 'react-router-dom';
-import Question from "../components/Question";
-import Result from "../components/Result";
-import {Card, CardContent} from "@mui/material";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import Box from "@mui/material/Box";
-import {useAppSelector} from "../hooks/redux";
+import {Card, CardContent, Stack} from "@mui/material";
+import {useAppDispatch, useAppSelector} from "../hooks/redux";
 import {getGuideById} from "../services/selectors/guidesSelectors";
-import {IGuide} from "../models/guideInterface";
-import {GUIDE_ITEM_TYPE} from "../utils/const";
+import {getBreadCrumbs} from "../services/selectors/breadCrumbsSelectors";
+import BreadCrumbs from "../components/BreadCrumbs";
+import GuideHeader from "../components/GuideHeader";
+import GuideItem from "../components/GuideItem";
+import {cleanBreadCrumbs} from "../services/reducers/breadCrumbs"
 
 const Guide = () => {
-        const {guideId} = useParams();
-        let id = 0
-        if (guideId) id = +guideId
-        const guide = useAppSelector(state => getGuideById(state, id))
-        const [currentStep, setCurrentStep] = useState(guide.items[0])
-        const getGuideItemById = (itemId: number) => {
-            return guide.items.filter(item => item.id === itemId)[0]
-        }
-        const handleSelectOption = (nextQuestionId: number) => {
-            const nextGuideItem = getGuideItemById(nextQuestionId);
-            setCurrentStep(nextGuideItem)
-        }
-        const handleBackClick = () => {
-            setCurrentStep(guide.items[0])
-        }
+        const guideId = useParams().guideId || "0";
+        const guide = useAppSelector(state => getGuideById(state, guideId))
+        const bredCrumbs = useAppSelector(state => getBreadCrumbs(state))
+        const dispatch = useAppDispatch()
+        useEffect(() => {
+            dispatch(cleanBreadCrumbs())
+        }, [dispatch])
         return (
-            <Card>
-                <CardContent>
-                    <Typography>
-                        {guide.title}
-                    </Typography>
-                    {currentStep.type === GUIDE_ITEM_TYPE.result
-                        ? (<Result {...currentStep}/>)
-                        : (<Question {...currentStep}
-                                     handleSelectOption={handleSelectOption}/>)
-                    }
-                    <Box mt={"50px"}>
-                        <Button onClick={handleBackClick}>
-                            Начать заново
-                        </Button>
-                    </Box>
-                </CardContent>
-            </Card>
+            <Stack spacing={2}>
+                <GuideHeader title={guide.title}/>
+                {bredCrumbs && bredCrumbs.length > 0 && (<BreadCrumbs/>)}
+                <GuideItem guideId={guideId}/>
+            </Stack>
         );
     }
 ;
