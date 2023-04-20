@@ -10,7 +10,7 @@ interface IGuideState {
 }
 
 export const initialState: IGuideState = {
-    isLoading: false,
+    isLoading: true,
     errorMessage: "",
     guides: []
 }
@@ -19,12 +19,19 @@ export const GuidesSlice = createSlice({
     name: 'guides',
     initialState,
     reducers: {
-        pushNewGuide: (state, action: PayloadAction<INewGuide>) => {
-            state.guides = [...state.guides, {...action.payload, id: Date.now()} ]
+//        pushNewGuide: (state, action: PayloadAction<INewGuide>) => {
+//            state.guides = [...state.guides, {...action.payload, id: Date.now()} ]
+//        }
+        setGuides: (state, action: PayloadAction<IGuide[] | []>) => {
+            state.guides = action.payload
+        },
+        setIsGuidesLoading: (state, action: PayloadAction<boolean>) => {
+            state.isLoading = action.payload
         }
     },
     extraReducers: {
         [fetchAllGuides.fulfilled.type]: (state, action: PayloadAction<IGuide[]>) => {
+            console.log(action.payload)
             state.guides = action.payload
             state.isLoading = false;
         },
@@ -51,5 +58,5 @@ export const GuidesSlice = createSlice({
     }
 })
 
-export const {pushNewGuide} = GuidesSlice.actions
+export const {setGuides, setIsGuidesLoading} = GuidesSlice.actions
 export default GuidesSlice.reducer;

@@ -9,22 +9,33 @@ import Preloader from "./Preloader";
 const GuidesList = () => {
     const guides = useAppSelector(state => getAllGuides(state))
     const isLoading = useAppSelector(state => geiIsGuidesLoading(state))
-    const guidesList = guides.map(item => {
-        return (
-            <Grid item xs={3}>
-                <Link to={`/guide/${item.id}`}>
-                    <Card sx={{minWidth: 275}}>
-                        <CardContent>
-                            <Typography fontSize={"16px"}>
-                                {item.title}
-                            </Typography>
-                        </CardContent>
-                    </Card>
-                </Link>
-            </Grid>
-        )
-    })
     if (isLoading) return (<Preloader/>)
+    const guidesList = guides.map(item => {
+        if (item && item.id) {
+            return (
+                <Grid item xs={3} key={item.title}>
+                    <Link to={`/guide/${item.id}/0`} style={{textDecoration: "none"}}>
+                        <Card sx={{minWidth: 275}}>
+                            <CardContent>
+                                <Typography fontSize={"16px"}>
+                                    {item.title}
+                                </Typography>
+                                <Typography fontSize={"12px"} marginTop="10px">
+                                    Категория: {item.category}
+                                </Typography>
+                            </CardContent>
+                        </Card>
+                    </Link>
+                </Grid>
+            )
+        } else {
+            return (
+                <Grid item xs={3} key="null">
+
+                </Grid>
+            )
+        }
+    })
     return (
         <>
             {guidesList}

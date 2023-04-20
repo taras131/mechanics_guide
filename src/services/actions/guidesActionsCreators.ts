@@ -11,7 +11,8 @@ export const fetchAllGuides = createAsyncThunk(
     'fetch_all_guides',
     async (_, ThunkAPI) => {
         try {
-            const res = await api.getAllIngredients()
+            const res = await api.getAllGuides()
+            console.log(res)
             return res
         } catch (e) {
             return ThunkAPI.rejectWithValue(handlerError(e))

@@ -1,15 +1,18 @@
-import React, {FC, useState} from 'react';
-import {FormControl, FormControlLabel, FormLabel, Grid, Radio, RadioGroup, TextField} from "@mui/material";
+import React, {FC} from 'react';
+import {FormControl, FormControlLabel, FormLabel, Grid, Radio, RadioGroup, Stack, TextField} from "@mui/material";
 import Button from "@mui/material/Button";
-import {getBreadCrumbs, getNewGuideItemById} from "../services/selectors/newGuideSelectors";
+import {getNewGuideItemById} from "../services/selectors/newGuideSelectors";
 import {useAppDispatch, useAppSelector} from "../hooks/redux";
-import {removeLastBreadCrumb, updateItemType, updateText} from "../services/reducers/newGuide";
+import {updateItemType, updateText} from "../services/reducers/newGuide";
 import Typography from "@mui/material/Typography";
 import NewGuideAddOptionModal from "./NewGuideAddOptionModal";
 import NewGuideOptionList from "./NewGuideOptionList";
 import {routes} from "../utils/routes";
 import {useNavigate} from "react-router-dom";
 import {GUIDE_ITEM_TYPE} from "../utils/const";
+import {getBreadCrumbs} from "../services/selectors/breadCrumbsSelectors";
+import {removeLastBreadCrumb} from "../services/reducers/breadCrumbs"
+import SelectResultModal from "./SelectResultModal";
 
 interface NewGuideItemProps {
     id: number,
@@ -34,19 +37,8 @@ const NewGuideItem: FC<NewGuideItemProps> = ({id}) => {
             dispatch(updateItemType({id: currentItem.id, type: e.target.value}))
         }
     }
-
     return (
-        <Grid
-            container
-            direction="column"
-            justifyContent="center"
-            alignItems="center"
-            spacing={2}
-            sx={{
-                width: '100%',
-                marginTop: "20px"
-            }}
-        >
+        <Stack spacing={2}>
             <Grid
                 container
                 justifyContent="space-between"
@@ -57,10 +49,14 @@ const NewGuideItem: FC<NewGuideItemProps> = ({id}) => {
                     marginTop: "40px"
                 }}
             >
-                <Typography variant="h5" component="h2"> Этап № {currentItem.id + 1}</Typography>
-                {bredCrumbs && bredCrumbs.length > 0 && (
-                    <Button variant="outlined" onClick={handleBackClick}>Назад</Button>
-                )}
+                <Grid item>
+                    <Typography variant="h5" component="h2"> Этап № {currentItem.id + 1}</Typography>
+                </Grid>
+                <Grid item>
+                    {bredCrumbs && bredCrumbs.length > 0 && (
+                        <Button variant="outlined" onClick={handleBackClick}>Назад</Button>
+                    )}
+                </Grid>
             </Grid>
             <FormControl sx={{
                 width: '100%',
@@ -91,9 +87,13 @@ const NewGuideItem: FC<NewGuideItemProps> = ({id}) => {
                 <>
                     <NewGuideOptionList id={currentItem.id} questionText={currentItem.text}/>
                     <NewGuideAddOptionModal id={currentItem.id}/>
+
                 </>
             )}
-        </Grid>
+            {currentItem.type === GUIDE_ITEM_TYPE.result && (
+                <SelectResultModal/>
+            )}
+        </Stack>
     );
 };
 

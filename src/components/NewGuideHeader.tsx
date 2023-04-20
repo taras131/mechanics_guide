@@ -5,14 +5,17 @@ import Button from "@mui/material/Button";
 import {useAppDispatch, useAppSelector} from "../hooks/redux";
 import {fetchNewGuide} from "../services/actions/guidesActionsCreators";
 import {getNewGuide} from "../services/selectors/newGuideSelectors";
-import {pushNewGuide} from "../services/reducers/guides";
+import {useNavigate} from "react-router-dom";
+import {cleanNewGuide} from "../services/reducers/newGuide";
 
 const NewGuideHeader = () => {
     const dispatch = useAppDispatch()
+    const navigate = useNavigate()
     const newGuide = useAppSelector(state => getNewGuide(state))
     const handleSaveClick = () => {
-        dispatch(pushNewGuide(newGuide))
         dispatch(fetchNewGuide(newGuide))
+        dispatch(cleanNewGuide())
+        navigate("/")
     }
     return (
         <Grid container direction="row" justifyContent="space-between" alignItems="center">

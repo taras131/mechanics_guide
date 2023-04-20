@@ -2,16 +2,11 @@ import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {INewGuide, IGuideItem} from "../../models/newGuideInterface";
 import {GUIDE_ITEM_TYPE} from "../../utils/const";
 
-export interface IBreadCrumb {
-    text: string
-    answer: string
-    prevItemId: number
-}
 
 interface INewGuideState {
     isLoading: boolean,
     newGuide: INewGuide,
-    breadCrumbs: IBreadCrumb [] | []
+    errorMessage: string,
 }
 
 export const initialState: INewGuideState = {
@@ -22,7 +17,7 @@ export const initialState: INewGuideState = {
             category: "",
             items: [{id: 0, text: "", type: GUIDE_ITEM_TYPE.question, options: []}]
         },
-    breadCrumbs: []
+    errorMessage: ""
 }
 
 export const NewGuideSlice = createSlice({
@@ -34,6 +29,9 @@ export const NewGuideSlice = createSlice({
         },
         updateTitle: (state, action: PayloadAction<string>) => {
             state.newGuide.title = action.payload
+        },
+        setCategory: (state, action: PayloadAction<string>) => {
+            state.newGuide.category = action.payload
         },
         updateText: (state, action: PayloadAction<{ id: number, text: string }>) => {
             state.newGuide.items = [...state.newGuide.items.map(item => {
@@ -62,13 +60,21 @@ export const NewGuideSlice = createSlice({
             tempItems = [...tempItems, {id: newItemId, text: "", type: GUIDE_ITEM_TYPE.question, options: []}]
             state.newGuide = {...state.newGuide, items: tempItems}
         },
-        addBreadCrumb: (state, action: PayloadAction<IBreadCrumb>) => {
-            state.breadCrumbs = [...state.breadCrumbs, action.payload]
+        changeNextIdFromNewGuideItem: (state, action: PayloadAction<{ itemId: number, newNextId: number }>) => {
+            state.newGuide.items = [...state.newGuide.items.map(item => {
+                if (item.id === action.payload.itemId) {
+                    return {...item, nextId: action.payload.newNextId}
+                } else {
+                    return item
+                }
+            })]
         },
-        removeLastBreadCrumb: (state) => {
-            const tempState = [...state.breadCrumbs]
-            tempState.pop()
-            state.breadCrumbs = tempState
+        cleanNewGuide: (state) => {
+            state.newGuide = {
+                title: "",
+                category: "",
+                items: [{id: 0, text: "", type: GUIDE_ITEM_TYPE.question, options: []}]
+            }
         },
     },
     extraReducers: {}
@@ -77,10 +83,11 @@ export const NewGuideSlice = createSlice({
 export const {
     addItem,
     updateTitle,
+    setCategory,
     updateText,
     updateItemType,
     addOption,
-    addBreadCrumb,
-    removeLastBreadCrumb
+    changeNextIdFromNewGuideItem,
+    cleanNewGuide
 } = NewGuideSlice.actions
 export default NewGuideSlice.reducer;

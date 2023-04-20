@@ -1,7 +1,6 @@
 import {RootState} from "../store";
 import {INewGuide, IGuideItem, IGuideItemOption} from "../../models/newGuideInterface";
-import {IBreadCrumb} from "../reducers/newGuide";
-
+import {GUIDE_ITEM_TYPE} from "../../utils/const";
 
 export const getNewGuideIsLoading = (state: RootState): boolean => {
     return state.newGuide.isLoading
@@ -15,6 +14,6 @@ export const getNewGuideItemById = (state: RootState, id: number): IGuideItem =>
 export const getOptionsById = (state: RootState, id: number): IGuideItemOption[] | [] => {
     return state.newGuide.newGuide.items.filter(item => item.id === id)[0].options
 }
-export const getBreadCrumbs = (state: RootState): IBreadCrumb[] | [] => {
-    return state.newGuide.breadCrumbs
+export const getNewGuideResultItems = (state: RootState): IGuideItem [] => {
+    return state.newGuide.newGuide.items.filter(item => item.type === GUIDE_ITEM_TYPE.result)
 }
