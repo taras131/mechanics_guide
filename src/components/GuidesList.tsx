@@ -13,7 +13,7 @@ const GuidesList = () => {
     const guidesList = guides.map(item => {
         if (item && item.id) {
             return (
-                <Grid item xs={3} key={item.title}>
+                <Grid item sm={4} md={3} xs={12} key={item.title}>
                     <Link to={`/guide/${item.id}/0`} style={{textDecoration: "none"}}>
                         <Card sx={{minWidth: 275}}>
                             <CardContent>
