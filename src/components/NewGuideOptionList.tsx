@@ -19,7 +19,12 @@ const NewGuideOptionList: FC<INewGuideOptionListProps> = ({id, questionText}) =>
     const options = useAppSelector(state => getOptionsById(state, id))
     const optionsList = options.map(item => {
         const handleOptionClick = () => {
-            dispatch(addBreadCrumb({text: questionText, answer: item.text, prevItemId: id}))
+            dispatch(addBreadCrumb({
+                text: questionText,
+                answer: item.text,
+                itemId: id,
+                optionId: item.id
+            }))
             navigate(routes.new_guide + '/' + item.nextId, {
                 state: {
                     from: location.pathname,

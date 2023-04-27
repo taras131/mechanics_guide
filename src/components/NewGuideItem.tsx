@@ -27,7 +27,7 @@ const NewGuideItem: FC<NewGuideItemProps> = ({id}) => {
         dispatch(updateText({id: currentItem.id, text: e.target.value}))
     }
     let prevItemId = 0
-    if (bredCrumbs.length) prevItemId = bredCrumbs[bredCrumbs.length - 1].prevItemId
+    if (bredCrumbs.length) prevItemId = bredCrumbs[bredCrumbs.length - 1].itemId
     const handleBackClick = () => {
         navigate(routes.new_guide + "/" + prevItemId)
         dispatch(removeLastBreadCrumb())

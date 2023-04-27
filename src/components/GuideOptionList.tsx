@@ -25,7 +25,8 @@ const GuideOptionList: FC<IGuideOptionListProps> = ({
             dispatch(addBreadCrumb({
                 text: questionText,
                 answer: item.text,
-                prevItemId: itemId
+                itemId: itemId,
+                optionId: item.id
             }))
         }
         return (
