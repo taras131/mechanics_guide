@@ -20,7 +20,7 @@ const GuideItem: FC<IGuideItemProps> = ({guideId}) => {
     const bredCrumbs = useAppSelector(state => getBreadCrumbs(state))
     const currentItem = useAppSelector(state => getGuideItemById(state, guideId, +itemId))
     let prevItemId = 0
-    if (bredCrumbs.length) prevItemId = bredCrumbs[bredCrumbs.length - 1].prevItemId
+    if (bredCrumbs.length) prevItemId = bredCrumbs[bredCrumbs.length - 1].itemId
     const handleBackClick = () => {
         dispatch(removeLastBreadCrumb())
     }

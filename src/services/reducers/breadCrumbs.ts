@@ -3,7 +3,8 @@ import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 export interface IBreadCrumb {
     text: string
     answer: string
-    prevItemId: number
+    itemId: number
+    optionId: number
 }
 
 interface IBreadCrumbsState {
@@ -27,7 +28,6 @@ export const BreadCrumbsSlice = createSlice({
             state.list = tempState
         },
         cleanBreadCrumbs: (state) => {
-            console.log("reducer work")
             state.list = []
         }
     },

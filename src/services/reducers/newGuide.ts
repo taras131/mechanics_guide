@@ -60,14 +60,35 @@ export const NewGuideSlice = createSlice({
             tempItems = [...tempItems, {id: newItemId, text: "", type: GUIDE_ITEM_TYPE.question, options: []}]
             state.newGuide = {...state.newGuide, items: tempItems}
         },
-        changeNextIdFromNewGuideItem: (state, action: PayloadAction<{ itemId: number, newNextId: number }>) => {
-            state.newGuide.items = [...state.newGuide.items.map(item => {
+        changeNextIdFromNewGuideItem: (state, action: PayloadAction<{
+            itemId: number,
+            optionId: number,
+            newNextId: number,
+            currentItemId: number
+        }>) => {
+            console.log("Новый itemId " + action.payload.itemId)
+            console.log("Новый optionId " + action.payload.optionId)
+            console.log("Новый nextId " + action.payload.newNextId)
+            console.log("Новый currentItemId " + action.payload.currentItemId)
+            const tempItems = [...state.newGuide.items.map(item => {
                 if (item.id === action.payload.itemId) {
-                    return {...item, nextId: action.payload.newNextId}
+                    return {
+                        ...item, options: [...item.options.map(option => {
+                            if (option.id === action.payload.optionId) {
+                                console.log("Нашёл и поменял " + action.payload.optionId)
+                                return {...option, nextId: action.payload.newNextId}
+                            } else {
+                                return option
+                            }
+                        })]
+                    }
                 } else {
                     return item
                 }
             })]
+            console.log(tempItems)
+            state.newGuide.items = tempItems
+            // [...tempItems.filter(item => item.id !== action.payload.currentItemId)]
         },
         cleanNewGuide: (state) => {
             state.newGuide = {
