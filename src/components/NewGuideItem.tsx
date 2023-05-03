@@ -6,13 +6,14 @@ import {useAppDispatch, useAppSelector} from "../hooks/redux";
 import {updateItemType, updateText} from "../services/reducers/newGuide";
 import Typography from "@mui/material/Typography";
 import NewGuideAddOptionModal from "./NewGuideAddOptionModal";
-import NewGuideOptionList from "./NewGuideOptionList";
+import NewGuideOptionsList from "./NewGuideOptionsList";
 import {routes} from "../utils/routes";
 import {useNavigate} from "react-router-dom";
 import {GUIDE_ITEM_TYPE} from "../utils/const";
 import {getBreadCrumbs} from "../services/selectors/breadCrumbsSelectors";
 import {removeLastBreadCrumb} from "../services/reducers/breadCrumbs"
 import SelectResultModal from "./SelectResultModal";
+import NewGuideOptions from "./NewGuideOptions";
 
 interface NewGuideItemProps {
     id: number,
@@ -84,11 +85,7 @@ const NewGuideItem: FC<NewGuideItemProps> = ({id}) => {
                        sx={{marginTop: "20px"}}
             />
             {currentItem.type === "question" && (
-                <>
-                    <NewGuideOptionList id={currentItem.id} questionText={currentItem.text}/>
-                    <NewGuideAddOptionModal id={currentItem.id}/>
-
-                </>
+                <NewGuideOptions currentGuideItem ={currentItem}/>
             )}
             {currentItem.type === GUIDE_ITEM_TYPE.result && (
                 <SelectResultModal/>

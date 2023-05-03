@@ -20,15 +20,13 @@ export const modalStyle = {
 
 interface INewGuideAddOptionModalProps {
     id: number
+    isOpenModal: boolean
+    handleToggleOpen: () => void
 }
 
-const NewGuideAddOptionModal: FC<INewGuideAddOptionModalProps> = ({id}) => {
+const NewGuideAddOptionModal: FC<INewGuideAddOptionModalProps> = ({id, isOpenModal, handleToggleOpen}) => {
     const dispatch = useAppDispatch()
-    const [isOpenModal, setIsOpenModal] = useState(false)
     const [answerText, setAnswerText] = useState("")
-    const handleToggleOpen = () => {
-        setIsOpenModal(prev => !prev)
-    }
     const handleAnswerTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setAnswerText(e.target.value)
     }
@@ -39,11 +37,6 @@ const NewGuideAddOptionModal: FC<INewGuideAddOptionModalProps> = ({id}) => {
     }
     return (
         <>
-            <Button onClick={handleToggleOpen}
-                    variant="contained"
-                    sx={{marginTop: "20px"}}>
-                Добавить вариант
-            </Button>
             <Modal
                 open={isOpenModal}
                 onClose={handleToggleOpen}

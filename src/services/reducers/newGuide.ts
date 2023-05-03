@@ -66,10 +66,6 @@ export const NewGuideSlice = createSlice({
             newNextId: number,
             currentItemId: number
         }>) => {
-            console.log("Новый itemId " + action.payload.itemId)
-            console.log("Новый optionId " + action.payload.optionId)
-            console.log("Новый nextId " + action.payload.newNextId)
-            console.log("Новый currentItemId " + action.payload.currentItemId)
             const tempItems = [...state.newGuide.items.map(item => {
                 if (item.id === action.payload.itemId) {
                     return {
@@ -97,6 +93,46 @@ export const NewGuideSlice = createSlice({
                 items: [{id: 0, text: "", type: GUIDE_ITEM_TYPE.question, options: []}]
             }
         },
+        updateOptionText: (state, action: PayloadAction<{
+            guideItemId: number,
+            optionId: number,
+            newOptionText: string
+        }>) => {
+            const {guideItemId, optionId, newOptionText} = action.payload
+            state.newGuide.items = [...state.newGuide.items.map(guide => {
+                if (guide.id === guideItemId) {
+                    return {
+                        ...guide, options: [...guide.options.map(option => {
+                            if (option.id === optionId) {
+                                return {...option, text: newOptionText}
+                            } else {
+                                return option
+                            }
+                        })]
+                    }
+                } else {
+                    return guide
+                }
+            })]
+        },
+        deleteOption: (state, action: PayloadAction<{
+            guideItemId: number,
+            optionId: number
+        }>) => {
+            const {guideItemId, optionId} = action.payload
+
+
+
+            state.newGuide.items = [...state.newGuide.items.map(guide => {
+                if (guide.id === guideItemId) {
+                    return {
+                        ...guide, options: [...guide.options.filter(option => option.id !== optionId)]
+                    }
+                } else {
+                    return guide
+                }
+            })]
+        }
     },
     extraReducers: {}
 })
@@ -109,6 +145,8 @@ export const {
     updateItemType,
     addOption,
     changeNextIdFromNewGuideItem,
-    cleanNewGuide
+    cleanNewGuide,
+    updateOptionText,
+    deleteOption
 } = NewGuideSlice.actions
 export default NewGuideSlice.reducer;
