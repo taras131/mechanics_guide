@@ -1,6 +1,6 @@
 import React, {FC} from 'react';
 import {useAppDispatch, useAppSelector} from "../hooks/redux";
-import {Link,  useParams} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import {getBreadCrumbs} from "../services/selectors/breadCrumbsSelectors";
 import {removeLastBreadCrumb} from "../services/reducers/breadCrumbs";
 import {GUIDE_ITEM_TYPE} from "../utils/const";
@@ -40,7 +40,7 @@ const GuideItem: FC<IGuideItemProps> = ({guideId}) => {
                     >
                         <Grid item>
                             <Typography variant="h5" component="h2">
-                                Этап № {currentItem.id + 1}
+                                Этап № {bredCrumbs.length + 1}
                             </Typography>
                         </Grid>
                         <Grid item>

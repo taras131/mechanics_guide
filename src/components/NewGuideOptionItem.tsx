@@ -3,13 +3,12 @@ import {addBreadCrumb} from "../services/reducers/breadCrumbs";
 import {routes} from "../utils/routes";
 import {useAppDispatch, useAppSelector} from "../hooks/redux";
 import {useLocation, useNavigate} from "react-router-dom";
-import {Divider, ListItem, ListItemButton, TextField} from "@mui/material";
+import {Divider, ListItem, ListItemButton, TextField, Tooltip} from "@mui/material";
 import EditIcon from '@mui/icons-material/Edit';
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from '@mui/icons-material/Delete';
 import SaveAsIcon from '@mui/icons-material/SaveAs';
 import {deleteOption, updateOptionText} from "../services/reducers/newGuide";
-import {getNextGuideItemIdByOptionId} from "../services/selectors/newGuideSelectors";
 import {IGuideItem} from "../models/newGuideInterface";
 
 interface INewGuideOptionProps {
@@ -30,9 +29,7 @@ const NewGuideOptionItem: FC<INewGuideOptionProps> = ({
     const dispatch = useAppDispatch()
     const location: any = useLocation()
     const navigate = useNavigate()
-
     const guideItems = useAppSelector(state => state.newGuide.newGuide.items)
-
     const [isEditOption, setIsEditOption] = useState(false)
     const [newOptionText, setNewOptionText] = useState(optionText)
     const toggleIsEditOption = () => {
@@ -81,9 +78,11 @@ const NewGuideOptionItem: FC<INewGuideOptionProps> = ({
             <ListItem disablePadding>
                 {isEditOption
                     ? (<>
-                        <IconButton edge="start" aria-label="edit" onClick={handleSaveClick}>
-                            <SaveAsIcon/>
-                        </IconButton>
+                        <Tooltip title="Сохранить">
+                            <IconButton edge="start" aria-label="edit" onClick={handleSaveClick}>
+                                <SaveAsIcon/>
+                            </IconButton>
+                        </Tooltip>
                         <TextField
                             id="option-text"
                             defaultValue={newOptionText}
@@ -92,17 +91,25 @@ const NewGuideOptionItem: FC<INewGuideOptionProps> = ({
                             fullWidth
                             variant="standard"
                         />
+
                     </>)
                     : (<>
-                        <IconButton edge="start" aria-label="edit" onClick={toggleIsEditOption}>
-                            <EditIcon/>
-                        </IconButton>
-                        <ListItemButton onClick={handleOptionClick}>{optionText}</ListItemButton>
-                    </>)
+                            <Tooltip title="Редактировать">
+                                <IconButton edge="start" aria-label="edit" onClick={toggleIsEditOption}>
+                                    <EditIcon/>
+                                </IconButton>
+                            </Tooltip>
+                            <Tooltip title="Кликните ,чтобы перейти дольше по ветке">
+                                <ListItemButton onClick={handleOptionClick}>{optionText}</ListItemButton>
+                            </Tooltip>
+                        </>
+                    )
                 }
-                <IconButton edge="end" aria-label="delete" onClick={handleDeleteClick}>
-                    <DeleteIcon/>
-                </IconButton>
+                <Tooltip title="Удалить">
+                    <IconButton edge="end" aria-label="delete" onClick={handleDeleteClick}>
+                        <DeleteIcon/>
+                    </IconButton>
+                </Tooltip>
             </ListItem>
             {!isEditOption && (<Divider/>)}
         </>

@@ -1,6 +1,7 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import api from "../../api";
 import {INewGuide} from "../../models/newGuideInterface";
+import {IGuide} from "../../models/guideInterface";
 
 const handlerError = (e: any) => {
     if (e instanceof Error && e.message) return e.message;
@@ -12,7 +13,6 @@ export const fetchAllGuides = createAsyncThunk(
     async (_, ThunkAPI) => {
         try {
             const res = await api.getAllGuides()
-            console.log(res)
             return res
         } catch (e) {
             return ThunkAPI.rejectWithValue(handlerError(e))
@@ -24,6 +24,28 @@ export const fetchNewGuide = createAsyncThunk(
     async (guide: INewGuide, ThunkAPI) => {
         try {
             const res = await api.addNewGuide(guide)
+            return res
+        } catch (e) {
+            return ThunkAPI.rejectWithValue(handlerError(e))
+        }
+    }
+)
+export const fetchRemoveGuide = createAsyncThunk(
+    'fetch_remove_guide',
+    async (guideId: string, ThunkAPI) => {
+        try {
+            const res = await api.removeGuide(guideId)
+            return res
+        } catch (e) {
+            return ThunkAPI.rejectWithValue(handlerError(e))
+        }
+    }
+)
+export const fetchUpdateGuide = createAsyncThunk(
+    'update_guide',
+    async (guide: IGuide, ThunkAPI) => {
+        try {
+            const res = await api.updateGuide(guide)
             return res
         } catch (e) {
             return ThunkAPI.rejectWithValue(handlerError(e))

@@ -19,7 +19,7 @@ const Guide = () => {
         }, [dispatch])
         return (
             <Stack spacing={2}>
-                <GuideHeader title={guide.title}/>
+                <GuideHeader title={guide.title} guideId={guideId}/>
                 {bredCrumbs && bredCrumbs.length > 0 && (<BreadCrumbs/>)}
                 <GuideItem guideId={guideId}/>
             </Stack>

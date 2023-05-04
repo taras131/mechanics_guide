@@ -13,7 +13,6 @@ import {
 
 const BreadCrumbs = () => {
     const breadCrumbs = useAppSelector(state => getBreadCrumbs(state))
-    console.log(breadCrumbs)
     const breadCrumbsList = breadCrumbs.map(item => (
         <TableRow
             key={item.text}

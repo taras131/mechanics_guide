@@ -1,7 +1,7 @@
 import React, {FC} from 'react';
 import {useAppSelector} from "../hooks/redux";
 import {getOptionsById} from "../services/selectors/newGuideSelectors";
-import {List, ListSubheader} from "@mui/material";
+import {List, ListItem, ListSubheader} from "@mui/material";
 import NewGuideOptionItem from "./NewGuideOptionItem";
 
 interface INewGuideOptionListProps {
@@ -19,6 +19,10 @@ const NewGuideOptionsList: FC<INewGuideOptionListProps> = ({guideItemId, questio
     return (
         <List subheader={<ListSubheader>Варианты:</ListSubheader>}>
             {optionsList}
+            {optionsList.length === 0 && (<ListItem disablePadding>
+                Пока нет вариантов
+            </ListItem>)}
+
         </List>
     );
 };

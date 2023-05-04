@@ -1,12 +1,15 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {INewGuide, IGuideItem} from "../../models/newGuideInterface";
 import {GUIDE_ITEM_TYPE} from "../../utils/const";
+import {IGuide} from "../../models/guideInterface";
 
 
 interface INewGuideState {
     isLoading: boolean,
     newGuide: INewGuide,
     errorMessage: string,
+    isNewGuide: boolean,
+    editionGuideId: string
 }
 
 export const initialState: INewGuideState = {
@@ -17,7 +20,9 @@ export const initialState: INewGuideState = {
             category: "",
             items: [{id: 0, text: "", type: GUIDE_ITEM_TYPE.question, options: []}]
         },
-    errorMessage: ""
+    errorMessage: "",
+    isNewGuide: true,
+    editionGuideId: ""
 }
 
 export const NewGuideSlice = createSlice({
@@ -61,17 +66,16 @@ export const NewGuideSlice = createSlice({
             state.newGuide = {...state.newGuide, items: tempItems}
         },
         changeNextIdFromNewGuideItem: (state, action: PayloadAction<{
-            itemId: number,
+            prevItemId: number,
             optionId: number,
             newNextId: number,
             currentItemId: number
         }>) => {
             const tempItems = [...state.newGuide.items.map(item => {
-                if (item.id === action.payload.itemId) {
+                if (item.id === action.payload.prevItemId) {
                     return {
                         ...item, options: [...item.options.map(option => {
                             if (option.id === action.payload.optionId) {
-                                console.log("Нашёл и поменял " + action.payload.optionId)
                                 return {...option, nextId: action.payload.newNextId}
                             } else {
                                 return option
@@ -82,16 +86,16 @@ export const NewGuideSlice = createSlice({
                     return item
                 }
             })]
-            console.log(tempItems)
-            state.newGuide.items = tempItems
-            // [...tempItems.filter(item => item.id !== action.payload.currentItemId)]
+            state.newGuide.items = [...tempItems.filter(item => item.id !== action.payload.currentItemId)]
         },
         cleanNewGuide: (state) => {
             state.newGuide = {
                 title: "",
                 category: "",
-                items: [{id: 0, text: "", type: GUIDE_ITEM_TYPE.question, options: []}]
+                items: [{id: 0, text: "", type: GUIDE_ITEM_TYPE.question, options: []}],
             }
+            state.isNewGuide = true
+            state.editionGuideId = ""
         },
         updateOptionText: (state, action: PayloadAction<{
             guideItemId: number,
@@ -122,7 +126,6 @@ export const NewGuideSlice = createSlice({
             const {guideItemId, optionId} = action.payload
 
 
-
             state.newGuide.items = [...state.newGuide.items.map(guide => {
                 if (guide.id === guideItemId) {
                     return {
@@ -132,6 +135,11 @@ export const NewGuideSlice = createSlice({
                     return guide
                 }
             })]
+        },
+        setEditionGuide: (state, action: PayloadAction<IGuide>) => {
+            state.isNewGuide = false
+            state.newGuide = action.payload
+            state.editionGuideId = action.payload.id
         }
     },
     extraReducers: {}
@@ -147,6 +155,7 @@ export const {
     changeNextIdFromNewGuideItem,
     cleanNewGuide,
     updateOptionText,
-    deleteOption
+    deleteOption,
+    setEditionGuide
 } = NewGuideSlice.actions
 export default NewGuideSlice.reducer;

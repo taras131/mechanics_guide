@@ -1,16 +1,31 @@
 import React, {FC} from 'react';
-import {Grid} from "@mui/material";
+import {ButtonGroup, Grid} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import {useNavigate} from "react-router-dom";
 import {routes} from "../utils/routes";
+import {useAppDispatch} from "../hooks/redux";
+import {fetchRemoveGuide} from "../services/actions/guidesActionsCreators";
 
 interface IGuideHeaderProps {
-    title: string
+    title: string,
+    guideId: string
 }
 
-const GuideHeader: FC<IGuideHeaderProps> = ({title}) => {
+const GuideHeader: FC<IGuideHeaderProps> = ({title, guideId}) => {
+    const dispatch = useAppDispatch()
     const navigate = useNavigate()
+    const handleRemoveClick = () => {
+        dispatch(fetchRemoveGuide(guideId))
+        navigate(routes.main)
+    }
+    const handleEditionClick = () => {
+        navigate(routes.new_guide + '/0', {
+            state: {
+                guideId: guideId
+            }
+        })
+    }
     const handleOnMainClick = () => {
         navigate(routes.main)
     }
@@ -21,7 +36,11 @@ const GuideHeader: FC<IGuideHeaderProps> = ({title}) => {
                     <Typography variant="h4" component="h1">{title}</Typography>
                 </Grid>
                 <Grid item>
-                    <Button variant="contained" onClick={handleOnMainClick}>На главную</Button>
+                    <ButtonGroup variant="contained" aria-label="outlined primary button group">
+                        <Button onClick={handleRemoveClick} color="secondary">Удалить</Button>
+                        <Button onClick={handleEditionClick} color="success">Редактировать</Button>
+                        <Button onClick={handleOnMainClick}>На главную</Button>
+                    </ButtonGroup>
                 </Grid>
             </Grid>
         </div>
