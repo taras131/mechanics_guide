@@ -1,14 +1,20 @@
-import React, {useEffect} from 'react';
-import {Grid} from "@mui/material";
-import GuidesList from "../components/GuidesList";
+import React, {useEffect, useState} from 'react';
+import {SelectChangeEvent, Stack} from "@mui/material";
+import GuidesPreviewList from "../components/GuidesPreviewList";
 import {useAppDispatch} from "../hooks/redux";
 import {collection, onSnapshot, query} from "firebase/firestore";
 import {db} from "../firebase";
 import {IGuide} from "../models/guideInterface";
 import {setGuides, setIsGuidesLoading} from "../services/reducers/guides";
+import GuidesFilter from "../components/GuidesFilter";
+import {ALL_CATEGORIES} from "../utils/const";
 
 const Main = () => {
     const dispatch = useAppDispatch()
+    const [currentCategory, setCurrentCategory] = useState(ALL_CATEGORIES)
+    const handleCategoryChange = (e: SelectChangeEvent) => {
+        setCurrentCategory(e.target.value)
+    }
     useEffect(() => {
         const q = query(collection(db, "guides"));
         const unsubscribe = onSnapshot(q, (querySnapshot) => {
@@ -28,9 +34,10 @@ const Main = () => {
         });
     }, [])
     return (
-        <Grid container spacing={2}>
-            <GuidesList/>
-        </Grid>
+        <Stack>
+            <GuidesFilter currentCategory={currentCategory} handleCategoryChange={handleCategoryChange}/>
+            <GuidesPreviewList currentCategory={currentCategory}/>
+        </Stack>
     );
 };
 

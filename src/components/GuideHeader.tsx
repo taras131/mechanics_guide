@@ -31,15 +31,15 @@ const GuideHeader: FC<IGuideHeaderProps> = ({title, guideId}) => {
     }
     return (
         <div>
-            <Grid container direction="row" justifyContent="space-between" alignItems="center">
-                <Grid item>
+            <Grid container direction="row" justifyContent="space-between" alignItems="start">
+                <Grid item xs={8}>
                     <Typography variant="h4" component="h1">{title}</Typography>
                 </Grid>
-                <Grid item>
+                <Grid item xs={4}>
                     <ButtonGroup variant="contained" aria-label="outlined primary button group">
                         <Button onClick={handleRemoveClick} color="secondary">Удалить</Button>
-                        <Button onClick={handleEditionClick} color="success">Редактировать</Button>
-                        <Button onClick={handleOnMainClick}>На главную</Button>
+                        <Button onClick={handleEditionClick} variant="outlined">Редактировать</Button>
+                        <Button onClick={handleOnMainClick}>Главная</Button>
                     </ButtonGroup>
                 </Grid>
             </Grid>

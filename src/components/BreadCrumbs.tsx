@@ -9,28 +9,28 @@ import {
     TableHead,
     TableRow
 } from "@mui/material";
+import BreadCrumbsItem from "./BreadCrumbsItem";
+import Typography from "@mui/material/Typography";
 
 
 const BreadCrumbs = () => {
     const breadCrumbs = useAppSelector(state => getBreadCrumbs(state))
-    const breadCrumbsList = breadCrumbs.map(item => (
-        <TableRow
-            key={item.text}
-            sx={{'&:last-child td, &:last-child th': {border: 0}}}
-        >
-            <TableCell component="th" scope="row">
-                {item.text}
-            </TableCell>
-            <TableCell align="right">{item.answer}</TableCell>
-
-        </TableRow>))
+    const breadCrumbsList = breadCrumbs.map(crumb => (<BreadCrumbsItem key={crumb.itemId} {...crumb}/>))
     return (
         <TableContainer component={Paper}>
             <Table aria-label="simple table">
                 <TableHead>
                     <TableRow>
-                        <TableCell>Вопрос</TableCell>
-                        <TableCell align="right">Ответ</TableCell>
+                        <TableCell>
+                            <Typography fontWeight={600}>
+                                Вопрос
+                            </Typography>
+                        </TableCell>
+                        <TableCell align="right">
+                            <Typography fontWeight={600}>
+                                Ответ
+                            </Typography>
+                        </TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>

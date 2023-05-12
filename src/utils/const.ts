@@ -5,10 +5,8 @@ export enum GUIDE_ITEM_TYPE {
     result = "result"
 }
 
-export enum GUIDE_CATEGORY {
-    engine = "engine",
-}
-
+export const categoryVariants: string[] = ["Двигатель", "Трансмиссия", "Тормозная система", "Электрооборудование"]
+export const ALL_CATEGORIES = "Все";
 
 
 
