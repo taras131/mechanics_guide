@@ -5,7 +5,7 @@ import {getLastBreadCrumbs} from "../services/selectors/breadCrumbsSelectors";
 import {useParams} from "react-router-dom";
 import {GUIDE_ITEM_TYPE} from "../utils/const";
 import {getNewGuideItemsByType} from "../services/selectors/newGuideSelectors";
-import ModalWindow from "./modalWindow";
+import ModalWindow from "./ModalWindow";
 import RedirectToGuideItemSelectionElement from "./RedirectToGuideItemSelectionElement";
 
 interface IRedirectToGuideItemProps {

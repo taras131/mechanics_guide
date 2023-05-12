@@ -2,6 +2,7 @@ import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {INewGuide, IGuideItem} from "../../models/newGuideInterface";
 import {GUIDE_ITEM_TYPE} from "../../utils/const";
 import {IGuide} from "../../models/guideInterface";
+import {getNextId} from "../../utils/services";
 
 
 interface INewGuideState {
@@ -50,11 +51,11 @@ export const NewGuideSlice = createSlice({
                 return item
             })]
         },
-        addOption: (state, action: PayloadAction<{ id: number, text: string }>) => {
-            const newItemId = state.newGuide.items.length
+        addOption: (state, action: PayloadAction<{ guideId: number, text: string }>) => {
+            const newItemId = getNextId(state.newGuide.items)
             let tempItems = [...state.newGuide.items.map(item => {
-                if (item.id === action.payload.id) {
-                    const newOptionId = item.options.length | 0
+                if (item.id === action.payload.guideId) {
+                    const newOptionId = getNextId(item.options)
                     return {
                         ...item,
                         options: [...item.options, {id: newOptionId, text: action.payload.text, nextId: newItemId}]
