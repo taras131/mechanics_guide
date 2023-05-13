@@ -24,6 +24,7 @@ class Api {
             {
                 title: guide.title,
                 category: guide.category,
+                authorId: guide.authorId,
                 items: JSON.stringify(guide.items)
             }
         );

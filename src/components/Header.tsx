@@ -48,16 +48,16 @@ const Header = () => {
                         Mechanics guide
                     </Typography>
                     {isAuth && user && user.email && (
-                        <Link to={routes.profile}>
-                            <Button variant="contained" color="success">
+                        <Link to={routes.profile} style={{color: "white"}}>
+                            <Button color="inherit">
                                 {user.email}
                             </Button>
                         </Link>
                     )}
                     {!isAuth && (
-                        <Link to={routes.login}>
-                            <Button variant="contained" color="success">
-                                Войти
+                        <Link to={routes.login} style={{color: "white"}}>
+                            <Button color="inherit">
+                                Вход
                             </Button>
                         </Link>
                     )}

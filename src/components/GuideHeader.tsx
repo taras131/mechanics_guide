@@ -38,8 +38,8 @@ const GuideHeader: FC<IGuideHeaderProps> = ({title, guideId}) => {
                 <Grid item xs={4}>
                     <ButtonGroup variant="contained" aria-label="outlined primary button group">
                         <Button onClick={handleRemoveClick} color="secondary">Удалить</Button>
-                        <Button onClick={handleEditionClick} variant="outlined">Редактировать</Button>
-                        <Button onClick={handleOnMainClick}>Главная</Button>
+                        <Button onClick={handleEditionClick}>Редактировать</Button>
+                        <Button onClick={handleOnMainClick} variant="outlined">Главная</Button>
                     </ButtonGroup>
                 </Grid>
             </Grid>

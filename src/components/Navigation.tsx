@@ -21,17 +21,17 @@ const Navigation: FC<INavigation> = ({anchorEl, handleClose, open}) => {
             }}
         >
             <MenuItem onClick={handleClose}>
-                <Link to={routes.main}>
+                <Link to={routes.main} style={{textDecoration: "none"}}>
                     Главная
                 </Link>
             </MenuItem>
-            <MenuItem onClick={handleClose}>
-                <Link to={routes.new_guide+"/0"}>
+            <MenuItem onClick={handleClose} >
+                <Link to={routes.new_guide+"/0"} style={{textDecoration: "none"}}>
                     Новый гайд
                 </Link>
             </MenuItem>
-            <MenuItem onClick={handleClose}>
-                <Link to={routes.login}>
+            <MenuItem onClick={handleClose} >
+                <Link to={routes.login} style={{textDecoration: "none"}}>
                     Auth
                 </Link>
             </MenuItem>

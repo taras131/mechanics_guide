@@ -16,5 +16,6 @@ export interface IGuideItem {
 export interface INewGuide {
     title: string
     category: string
+    authorId: string
     items: IGuideItem[]
 }

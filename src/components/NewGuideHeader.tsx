@@ -7,7 +7,7 @@ import {fetchNewGuide, fetchUpdateGuide} from "../services/actions/guidesActions
 import {getEditionGuideId, getIsNewGuide, getNewGuide} from "../services/selectors/newGuideSelectors";
 import {useNavigate} from "react-router-dom";
 import {cleanNewGuide} from "../services/reducers/newGuide";
-import {getIsAuth} from "../services/selectors/authSelector";
+import {getIsAuth, getUser} from "../services/selectors/authSelector";
 import Stack from '@mui/material/Stack';
 
 const NewGuideHeader = () => {
@@ -17,10 +17,11 @@ const NewGuideHeader = () => {
     const isNewGuide = useAppSelector(state => getIsNewGuide(state))
     const editionGuideId = useAppSelector(state => getEditionGuideId(state))
     const isAuth = useAppSelector(state => getIsAuth(state))
+    const user = useAppSelector(state => getUser(state))
     const handleSaveClick = () => {
         navigate("/")
         if (isNewGuide) {
-            dispatch(fetchNewGuide(newGuide))
+            dispatch(fetchNewGuide({...newGuide, authorId: user.id}))
         } else {
             dispatch(fetchUpdateGuide({...newGuide, id: editionGuideId}))
         }
