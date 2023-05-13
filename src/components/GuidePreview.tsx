@@ -4,7 +4,7 @@ import {Link} from "react-router-dom";
 import Typography from "@mui/material/Typography";
 import {IGuide} from "../models/guideInterface";
 
-const GuidePreview: FC<IGuide> = ({title, id, category}) => {
+const GuidePreview: FC<IGuide> = ({title, id, category, authorId}) => {
     return (
         <Grid item xs={1} sm={4} md={3}>
             <Link to={`/guide/${id}/0`} style={{textDecoration: "none"}}>
@@ -16,6 +16,11 @@ const GuidePreview: FC<IGuide> = ({title, id, category}) => {
                         <Typography fontSize={"12px"} marginTop="10px">
                             Категория: {category}
                         </Typography>
+                        {authorId && (
+                            <Typography fontSize={"12px"} marginTop="10px">
+                                Автор: {authorId}
+                            </Typography>
+                        )}
                     </CardContent>
                 </Card>
             </Link>

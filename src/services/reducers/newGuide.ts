@@ -19,6 +19,7 @@ export const initialState: INewGuideState = {
         {
             title: "",
             category: "",
+            authorId: "",
             items: [{id: 0, text: "", type: GUIDE_ITEM_TYPE.question, options: []}]
         },
     errorMessage: "",
@@ -93,6 +94,7 @@ export const NewGuideSlice = createSlice({
             state.newGuide = {
                 title: "",
                 category: "",
+                authorId: "",
                 items: [{id: 0, text: "", type: GUIDE_ITEM_TYPE.question, options: []}],
             }
             state.isNewGuide = true

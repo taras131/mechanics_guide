@@ -6,12 +6,14 @@ import {IGuideItem, INewGuide} from "../../models/newGuideInterface";
 interface IGuideState {
     isLoading: boolean,
     errorMessage: string,
+    isSelectedMyGuide: boolean,
     guides: IGuide[],
 }
 
 export const initialState: IGuideState = {
     isLoading: true,
     errorMessage: "",
+    isSelectedMyGuide: false,
     guides: []
 }
 
@@ -27,6 +29,9 @@ export const GuidesSlice = createSlice({
         },
         setIsGuidesLoading: (state, action: PayloadAction<boolean>) => {
             state.isLoading = action.payload
+        },
+        toggleIsSelectedMyGuide: (state) => {
+            state.isSelectedMyGuide = !state.isSelectedMyGuide
         }
     },
     extraReducers: {
@@ -69,5 +74,5 @@ export const GuidesSlice = createSlice({
     }
 })
 
-export const {setGuides, setIsGuidesLoading} = GuidesSlice.actions
+export const {setGuides, setIsGuidesLoading, toggleIsSelectedMyGuide} = GuidesSlice.actions
 export default GuidesSlice.reducer;
