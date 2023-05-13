@@ -9,6 +9,7 @@ import Guide from "../pages/Guide";
 import NewGuide from "../pages/NewGuide";
 import {routes} from "../utils/routes";
 import Box from "@mui/material/Box";
+import Profile from "../pages/Profile";
 
 const App = () => {
     return (
@@ -18,8 +19,10 @@ const App = () => {
                 <Routes>
                     <Route path={routes.main} element={<Main/>}/>
                     <Route path={`${routes.new_guide}/:itemId`} element={<NewGuide/>}/>
-                    <Route path={routes.auth} element={<Auth/>}/>
+                    <Route path={routes.login} element={<Auth/>}/>
+                    <Route path={routes.register} element={<Auth/>}/>
                     <Route path={routes.guide} element={<Guide/>}/>
+                    <Route path={routes.profile} element={<Profile/>}/>
                     <Route path={routes.not_found} element={<NotFound/>}/>
                 </Routes>
             </Box>

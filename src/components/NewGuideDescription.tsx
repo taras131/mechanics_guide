@@ -1,5 +1,5 @@
 import React from 'react';
-import {FormControl, Grid, InputLabel, MenuItem, Select, SelectChangeEvent, Stack, TextField} from "@mui/material";
+import {Grid, SelectChangeEvent, TextField} from "@mui/material";
 import {updateTitle, setCategory} from "../services/reducers/newGuide";
 import {useAppDispatch, useAppSelector} from "../hooks/redux";
 import {getNewGuide} from "../services/selectors/newGuideSelectors";

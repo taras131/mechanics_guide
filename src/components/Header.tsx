@@ -8,9 +8,14 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import Navigation from "./Navigation";
 import {Link} from "react-router-dom";
+import {routes} from "../utils/routes";
+import {useAppSelector} from "../hooks/redux";
+import {getIsAuth, getUser} from "../services/selectors/authSelector";
 
 const Header = () => {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+    const isAuth = useAppSelector(state => getIsAuth(state))
+    const user = useAppSelector(state => getUser(state))
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget);
     };
@@ -42,11 +47,20 @@ const Header = () => {
                     <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
                         Mechanics guide
                     </Typography>
-                    <Link to={"/auth"}>
-                        <Button color="inherit">
-                            Login
-                        </Button>
-                    </Link>
+                    {isAuth && user && user.email && (
+                        <Link to={routes.profile}>
+                            <Button variant="contained" color="success">
+                                {user.email}
+                            </Button>
+                        </Link>
+                    )}
+                    {!isAuth && (
+                        <Link to={routes.login}>
+                            <Button variant="contained" color="success">
+                                Войти
+                            </Button>
+                        </Link>
+                    )}
                 </Toolbar>
             </AppBar>
         </Box>

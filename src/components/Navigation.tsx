@@ -31,7 +31,7 @@ const Navigation: FC<INavigation> = ({anchorEl, handleClose, open}) => {
                 </Link>
             </MenuItem>
             <MenuItem onClick={handleClose}>
-                <Link to={routes.auth}>
+                <Link to={routes.login}>
                     Auth
                 </Link>
             </MenuItem>
