@@ -44,9 +44,13 @@ const Header = () => {
                     <Navigation anchorEl={anchorEl}
                                 handleClose={handleClose}
                                 open={open}/>
+
                     <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
-                        Mechanics guide
+                        <Link to={routes.main} style={{color: "white", textDecoration: "none"}}>
+                            Mechanics guide
+                        </Link>
                     </Typography>
+
                     {isAuth && user && user.email && (
                         <Link to={routes.profile} style={{color: "white"}}>
                             <Button color="inherit">
