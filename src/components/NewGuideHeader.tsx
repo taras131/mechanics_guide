@@ -7,6 +7,8 @@ import {fetchNewGuide, fetchUpdateGuide} from "../services/actions/guidesActions
 import {getEditionGuideId, getIsNewGuide, getNewGuide} from "../services/selectors/newGuideSelectors";
 import {useNavigate} from "react-router-dom";
 import {cleanNewGuide} from "../services/reducers/newGuide";
+import {getIsAuth} from "../services/selectors/authSelector";
+import Stack from '@mui/material/Stack';
 
 const NewGuideHeader = () => {
     const dispatch = useAppDispatch()
@@ -14,6 +16,7 @@ const NewGuideHeader = () => {
     const newGuide = useAppSelector(state => getNewGuide(state))
     const isNewGuide = useAppSelector(state => getIsNewGuide(state))
     const editionGuideId = useAppSelector(state => getEditionGuideId(state))
+    const isAuth = useAppSelector(state => getIsAuth(state))
     const handleSaveClick = () => {
         navigate("/")
         if (isNewGuide) {
@@ -33,11 +36,17 @@ const NewGuideHeader = () => {
                 </Typography>
             </Grid>
             <Grid item>
-                <Button variant="contained"
-                        color="success"
-                        onClick={handleSaveClick}>
-                    Сохранить Гайд
-                </Button>
+                <Stack>
+                    <Button variant="contained"
+                            color="success"
+                            onClick={handleSaveClick}
+                            disabled={!isAuth}>
+                        Сохранить Гайд
+                    </Button>
+                    {!isAuth && (<Typography component="span" fontSize="10px" fontWeight="500">
+                        авторизуйтесь, чтобы сохранить
+                    </Typography>)}
+                </Stack>
             </Grid>
         </Grid>
     );

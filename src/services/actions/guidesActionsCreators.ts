@@ -3,7 +3,7 @@ import api from "../../api";
 import {INewGuide} from "../../models/newGuideInterface";
 import {IGuide} from "../../models/guideInterface";
 
-const handlerError = (e: any) => {
+export const handlerError = (e: any) => {
     if (e instanceof Error && e.message) return e.message;
     return 'неизвестная ошибка';
 }
