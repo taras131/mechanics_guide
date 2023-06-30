@@ -53,10 +53,10 @@ export const NewGuideSlice = createSlice({
             })]
         },
         addOption: (state, action: PayloadAction<{ guideId: number, text: string }>) => {
-            const newItemId = getNextId(state.newGuide.items)
+            const newItemId = getNextId()
             let tempItems = [...state.newGuide.items.map(item => {
                 if (item.id === action.payload.guideId) {
-                    const newOptionId = getNextId(item.options)
+                    const newOptionId = getNextId()
                     return {
                         ...item,
                         options: [...item.options, {id: newOptionId, text: action.payload.text, nextId: newItemId}]

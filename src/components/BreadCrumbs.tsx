@@ -15,9 +15,19 @@ import Typography from "@mui/material/Typography";
 
 const BreadCrumbs = () => {
     const breadCrumbs = useAppSelector(state => getBreadCrumbs(state))
-    const breadCrumbsList = breadCrumbs.map(crumb => (<BreadCrumbsItem key={crumb.itemId} {...crumb}/>))
+    const breadCrumbsList = breadCrumbs.map((crumb, index) => {
+        return (<BreadCrumbsItem key={crumb.itemId} {...crumb} index={index}/>)
+    })
     return (
         <TableContainer component={Paper}>
+            <Typography
+                sx={{ marginTop: "5px", marginLeft: "5px"}}
+                variant="h6"
+                id="tableTitle"
+                align={"center"}
+            >
+                Дерево ответов
+            </Typography>
             <Table aria-label="simple table">
                 <TableHead>
                     <TableRow>
