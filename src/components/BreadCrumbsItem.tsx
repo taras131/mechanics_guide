@@ -1,12 +1,20 @@
 import React, {FC} from 'react';
-import {TableCell, TableRow} from "@mui/material";
+import {Stack, TableCell, TableRow} from "@mui/material";
 import {IBreadCrumb} from "../services/reducers/breadCrumbs";
+import Typography from "@mui/material/Typography";
 
-const BreadCrumbsItem: FC<IBreadCrumb> = ({text, answer}) => {
+interface IBreadCrumbsItemProps extends IBreadCrumb {
+    index: number
+}
+
+const BreadCrumbsItem: FC<IBreadCrumbsItemProps> = ({text, answer, index}) => {
     return (
         <TableRow sx={{'&:last-child td, &:last-child th': {border: 0}}}>
             <TableCell component="th" scope="row">
-                {text}
+                <Stack direction="row" spacing={2}>
+                    <Typography fontWeight={600}>{index + 1}.</Typography>
+                    <Typography fontWeight={400}>{text}</Typography>
+                </Stack>
             </TableCell>
             <TableCell align="right">{answer}</TableCell>
         </TableRow>
