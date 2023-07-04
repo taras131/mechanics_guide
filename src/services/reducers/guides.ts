@@ -1,19 +1,18 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {IGuide} from "../../models/guideInterface";
 import {fetchAllGuides, fetchNewGuide, fetchRemoveGuide} from "../actions/guidesActionsCreators";
-import {IGuideItem, INewGuide} from "../../models/newGuideInterface";
+import {IGuide, IGuideCategory} from "../../models/iGuide";
 
 interface IGuideState {
     isLoading: boolean,
     errorMessage: string,
-    isSelectedMyGuide: boolean,
+    categories: IGuideCategory []
     guides: IGuide[],
 }
 
 export const initialState: IGuideState = {
     isLoading: true,
     errorMessage: "",
-    isSelectedMyGuide: false,
+    categories: [],
     guides: []
 }
 
@@ -21,18 +20,16 @@ export const GuidesSlice = createSlice({
     name: 'guides',
     initialState,
     reducers: {
-//        pushNewGuide: (state, action: PayloadAction<INewGuide>) => {
-//            state.guides = [...state.guides, {...action.payload, id: Date.now()} ]
-//        }
         setGuides: (state, action: PayloadAction<IGuide[] | []>) => {
             state.guides = action.payload
         },
         setIsGuidesLoading: (state, action: PayloadAction<boolean>) => {
             state.isLoading = action.payload
         },
-        toggleIsSelectedMyGuide: (state) => {
-            state.isSelectedMyGuide = !state.isSelectedMyGuide
+        setGuideCategories: (state, action: PayloadAction<IGuideCategory[]>) => {
+            state.categories= action.payload
         }
+
     },
     extraReducers: {
         [fetchAllGuides.fulfilled.type]: (state, action: PayloadAction<IGuide[]>) => {
@@ -74,5 +71,5 @@ export const GuidesSlice = createSlice({
     }
 })
 
-export const {setGuides, setIsGuidesLoading, toggleIsSelectedMyGuide} = GuidesSlice.actions
+export const {setGuides, setIsGuidesLoading, setGuideCategories} = GuidesSlice.actions
 export default GuidesSlice.reducer;

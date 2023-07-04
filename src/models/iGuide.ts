@@ -1,5 +1,10 @@
 import {GUIDE_ITEM_TYPE} from "../utils/const";
 
+export interface IGuideCategory {
+    id: string,
+    categoryName: string
+}
+
 export interface IGuideItemOption {
     id: number
     text: string,
@@ -13,9 +18,11 @@ export interface IGuideItem {
     options: IGuideItemOption[] | []
 }
 
-export interface INewGuide {
+export interface IGuide {
+    id: string
     title: string
     category: string
+    categoryId: string
     authorId: string
     items: IGuideItem[]
 }

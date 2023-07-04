@@ -1,5 +1,5 @@
 import {RootState} from "../store";
-import {IUser} from "../../models/authInterface";
+import {IUser} from "../../models/iAuth";
 
 export const getIsAuth= (state: RootState): boolean => {
     return state.auth.isAuth

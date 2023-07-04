@@ -1,4 +1,3 @@
-import {INewGuide} from "../models/newGuideInterface";
 import {db} from "../firebase";
 import {
     addDoc,
@@ -9,9 +8,9 @@ import {
     query,
     onSnapshot
 } from "firebase/firestore";
-import {IGuide} from "../models/guideInterface";
-import {IAuthData} from "../models/authInterface";
+import {IAuthData} from "../models/iAuth";
 import {getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut} from "firebase/auth";
+import {IGuide} from "../models/iGuide";
 
 class Api {
     auth = getAuth();
@@ -19,7 +18,7 @@ class Api {
 
 
     }
-    addNewGuide = async (guide: INewGuide) => {
+    addNewGuide = async (guide: IGuide) => {
         let res = await addDoc(collection(db, "guides"),
             {
                 title: guide.title,

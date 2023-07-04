@@ -1,12 +1,11 @@
 import React, {useEffect} from 'react';
 import {useParams} from 'react-router-dom';
-import {Card, CardContent, Stack} from "@mui/material";
+import {Stack} from "@mui/material";
 import {useAppDispatch, useAppSelector} from "../hooks/redux";
 import {getGuideById} from "../services/selectors/guidesSelectors";
 import {getBreadCrumbs} from "../services/selectors/breadCrumbsSelectors";
 import BreadCrumbs from "../components/BreadCrumbs";
-import GuideHeader from "../components/GuideHeader";
-import GuideItem from "../components/GuideItem";
+
 import {cleanBreadCrumbs} from "../services/reducers/breadCrumbs"
 
 const Guide = () => {
@@ -19,9 +18,7 @@ const Guide = () => {
         }, [dispatch])
         return (
             <Stack spacing={2}>
-                <GuideHeader title={guide.title} guideId={guideId}/>
-                {bredCrumbs && bredCrumbs.length > 0 && (<BreadCrumbs/>)}
-                <GuideItem guideId={guideId}/>
+
             </Stack>
         );
     }

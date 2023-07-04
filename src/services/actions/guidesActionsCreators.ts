@@ -1,7 +1,6 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import api from "../../api";
-import {INewGuide} from "../../models/newGuideInterface";
-import {IGuide} from "../../models/guideInterface";
+import {IGuide} from "../../models/iGuide";
 
 export const handlerError = (e: any) => {
     if (e instanceof Error && e.message) return e.message;
@@ -21,7 +20,7 @@ export const fetchAllGuides = createAsyncThunk(
 )
 export const fetchNewGuide = createAsyncThunk(
     'fetch_new_guide',
-    async (guide: INewGuide, ThunkAPI) => {
+    async (guide: IGuide, ThunkAPI) => {
         try {
             const res = await api.addNewGuide(guide)
             return res
