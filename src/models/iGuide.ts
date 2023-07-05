@@ -21,7 +21,6 @@ export interface IGuideItem {
 export interface IGuide {
     id: string
     title: string
-    category: string
     categoryId: string
     authorId: string
     items: IGuideItem[]

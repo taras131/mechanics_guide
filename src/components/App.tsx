@@ -13,11 +13,14 @@ import {collection, onSnapshot, query} from "firebase/firestore";
 import {db} from "../firebase";
 import {setGuideCategories, setGuides, setIsGuidesLoading} from "../services/reducers/guides";
 import {IGuide, IGuideCategory} from "../models/iGuide";
-import {useAppDispatch} from "../hooks/redux";
+import {useAppDispatch, useAppSelector} from "../hooks/redux";
 import {ALL_CATEGORIES} from "../utils/const";
+import {geiIsGuidesLoading} from "../services/selectors/guidesSelectors";
+import Preloader from "./Preloader";
 
 const App = () => {
     const dispatch = useAppDispatch()
+    const isLoading = useAppSelector(state => geiIsGuidesLoading(state))
     useEffect(() => {
         const q = query(collection(db, "guides"));
         const unsubscribe = onSnapshot(q, (querySnapshot) => {
@@ -55,6 +58,7 @@ const App = () => {
             return () => unsubscribe();
         });
     }, [])
+    if (isLoading) return (<Preloader/>)
     return (
         <Container sx={{backgroundColor: "WhiteSmoke", padding: "10px", minHeight: "97vh"}}>
             <Header/>
@@ -63,7 +67,7 @@ const App = () => {
                     <Route path={routes.main} element={<Main/>}/>
                     <Route path={routes.login} element={<Auth/>}/>
                     <Route path={routes.register} element={<Auth/>}/>
-                    <Route path={routes.guide} element={<Guide/>}/>
+                    <Route path={routes.guide+"/:guideId/:stepId"} element={<Guide/>}/>
                     <Route path={routes.profile} element={<Profile/>}/>
                     <Route path={routes.not_found} element={<NotFound/>}/>
                 </Routes>

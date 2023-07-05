@@ -8,15 +8,20 @@ import {useAppSelector} from "../hooks/redux";
 import {getCountGuideSteps, getGuideCategoryNameById} from "../services/selectors/guidesSelectors";
 import {deepPurple} from "@mui/material/colors";
 import Avatar from "@mui/material/Avatar";
-import Stack from "@mui/material/Stack"; // Grid version 2
+import {useNavigate} from "react-router-dom";
+import {routes} from "../utils/routes";
 
 interface IGuidePreviewProps {
     guide: IGuide
 }
 
 const GuidePreview: FC<IGuidePreviewProps> = ({guide}) => {
+    const navigate = useNavigate()
     const categoryName = useAppSelector(state => getGuideCategoryNameById(state, guide.categoryId))
     const countGuideSteps = useAppSelector(state => getCountGuideSteps(state, guide.id))
+    const handleGuideClick = () => {
+        navigate(routes.guide+"/"+guide.id+"/0")
+    }
     return (
         <Grid xs={12} sm={6} md={4}>
             <Card sx={{minWidth: 275, minHeight: 250}}>
@@ -51,7 +56,7 @@ const GuidePreview: FC<IGuidePreviewProps> = ({guide}) => {
                         </Typography>
                     </CardContent>
                     <CardActions>
-                        <Button size="small">Learn More</Button>
+                        <Button size="small" onClick={handleGuideClick}>Перейти к гайду</Button>
                     </CardActions>
                 </Grid>
             </Card>

@@ -22,7 +22,7 @@ class Api {
         let res = await addDoc(collection(db, "guides"),
             {
                 title: guide.title,
-                category: guide.category,
+                category: guide.categoryId,
                 authorId: guide.authorId,
                 items: JSON.stringify(guide.items)
             }
@@ -34,7 +34,7 @@ class Api {
     updateGuide = async (guide: IGuide) => {
         await updateDoc(doc(db, "guides", guide.id), {
             title: guide.title,
-            category: guide.category,
+            category: guide.categoryId,
             items: JSON.stringify(guide.items)
         });
     }

@@ -8,7 +8,7 @@ interface ISelectMyGuidesProps {
     handleMyGuideSelected: () => void
 }
 
-const SelectMyGuides: FC<ISelectMyGuidesProps> = ({isSelectedMyGuides, handleMyGuideSelected}) => {
+const GuidesHeaderSelectMyGuides: FC<ISelectMyGuidesProps> = ({isSelectedMyGuides, handleMyGuideSelected}) => {
     return (
         <FormControlLabel
             control={<Checkbox checked={isSelectedMyGuides}
@@ -18,4 +18,4 @@ const SelectMyGuides: FC<ISelectMyGuidesProps> = ({isSelectedMyGuides, handleMyG
     );
 };
 
-export default SelectMyGuides;
+export default GuidesHeaderSelectMyGuides;

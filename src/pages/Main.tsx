@@ -13,14 +13,12 @@ const Main = () => {
     const [selectedGuideCategoryId, setSelectedGuideCategoryId] = useState(ALL_CATEGORIES.id)
     const [isSelectedMyGuides, setIsSelectedMyGuides] = useState(false)
     const guides = useAppSelector(state => getGuidesWithFilter(state, selectedGuideCategoryId, isSelectedMyGuides))
-    const isLoading = useAppSelector(state => geiIsGuidesLoading(state))
     const handleGuideCategoryChange = (e: SelectChangeEvent) => {
         setSelectedGuideCategoryId(e.target.value as string)
     }
     const handleMyGuideSelected = () => {
         setIsSelectedMyGuides(prev => !prev)
     }
-    if (isLoading) return (<Preloader/>)
     return (
         <Stack spacing={2}>
             <GuidesHeader selectedGuideCategoryId={selectedGuideCategoryId}

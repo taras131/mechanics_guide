@@ -16,7 +16,7 @@ import Typography from "@mui/material/Typography";
 const BreadCrumbs = () => {
     const breadCrumbs = useAppSelector(state => getBreadCrumbs(state))
     const breadCrumbsList = breadCrumbs.map((crumb, index) => {
-        return (<BreadCrumbsItem key={crumb.itemId} {...crumb} index={index}/>)
+        return (<BreadCrumbsItem key={crumb.optionId} {...crumb} index={index}/>)
     })
     return (
         <TableContainer component={Paper}>

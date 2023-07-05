@@ -1,6 +1,6 @@
 import {RootState} from "../store";
 import {ALL_CATEGORIES} from "../../utils/const";
-import {IGuide, IGuideCategory} from "../../models/iGuide";
+import {IGuide, IGuideCategory, IGuideItem} from "../../models/iGuide";
 
 export const getGuidesWithFilter = (state: RootState,
                                     selectedGuideCategoryId: string,
@@ -16,6 +16,10 @@ export const getGuidesWithFilter = (state: RootState,
 }
 export const getGuideById = (state: RootState, id: string) => {
     return state.guides.guides.filter(item => item.id === id)[0]
+}
+
+export const getGuideStepById = (state: RootState, guideId: string, stepId: number): IGuideItem => {
+    return getGuideById(state, guideId).items.filter(item => item.id === stepId)[0]
 }
 
 export const geiIsGuidesLoading = (state: RootState): boolean => {
