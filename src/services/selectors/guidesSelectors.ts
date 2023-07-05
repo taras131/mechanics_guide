@@ -2,8 +2,16 @@ import {RootState} from "../store";
 import {ALL_CATEGORIES} from "../../utils/const";
 import {IGuide, IGuideCategory} from "../../models/iGuide";
 
-export const getGuidesByCategory = (state: RootState, currentCategory: string): IGuide [] => {
+export const getGuidesWithFilter = (state: RootState,
+                                    selectedGuideCategoryId: string,
+                                    isSelectedMyGuides: boolean): IGuide [] => {
     let guides = state.guides.guides
+    if (selectedGuideCategoryId !== ALL_CATEGORIES.id) {
+        guides = [...guides.filter(guide => guide.categoryId === selectedGuideCategoryId)]
+    }
+    if (isSelectedMyGuides && state.auth.user.id) {
+        guides = [...guides.filter(guide => guide.authorId === state.auth.user.id)]
+    }
     return guides
 }
 export const getGuideById = (state: RootState, id: string) => {
@@ -19,6 +27,13 @@ export const getGuideCategories = (state: RootState): IGuideCategory[] => {
 }
 
 export const getGuideCategoryNameById = (state: RootState, categoryId: string): string => {
-    return state.guides.categories.filter(category => category.id === categoryId)[0].categoryName
+    let categoryName = "подождите"
+    if (state.guides.categories.filter(category => category.id === categoryId)[0]) {
+        categoryName = state.guides.categories.filter(category => category.id === categoryId)[0].categoryName
+    }
+    return categoryName
+}
+export const getCountGuideSteps = (state: RootState, guideId: string) => {
+    return state.guides.guides.filter(guide => guide.id === guideId)[0].items.length
 }
 

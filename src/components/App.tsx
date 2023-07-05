@@ -56,7 +56,7 @@ const App = () => {
         });
     }, [])
     return (
-        <Container sx={{backgroundColor: "WhiteSmoke", padding: "10px"}}>
+        <Container sx={{backgroundColor: "WhiteSmoke", padding: "10px", minHeight: "97vh"}}>
             <Header/>
             <Box mt={"40px"}>
                 <Routes>
