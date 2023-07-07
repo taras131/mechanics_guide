@@ -1,27 +1,29 @@
 import React, {useEffect} from 'react';
 import {useParams} from 'react-router-dom';
-import {Card, CardContent, Stack} from "@mui/material";
+import {Stack} from "@mui/material";
 import {useAppDispatch, useAppSelector} from "../hooks/redux";
-import {getGuideById} from "../services/selectors/guidesSelectors";
+import {getGuideById, getGuideStepById, getIsEdit} from "../services/selectors/guidesSelectors";
 import {getBreadCrumbs} from "../services/selectors/breadCrumbsSelectors";
 import BreadCrumbs from "../components/BreadCrumbs";
-import GuideHeader from "../components/GuideHeader";
-import GuideItem from "../components/GuideItem";
 import {cleanBreadCrumbs} from "../services/reducers/breadCrumbs"
+import GuideHeader from "../components/GuideHeader";
+import GuideStep from "../components/GuideStep";
 
 const Guide = () => {
         const guideId = useParams().guideId || "0";
-        const guide = useAppSelector(state => getGuideById(state, guideId))
-        const bredCrumbs = useAppSelector(state => getBreadCrumbs(state))
+        const guideStepId = useParams().stepId || "0";
+        const isEdit = useAppSelector(state => getIsEdit(state))
+        const guide = useAppSelector(state => getGuideById(state, guideId, isEdit))
+        const guideStep = useAppSelector(state => getGuideStepById(state, guideId, +guideStepId, isEdit))
         const dispatch = useAppDispatch()
         useEffect(() => {
             dispatch(cleanBreadCrumbs())
         }, [dispatch])
         return (
             <Stack spacing={2}>
-                <GuideHeader title={guide.title} guideId={guideId}/>
-                {bredCrumbs && bredCrumbs.length > 0 && (<BreadCrumbs/>)}
-                <GuideItem guideId={guideId}/>
+                <GuideHeader guide={guide} isEdit={isEdit}/>
+                <BreadCrumbs/>
+                <GuideStep guideStep={guideStep} isEdit={isEdit}/>
             </Stack>
         );
     }

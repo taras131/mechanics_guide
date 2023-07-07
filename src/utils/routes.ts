@@ -1,7 +1,7 @@
 export enum routes {
     main = "/",
     new_guide = "/new_guide",
-    guide = "/guide/:guideId/:itemId",
+    guide = "/guide",
     login = "/login",
     register = "/register",
     not_found = "*",

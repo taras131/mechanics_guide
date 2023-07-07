@@ -1,7 +1,7 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import api from "../../api";
 import {handlerError} from "./guidesActionsCreators";
-import {IAuthData} from "../../models/authInterface";
+import {IAuthData} from "../../models/iAuth";
 
 export const fetchLogin = createAsyncThunk(
     'fetch_login',

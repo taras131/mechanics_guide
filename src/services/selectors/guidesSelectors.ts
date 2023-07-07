@@ -1,30 +1,52 @@
 import {RootState} from "../store";
-import {IGuide} from "../../models/guideInterface";
-import {ALL_CATEGORIES} from "../../utils/const";
+import {ALL_CATEGORIES, GUIDE_ITEM_TYPE} from "../../utils/const";
+import {IGuide, IGuideCategory, IGuideItem} from "../../models/iGuide";
 
-export const getGuidesByCategory = (state: RootState, currentCategory: string): IGuide [] => {
-    let guides = []
-    if (currentCategory === ALL_CATEGORIES) {
-        guides = state.guides.guides
-    } else {
-        guides = state.guides.guides.filter(guide => guide.category === currentCategory)
+export const getGuidesWithFilter = (state: RootState,
+                                    selectedGuideCategoryId: string,
+                                    isSelectedMyGuides: boolean): IGuide [] => {
+    let guides = state.guides.guides
+    if (selectedGuideCategoryId !== ALL_CATEGORIES.id) {
+        guides = [...guides.filter(guide => guide.categoryId === selectedGuideCategoryId)]
     }
-    if (state.guides.isSelectedMyGuide && state.auth.user && state.auth.user.id) {
-        return guides.filter(guide => guide.authorId === state.auth.user.id)
-    } else {
-        return guides
+    if (isSelectedMyGuides && state.auth.user.id) {
+        guides = [...guides.filter(guide => guide.authorId === state.auth.user.id)]
     }
+    return guides
 }
-export const getGuideById = (state: RootState, id: string) => {
+export const getGuideById = (state: RootState, id: string, isEdit: boolean) => {
+    if(isEdit) return state.guides.editionGuide
     return state.guides.guides.filter(item => item.id === id)[0]
 }
-export const getGuideItemById = (state: RootState, guideId: string, itemId: number) => {
-    const guideItems = getGuideById(state, guideId).items
-    return guideItems.filter(item => item.id === itemId)[0]
+
+export const getGuideStepById = (state: RootState, guideId: string, stepId: number, isEdit: boolean): IGuideItem => {
+    if(isEdit) return state.guides.editionGuide.items.filter(item => item.id === stepId)[0]
+    return getGuideById(state, guideId,isEdit).items.filter(item => item.id === stepId)[0]
 }
+
 export const geiIsGuidesLoading = (state: RootState): boolean => {
     return state.guides.isLoading
 }
-export const geiIsSelectedMyGuide = (state: RootState): boolean => {
-    return state.guides.isSelectedMyGuide
+
+export const getGuideCategories = (state: RootState): IGuideCategory[] => {
+    return state.guides.categories
 }
+
+export const getGuideCategoryNameById = (state: RootState, categoryId: string): string => {
+    let categoryName = "подождите"
+    if (state.guides.categories.filter(category => category.id === categoryId)[0]) {
+        categoryName = state.guides.categories.filter(category => category.id === categoryId)[0].categoryName
+    }
+    return categoryName
+}
+export const getCountGuideSteps = (state: RootState, guideId: string) => {
+    return state.guides.guides.filter(guide => guide.id === guideId)[0].items.length
+}
+export const getIsEdit = (state: RootState) => {
+    return state.guides.isEdit
+}
+
+export const getEditionGuideResults = (state: RootState): IGuideItem [] => {
+    return [...state.guides.editionGuide.items.filter(item => item.type === GUIDE_ITEM_TYPE.question )]
+}
+

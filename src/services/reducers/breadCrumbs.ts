@@ -1,9 +1,9 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
 export interface IBreadCrumb {
-    text: string
-    answer: string
-    itemId: number
+    questionText: string
+    answerText: string
+    questionId: number
     optionId: number
 }
 

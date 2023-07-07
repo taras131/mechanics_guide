@@ -1,4 +1,3 @@
-import {INewGuide} from "../models/newGuideInterface";
 import {db} from "../firebase";
 import {
     addDoc,
@@ -9,9 +8,9 @@ import {
     query,
     onSnapshot
 } from "firebase/firestore";
-import {IGuide} from "../models/guideInterface";
-import {IAuthData} from "../models/authInterface";
+import {IAuthData} from "../models/iAuth";
 import {getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut} from "firebase/auth";
+import {IGuide} from "../models/iGuide";
 
 class Api {
     auth = getAuth();
@@ -19,11 +18,11 @@ class Api {
 
 
     }
-    addNewGuide = async (guide: INewGuide) => {
+    addNewGuide = async (guide: IGuide) => {
         let res = await addDoc(collection(db, "guides"),
             {
                 title: guide.title,
-                category: guide.category,
+                category: guide.categoryId,
                 authorId: guide.authorId,
                 items: JSON.stringify(guide.items)
             }
@@ -35,8 +34,13 @@ class Api {
     updateGuide = async (guide: IGuide) => {
         await updateDoc(doc(db, "guides", guide.id), {
             title: guide.title,
-            category: guide.category,
+            category: guide.categoryId,
             items: JSON.stringify(guide.items)
+        });
+    }
+    addNewCategory = async (categoryName: string) => {
+        await addDoc(collection(db, "guide_categories"), {
+            categoryName: categoryName
         });
     }
     login = async (authData: IAuthData) => {
@@ -49,13 +53,10 @@ class Api {
         return {email: res.user.email, id: res.user.uid}
     }
     out = async () => {
-        console.log("out")
         const res = await signOut(this.auth)
-        console.log(res)
         return res
     }
 }
-
 const api = new Api();
 
 export default api;

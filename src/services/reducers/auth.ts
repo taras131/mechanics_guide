@@ -1,7 +1,5 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {IUser} from "../../models/authInterface";
-import {fetchAllGuides} from "../actions/guidesActionsCreators";
-import {IGuide} from "../../models/guideInterface";
+import {IUser} from "../../models/iAuth";
 import {fetchLogin, fetchOut, fetchRegister} from "../actions/authActionsCreators";
 
 export interface IAuthState {
