@@ -2,6 +2,7 @@ import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {fetchAllGuides, fetchNewGuide, fetchRemoveGuide} from "../actions/guidesActionsCreators";
 import {IGuide, IGuideCategory, IGuideItemOption} from "../../models/iGuide";
 import {GUIDE_ITEM_TYPE} from "../../utils/const";
+import {IBreadCrumb} from "./breadCrumbs";
 
 interface IGuideState {
     isLoading: boolean,
@@ -141,6 +142,36 @@ export const GuidesSlice = createSlice({
                         }
                     })]
                 }
+            },
+            editionGuideResultRedirect: (state, action: PayloadAction<{
+                lastBreadCrumb: IBreadCrumb,
+                newNextId: number
+            }>) => {
+                const {lastBreadCrumb, newNextId} = action.payload
+                state.editionGuide = {
+                    ...state.editionGuide, items: [...state.editionGuide.items.map(item => {
+                        if (item.id === lastBreadCrumb.questionId) {
+                            return {
+                                ...item, options: [...item.options.map(option => {
+                                    if (option.id === lastBreadCrumb.optionId) {
+                                        return {...option, nextId: newNextId}
+                                    } else {
+                                        return option
+                                    }
+                                })]
+                            }
+                        } else {
+                            return item
+                        }
+                    })]
+                }
+            },
+            removeGuideStep: (state, action: PayloadAction<number>) => {
+                state.editionGuide = {
+                    ...state.editionGuide,
+                    items: [...state.editionGuide.items.filter(item => item.id !== action.payload)
+                    ]
+                }
             }
         },
         extraReducers: {
@@ -188,6 +219,6 @@ export const {
     setGuides, setIsGuidesLoading, setGuideCategories, setIsEdit, setEditionGuide,
     setEditionGuideCategory, changeEditionGuideTitle, changeEditionGuideItemsText,
     changeEditionGuideItemsType, changeEditionGuideOptionText, editionGuideStepAddOption,
-    editionGuideStepRemoveOption
+    editionGuideStepRemoveOption, editionGuideResultRedirect, removeGuideStep
 } = GuidesSlice.actions
 export default GuidesSlice.reducer;

@@ -93,20 +93,20 @@ const GuideHeader: FC<IGuideHeaderProps> = ({isEdit, guide}) => {
             </Grid>
             <Box sx={{marginTop: 3}}>
                 <Grid container spacing={{xs: 4, md: 6}} columns={{xs: 3, sm: 8, md: 12}}>
-                    <GuideHeaderInformationBox title={"Автор"}>
+                    <GuideHeaderInformationBox title={"Автор:"}>
                         <Typography fontWeight={600}>
                             {guide.authorId ? guide.authorId : "Автор неизвестен"}
                         </Typography>
                     </GuideHeaderInformationBox>
-                    <GuideHeaderInformationBox title={isEdit ? "" : "Категория"}>
+                    <GuideHeaderInformationBox title={isEdit ? "" : "Категория:"}>
                         {isEdit
                             ? (
-                                <Grid container alignItems="center" justifyContent="space-between">
+                                <Grid container justifyContent="space-around">
                                     <Grid>
                                         <SelectGuideCategory selectedGuideCategoryId={guide.categoryId}
                                                              handleGuideCategoryChange={handleGuideCategoryChange}/>
                                     </Grid>
-                                    <Grid>
+                                    <Grid xs={1}>
                                         <IconButton onClick={handleAddCategoryClick} aria-label="add">
                                             <AddCircleOutlineIcon color="primary" fontSize="large"/>
                                         </IconButton>
@@ -119,7 +119,7 @@ const GuideHeader: FC<IGuideHeaderProps> = ({isEdit, guide}) => {
                                 </Typography>
                             )}
                     </GuideHeaderInformationBox>
-                    <GuideHeaderInformationBox title={"Количество шагов"}>
+                    <GuideHeaderInformationBox title={"Количество шагов:"}>
                         <Typography fontWeight={600}>
                             {countSteps}
                         </Typography>

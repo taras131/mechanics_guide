@@ -22,7 +22,8 @@ const SelectGuideStepResult: FC<ISelectGuideStepResultProps> = ({
                                                                 }) => {
     const resultsList = results.map((result, index) => (<SelectGuideStepResultItem key={result.id}
                                                                                    index={index}
-                                                                                   result={result}/>))
+                                                                                   result={result}
+                                                                                   toggleIsOpenSelectResultWindow={toggleIsOpenSelectResultWindow}/>))
     return (
         <ModalWindow isOpenModal={isOpenSelectResultWindow} handleToggleOpen={toggleIsOpenSelectResultWindow}>
             <Stack spacing={2}>
@@ -44,8 +45,10 @@ const SelectGuideStepResult: FC<ISelectGuideStepResultProps> = ({
                     <ListSubheader> Существующие результаты</ListSubheader>
                     {resultsList}
                 </List>
-                <Button onClick={() => {
-                }}>Перенаправить</Button>
+                <Typography fontSize={12} fontWeight={300}>
+                    Кликнете по нужному результату и текущий этап будет ссылаться на него. После выбора вы будете
+                    перенаправлены на предыдущий шаг.
+                </Typography>
             </Stack>
         </ModalWindow>
     );

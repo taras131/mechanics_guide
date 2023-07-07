@@ -16,7 +16,7 @@ const SelectGuideCategory: FC<ISelectGuideCategoryProps> = ({
     const categoryList = guidesCategory.map(category => (
         <MenuItem key={category.id} value={category.id}>{category.categoryName}</MenuItem>))
     return (
-        <FormControl fullWidth sx={{minWidth: "250px"}}>
+        <FormControl fullWidth>
             <InputLabel id="simple-select-label">Категория</InputLabel>
             <Select
                 labelId="simple-select-label"
