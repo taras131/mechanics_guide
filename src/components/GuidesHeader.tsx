@@ -1,7 +1,7 @@
 import React, {FC, useState} from 'react';
 import GuidesHeaderAddNewGuide from "./GuidesHeaderAddNewGuide";
 import GuidesHeaderSelectMyGuides from "./GuidesHeaderSelectMyGuides";
-import GuidesHeaderSelectGuideCategory from "./GuidesHeaderSelectGuideCategory";
+import SelectGuideCategory from "./SelectGuideCategory";
 import Grid from "@mui/material/Grid";
 import {ALL_CATEGORIES} from "../utils/const";
 import {SelectChangeEvent} from "@mui/material";
@@ -33,8 +33,8 @@ const GuidesHeader: FC<IGuidesHeaderProps> = ({
                                             handleMyGuideSelected={handleMyGuideSelected}/>
             </Grid>
             <Grid item>
-                <GuidesHeaderSelectGuideCategory selectedGuideCategoryId={selectedGuideCategoryId}
-                                                 handleGuideCategoryChange={handleGuideCategoryChange}/>
+                <SelectGuideCategory selectedGuideCategoryId={selectedGuideCategoryId}
+                                     handleGuideCategoryChange={handleGuideCategoryChange}/>
             </Grid>
         </Grid>
     );

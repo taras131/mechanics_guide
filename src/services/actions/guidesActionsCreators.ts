@@ -51,3 +51,14 @@ export const fetchUpdateGuide = createAsyncThunk(
         }
     }
 )
+export const fetchNewGuideCategory = createAsyncThunk(
+    'new_guide_category',
+    async (categoryName: string, ThunkAPI) => {
+        try {
+            const res = await api.addNewCategory(categoryName)
+            return res
+        } catch (e) {
+            return ThunkAPI.rejectWithValue(handlerError(e))
+        }
+    }
+)

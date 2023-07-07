@@ -10,6 +10,8 @@ export const ALL_CATEGORIES: IGuideCategory = {
     categoryName: "Все"
 };
 
+export const EDITION_GUIDE_ID = "edition_guide_id"
+
 
 
 

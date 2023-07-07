@@ -38,6 +38,11 @@ class Api {
             items: JSON.stringify(guide.items)
         });
     }
+    addNewCategory = async (categoryName: string) => {
+        await addDoc(collection(db, "guide_categories"), {
+            categoryName: categoryName
+        });
+    }
     login = async (authData: IAuthData) => {
         const res = await signInWithEmailAndPassword(this.auth, authData.email, authData.password)
         console.log(res)
@@ -48,13 +53,10 @@ class Api {
         return {email: res.user.email, id: res.user.uid}
     }
     out = async () => {
-        console.log("out")
         const res = await signOut(this.auth)
-        console.log(res)
         return res
     }
 }
-
 const api = new Api();
 
 export default api;

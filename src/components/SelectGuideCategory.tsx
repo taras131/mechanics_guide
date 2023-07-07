@@ -8,7 +8,7 @@ interface ISelectGuideCategoryProps {
     handleGuideCategoryChange: (e: SelectChangeEvent) => void
 }
 
-const GuidesHeaderSelectGuideCategory: FC<ISelectGuideCategoryProps> = ({
+const SelectGuideCategory: FC<ISelectGuideCategoryProps> = ({
                                                                 selectedGuideCategoryId,
                                                                 handleGuideCategoryChange
                                                             }) => {
@@ -31,4 +31,4 @@ const GuidesHeaderSelectGuideCategory: FC<ISelectGuideCategoryProps> = ({
     );
 };
 
-export default GuidesHeaderSelectGuideCategory;
+export default SelectGuideCategory;

@@ -12,7 +12,7 @@ interface IGuideHeaderInformationBoxProps {
 const GuideHeaderInformationBox: FC<IGuideHeaderInformationBoxProps> = ({title, children}) => {
     return (
         <Grid xs={12}  md={4}>
-            <Card sx={{minHeight: "70px", padding: "15px"}}>
+            <Card sx={{minHeight: "80px", padding: "15px"}}>
                 <Stack spacing={2}>
                     <Typography variant="h4" fontSize="18px" color="inherit">
                         {title}
