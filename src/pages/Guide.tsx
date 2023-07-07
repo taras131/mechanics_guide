@@ -8,6 +8,7 @@ import BreadCrumbs from "../components/BreadCrumbs";
 import {cleanBreadCrumbs, setBreadCrumbs} from "../services/reducers/breadCrumbs"
 import GuideHeader from "../components/GuideHeader";
 import GuideStep from "../components/GuideStep";
+import {setIsEdit} from "../services/reducers/guides"
 
 const Guide = () => {
         const dispatch = useAppDispatch()
@@ -33,7 +34,7 @@ const Guide = () => {
                     dispatch(setBreadCrumbs(JSON.parse(localStorageBreadCrumbs)))
                 }
             }
-
+            dispatch(setIsEdit(false))
         }, [dispatch])
 
         return (
