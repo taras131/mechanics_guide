@@ -51,32 +51,33 @@ const GuideStep: FC<IGuideStepProps> = ({guideStep, isEdit}) => {
         <Paper sx={{padding: 2}}>
             <Stack spacing={3}>
                 <Grid container alignItems="center" justifyContent="space-between">
-                    {isEdit
-                        ? (
-                            <FormControl>
-                                <FormLabel id="row-radio-buttons-group-label">Тип текущего шага</FormLabel>
-                                <RadioGroup
-                                    row
-                                    aria-labelledby="row-radio-buttons-group-label"
-                                    name="row-radio-buttons-group"
-                                    value={guideStep.type}
-                                    onChange={handleGuideStepTypeChange}
-                                >
-                                    <FormControlLabel value={GUIDE_ITEM_TYPE.question}
-                                                      control={<Radio/>}
-                                                      label="Вопрос"/>
-                                    <FormControlLabel value={GUIDE_ITEM_TYPE.result}
-                                                      control={<Radio/>}
-                                                      label="Результат"/>
-                                </RadioGroup>
-                            </FormControl>
-                        )
-                        : (<Typography variant="h4" fontSize="18px" color="inherit">
-                            {guideStep.type === GUIDE_ITEM_TYPE.result ? "Результат" : ` Вопрос № ${breadCrumbsCount + 1}`}
-                        </Typography>)}
-                    <Button onClick={handleBackClick} disabled={!lastBreadCrumbs}>
-                        Назад
-                    </Button>
+                    {isEdit && guideStep.id !== 0 && (
+                        <FormControl>
+                            <FormLabel id="row-radio-buttons-group-label">Тип текущего шага</FormLabel>
+                            <RadioGroup
+                                row
+                                aria-labelledby="row-radio-buttons-group-label"
+                                name="row-radio-buttons-group"
+                                value={guideStep.type}
+                                onChange={handleGuideStepTypeChange}
+                            >
+                                <FormControlLabel value={GUIDE_ITEM_TYPE.question}
+                                                  control={<Radio/>}
+                                                  label="Вопрос"/>
+                                <FormControlLabel value={GUIDE_ITEM_TYPE.result}
+                                                  control={<Radio/>}
+                                                  label="Результат"/>
+                            </RadioGroup>
+                        </FormControl>
+                    )}
+                    {!isEdit && (<Typography variant="h4" fontSize="18px" color="inherit">
+                        {guideStep.type === GUIDE_ITEM_TYPE.result ? "Результат" : ` Вопрос № ${breadCrumbsCount + 1}`}
+                    </Typography>)}
+                    {guideStep.id !== 0 && (
+                        <Button onClick={handleBackClick} disabled={!lastBreadCrumbs}>
+                            Назад
+                        </Button>
+                    )}
                 </Grid>
                 {isEdit
                     ? (<TextField value={guideStep.text}

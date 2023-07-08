@@ -6,8 +6,12 @@ import Grid from '@mui/material/Unstable_Grid2';
 import GuideHeaderInformationBox from "./GuideHeaderInformationBox";
 import {useAppDispatch, useAppSelector} from "../hooks/redux";
 import {getCountGuideSteps, getGuideCategoryNameById, getIsEdit} from "../services/selectors/guidesSelectors";
-import {ButtonGroup, SelectChangeEvent} from "@mui/material";
+import {ButtonGroup, SelectChangeEvent, Stack} from "@mui/material";
 import Button from "@mui/material/Button";
+import EditIcon from '@mui/icons-material/Edit';
+import CancelIcon from '@mui/icons-material/Cancel';
+import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
+import SaveIcon from '@mui/icons-material/Save';
 import {useNavigate} from "react-router-dom";
 import {routes} from "../utils/routes";
 import {
@@ -62,6 +66,10 @@ const GuideHeader: FC<IGuideHeaderProps> = ({isEdit, guide}) => {
         dispatch(fetchUpdateGuide(guide))
         dispatch(setIsEdit(false))
     }
+    const addCategoryButton = (
+        <Button onClick={handleAddCategoryClick} variant="text" startIcon={<AddCircleOutlineIcon/>}>
+            Добавить категорию
+        </Button>)
     return (
         <Box>
             <Grid container spacing={2} columns={12} alignItems="center" justifyContent="space-between" mt={3}>
@@ -77,19 +85,30 @@ const GuideHeader: FC<IGuideHeaderProps> = ({isEdit, guide}) => {
                             {guide.title}
                         </Typography>)}
                 </Grid>
-                <Grid>
+                <Stack spacing={1}>
+                    <Typography fontSize="14px" fontWeight={500} align="center">
+                        {isEdit ? "Режим редактирования" : "Режим просмотра"}
+                    </Typography>
                     <ButtonGroup>
                         {isEdit
                             ? (<>
-                                <Button onClick={handleCancelClick}>Отмена</Button>
-                                <Button onClick={handleSaveClick} variant="contained">Сохранить</Button>
+                                <Button onClick={handleCancelClick} startIcon={<CancelIcon/>}>
+                                    Отмена
+                                </Button>
+                                <Button onClick={handleSaveClick} variant="contained" startIcon={<SaveIcon/>}>
+                                    Сохранить
+                                </Button>
                             </>)
                             : (<>
-                                <Button onClick={handleEditClick} variant="contained">Редактировать</Button>
-                                <Button onClick={handleBackClick}>На главную</Button>
+                                <Button onClick={handleEditClick} variant="contained" startIcon={<EditIcon/>}>
+                                    Редактировать
+                                </Button>
+                                <Button onClick={handleBackClick} startIcon={<KeyboardReturnIcon/>}>
+                                    На главную
+                                </Button>
                             </>)}
                     </ButtonGroup>
-                </Grid>
+                </Stack>
             </Grid>
             <Box sx={{marginTop: 3}}>
                 <Grid container spacing={{xs: 4, md: 6}} columns={{xs: 3, sm: 8, md: 12}}>
@@ -104,12 +123,8 @@ const GuideHeader: FC<IGuideHeaderProps> = ({isEdit, guide}) => {
                                 <Grid container justifyContent="space-around">
                                     <Grid>
                                         <SelectGuideCategory selectedGuideCategoryId={guide.categoryId}
+                                                             addCategoryButton={addCategoryButton}
                                                              handleGuideCategoryChange={handleGuideCategoryChange}/>
-                                    </Grid>
-                                    <Grid xs={1}>
-                                        <IconButton onClick={handleAddCategoryClick} aria-label="add">
-                                            <AddCircleOutlineIcon color="primary" fontSize="large"/>
-                                        </IconButton>
                                     </Grid>
                                 </Grid>
                             )

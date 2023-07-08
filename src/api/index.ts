@@ -34,7 +34,7 @@ class Api {
     updateGuide = async (guide: IGuide) => {
         await updateDoc(doc(db, "guides", guide.id), {
             title: guide.title,
-            category: guide.categoryId,
+            categoryId: guide.categoryId,
             items: JSON.stringify(guide.items)
         });
     }

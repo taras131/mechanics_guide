@@ -5,18 +5,20 @@ import {getGuideCategories} from "../services/selectors/guidesSelectors";
 
 interface ISelectGuideCategoryProps {
     selectedGuideCategoryId: string
+    addCategoryButton?: React.ReactNode
     handleGuideCategoryChange: (e: SelectChangeEvent) => void
 }
 
 const SelectGuideCategory: FC<ISelectGuideCategoryProps> = ({
                                                                 selectedGuideCategoryId,
-                                                                handleGuideCategoryChange
+                                                                handleGuideCategoryChange,
+                                                                addCategoryButton
                                                             }) => {
     const guidesCategory = useAppSelector(state => getGuideCategories(state))
     const categoryList = guidesCategory.map(category => (
         <MenuItem key={category.id} value={category.id}>{category.categoryName}</MenuItem>))
     return (
-        <FormControl fullWidth>
+        <FormControl fullWidth sx={{minWidth: "250px"}}>
             <InputLabel id="simple-select-label">Категория</InputLabel>
             <Select
                 labelId="simple-select-label"
@@ -25,7 +27,7 @@ const SelectGuideCategory: FC<ISelectGuideCategoryProps> = ({
                 label="Category"
                 onChange={handleGuideCategoryChange}
             >
-                {categoryList}
+                {addCategoryButton ? [...categoryList, addCategoryButton] : categoryList}
             </Select>
         </FormControl>
     );
