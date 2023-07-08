@@ -52,6 +52,7 @@ class Api {
     }
     register = async (authData: IAuthData) => {
         const res = await createUserWithEmailAndPassword(this.auth, authData.email, authData.password)
+        console.log(res)
         return {email: res.user.email, id: res.user.uid}
     }
     out = async () => {

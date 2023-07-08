@@ -26,6 +26,9 @@ export const AuthSlice = createSlice({
         setIsAuth: (state, action: PayloadAction<boolean>) => {
             state.isAuth = action.payload
         },
+        cleanErrorMessage: (state) => {
+            state.errorMessage = ""
+        }
     },
     extraReducers: {
         [fetchLogin.fulfilled.type]: (state, action: PayloadAction<IUser>) => {
@@ -39,6 +42,7 @@ export const AuthSlice = createSlice({
         },
         [fetchLogin.rejected.type]: (state, action: PayloadAction<string>) => {
             state.isLoading = false;
+            console.log(action.payload)
             state.errorMessage = action.payload;
         },
         [fetchRegister.fulfilled.type]: (state, action: PayloadAction<IUser>) => {
@@ -52,6 +56,7 @@ export const AuthSlice = createSlice({
         },
         [fetchRegister.rejected.type]: (state, action: PayloadAction<string>) => {
             state.isLoading = false;
+            console.log(action.payload)
             state.errorMessage = action.payload;
 
         },

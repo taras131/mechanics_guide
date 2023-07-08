@@ -10,3 +10,6 @@ export const getUser = (state: RootState): IUser => {
 export const getIsAuthLoading = (state: RootState): boolean => {
     return state.auth.isLoading
 }
+export const getAuthErrorMessage = (state: RootState): string => {
+    return state.auth.errorMessage
+}

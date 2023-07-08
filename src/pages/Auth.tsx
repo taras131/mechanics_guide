@@ -15,7 +15,8 @@ import {Link, useLocation, useNavigate} from "react-router-dom";
 import {routes} from "../utils/routes";
 import {useAppDispatch, useAppSelector} from "../hooks/redux";
 import {fetchLogin, fetchRegister} from "../services/actions/authActionsCreators";
-import {getIsAuth, getIsAuthLoading} from "../services/selectors/authSelector";
+import {getAuthErrorMessage, getIsAuth, getIsAuthLoading} from "../services/selectors/authSelector";
+import MessageWindow from "../components/MessageWindow";
 
 
 const Auth = () => {
@@ -23,12 +24,22 @@ const Auth = () => {
     const navigate = useNavigate()
     const isAuth = useAppSelector(state => getIsAuth(state))
     const isLoading = useAppSelector(state => getIsAuthLoading(state))
+    const errorMessage = useAppSelector(state => getAuthErrorMessage(state))
     const [inputValues, setInputValues] = useState({
         email: "",
         password: ""
     })
     const {pathname} = useLocation()
     const isRegister = pathname === routes.register
+    const [isOpenErrorMessageWindow, setIsOpenErrorMessageWindow] = useState(false)
+    const toggleIsOpenErrorMessageWindow = () => {
+        setIsOpenErrorMessageWindow(prev => !prev)
+    }
+    useEffect(() => {
+        if (errorMessage) {
+            setIsOpenErrorMessageWindow(true)
+        }
+    }, [errorMessage])
     useEffect(() => {
         if (isAuth) navigate(routes.profile)
     }, [isAuth])
@@ -93,7 +104,7 @@ const Auth = () => {
                         label="Remember me"
                     />
                     <LoadingButton
-                        loading ={isLoading}
+                        loading={isLoading}
                         loadingIndicator="Загрузка…"
                         type="submit"
                         fullWidth
@@ -117,6 +128,9 @@ const Auth = () => {
                     </Grid>
                 </Box>
             </Box>
+            <MessageWindow isOpenModal={isOpenErrorMessageWindow}
+                           handleToggleOpen={toggleIsOpenErrorMessageWindow}
+                           message={errorMessage}/>
         </Container>
     );
 };
