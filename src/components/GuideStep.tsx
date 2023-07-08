@@ -70,7 +70,7 @@ const GuideStep: FC<IGuideStepProps> = ({guideStep, isEdit}) => {
                             </RadioGroup>
                         </FormControl>
                     )}
-                    {!isEdit && (<Typography variant="h4" fontSize="18px" color="inherit">
+                    {!isEdit && (<Typography variant="h4" fontSize="18px" color="inherit"   fontWeight={600}>
                         {guideStep.type === GUIDE_ITEM_TYPE.result ? "Результат" : ` Вопрос № ${breadCrumbsCount + 1}`}
                     </Typography>)}
                     {guideStep.id !== 0 && (
@@ -88,8 +88,8 @@ const GuideStep: FC<IGuideStepProps> = ({guideStep, isEdit}) => {
                                       : `Текст вопроса № ${breadCrumbsCount + 1}`}
                                   variant="outlined"
                                   fullWidth/>)
-                    : (<Typography fontWeight={600}>
-                        {guideStep.text}
+                    : (<Typography fontWeight={400}>
+                        {guideStep.text ? guideStep.text : "Эта часть гайда пока не наполнена, перейдите в режим редактирования для заполнения"}
                     </Typography>)}
                 {guideStep.type === GUIDE_ITEM_TYPE.question && (
                     <GuideStepAnswers options={[...guideStep.options]}

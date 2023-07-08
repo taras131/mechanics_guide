@@ -1,4 +1,4 @@
-import React, {FC, useState} from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import ModalWindow from "./ModalWindow";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
@@ -33,6 +33,7 @@ const AddNewOption: FC<IAddNewOptionProps> = ({
                 text: newOptionText
             }
         }))
+        setNewOptionText("")
         toggleIsOpenNewOptionWindow()
     }
     return (

@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, {FC, useEffect} from 'react';
 import {changeEditionGuideOptionText, editionGuideStepRemoveOption} from "../services/reducers/guides";
 import {addBreadCrumb} from "../services/reducers/breadCrumbs";
 import {routes} from "../utils/routes";
@@ -26,11 +26,11 @@ const GuideStepAnswersList: FC<IGuideStepAnswersListProps> = ({
     const handleOptionRemove = (guideStepId: number, optionId: number) => {
         dispatch(editionGuideStepRemoveOption({guideStepId, optionId}))
     }
-    const handleOptionTextChange = (e: React.ChangeEvent<HTMLInputElement>, optionId: number,) => {
+    const handleOptionTextChange = (newValue: string, optionId: number,) => {
         dispatch(changeEditionGuideOptionText({
             guideStepId: questionId,
             optionId: optionId,
-            newValue: e.target.value
+            newValue: newValue
         }))
     }
     const handleNextQuestionClick = (optionId: number, optionText: string, nextId: number) => {

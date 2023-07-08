@@ -22,21 +22,23 @@ class Api {
         let res = await addDoc(collection(db, "guides"),
             {
                 title: guide.title,
-                category: guide.categoryId,
+                categoryId: guide.categoryId,
                 authorId: guide.authorId,
                 items: JSON.stringify(guide.items)
             }
         );
+        return res
     }
     removeGuide = async (guideId: string) => {
         await deleteDoc(doc(db, "guides", guideId));
     }
     updateGuide = async (guide: IGuide) => {
-        await updateDoc(doc(db, "guides", guide.id), {
+        let res = await updateDoc(doc(db, "guides", guide.id), {
             title: guide.title,
             categoryId: guide.categoryId,
             items: JSON.stringify(guide.items)
         });
+        return res
     }
     addNewCategory = async (categoryName: string) => {
         await addDoc(collection(db, "guide_categories"), {
@@ -57,6 +59,7 @@ class Api {
         return res
     }
 }
+
 const api = new Api();
 
 export default api;

@@ -19,25 +19,26 @@ import {
     emptyGuide,
     setEditionGuide,
     setEditionGuideCategory,
-    setIsEdit
+    setIsEdit,
+    setIsNewGuideEdition
 } from "../services/reducers/guides";
 import SelectGuideCategory from "./SelectGuideCategory";
-import IconButton from "@mui/material/IconButton";
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import AddNewCategory from "./AddNewCategory";
 import TextField from "@mui/material/TextField";
-import {fetchUpdateGuide} from "../services/actions/guidesActionsCreators";
+import {fetchNewGuide, fetchUpdateGuide} from "../services/actions/guidesActionsCreators";
 
 interface IGuideHeaderProps {
     isEdit: boolean,
+    isNewGuide: boolean
     guide: IGuide
 }
 
-const GuideHeader: FC<IGuideHeaderProps> = ({isEdit, guide}) => {
+const GuideHeader: FC<IGuideHeaderProps> = ({isEdit, guide, isNewGuide}) => {
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
     const categoryName = useAppSelector(state => getGuideCategoryNameById(state, guide.categoryId))
-    const countSteps = useAppSelector(state => getCountGuideSteps(state, guide.id))
+    const countSteps = useAppSelector(state => getCountGuideSteps(state, guide.id, isEdit, isNewGuide))
     const [isOpenNewCategoryWindow, setIsOpenNewCategoryWindow] = useState(false)
     const handleGuideNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         dispatch(changeEditionGuideTitle(e.target.value))
@@ -63,7 +64,13 @@ const GuideHeader: FC<IGuideHeaderProps> = ({isEdit, guide}) => {
         toggleIsOpenNewCategoryWindow()
     }
     const handleSaveClick = () => {
-        dispatch(fetchUpdateGuide(guide))
+        if (isNewGuide) {
+            dispatch(fetchNewGuide(guide))
+            dispatch(setIsNewGuideEdition(false))
+            navigate(routes.main)
+        } else {
+            dispatch(fetchUpdateGuide(guide))
+        }
         dispatch(setIsEdit(false))
     }
     const addCategoryButton = (
@@ -87,14 +94,18 @@ const GuideHeader: FC<IGuideHeaderProps> = ({isEdit, guide}) => {
                 </Grid>
                 <Stack spacing={1}>
                     <Typography fontSize="14px" fontWeight={500} align="center">
-                        {isEdit ? "Режим редактирования" : "Режим просмотра"}
+                        {isNewGuide && "Новый гайд"}
+                        {!isNewGuide && isEdit && "Режим редактирования"}
+                        {!isNewGuide && !isEdit && "Режим просмотра"}
                     </Typography>
                     <ButtonGroup>
                         {isEdit
                             ? (<>
-                                <Button onClick={handleCancelClick} startIcon={<CancelIcon/>}>
-                                    Отмена
-                                </Button>
+                                {!isNewGuide && (
+                                    <Button onClick={handleCancelClick} startIcon={<CancelIcon/>}>
+                                        Отмена
+                                    </Button>
+                                )}
                                 <Button onClick={handleSaveClick} variant="contained" startIcon={<SaveIcon/>}>
                                     Сохранить
                                 </Button>

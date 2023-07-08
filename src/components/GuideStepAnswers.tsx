@@ -61,11 +61,12 @@ const GuideStepAnswers: FC<IGuideStepAnswersProps> = ({
             </Grid>
             {options.length > 0
                 ? (<GuideStepAnswersList options={options}
-                                        questionId={questionId}
-                                        questionText={questionText}
-                                        isEdit={isEdit}/>)
+                                         questionId={questionId}
+                                         questionText={questionText}
+                                         isEdit={isEdit}/>)
                 : (<Typography variant="subtitle2" fontSize={12}>
-                    У вас пока нет вариантов ответа, нажмите на кнопку "Добавить вариант ответа" чтобы начать заполнение
+                    У вас пока нет вариантов ответа, перейдите в режим редактирования и нажмите на кнопку "Добавить
+                    вариант ответа" чтобы добавить вариант ответа
                 </Typography>)}
         </Stack>
     );

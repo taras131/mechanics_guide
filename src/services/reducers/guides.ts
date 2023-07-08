@@ -7,6 +7,7 @@ import {IBreadCrumb} from "./breadCrumbs";
 interface IGuideState {
     isLoading: boolean,
     isEdit: boolean,
+    isNewGuideEdition : boolean,
     errorMessage: string,
     categories: IGuideCategory []
     guides: IGuide[],
@@ -31,6 +32,7 @@ export const emptyGuide = {
 export const initialState: IGuideState = {
     isLoading: true,
     isEdit: false,
+    isNewGuideEdition: false,
     errorMessage: "",
     categories: [],
     guides: [],
@@ -172,6 +174,9 @@ export const GuidesSlice = createSlice({
                     items: [...state.editionGuide.items.filter(item => item.id !== action.payload)
                     ]
                 }
+            },
+            setIsNewGuideEdition: (state, action:PayloadAction<boolean>) => {
+                state.isNewGuideEdition = action.payload
             }
         },
         extraReducers: {
@@ -219,6 +224,6 @@ export const {
     setGuides, setIsGuidesLoading, setGuideCategories, setIsEdit, setEditionGuide,
     setEditionGuideCategory, changeEditionGuideTitle, changeEditionGuideItemsText,
     changeEditionGuideItemsType, changeEditionGuideOptionText, editionGuideStepAddOption,
-    editionGuideStepRemoveOption, editionGuideResultRedirect, removeGuideStep
+    editionGuideStepRemoveOption, editionGuideResultRedirect, removeGuideStep, setIsNewGuideEdition
 } = GuidesSlice.actions
 export default GuidesSlice.reducer;

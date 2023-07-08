@@ -14,14 +14,14 @@ export const getGuidesWithFilter = (state: RootState,
     }
     return guides
 }
-export const getGuideById = (state: RootState, id: string, isEdit: boolean) => {
-    if(isEdit) return state.guides.editionGuide
+export const getGuideById = (state: RootState, id: string, isEdit: boolean, isNewGuide: boolean) => {
+    if (isEdit || isNewGuide) return state.guides.editionGuide
     return state.guides.guides.filter(item => item.id === id)[0]
 }
 
-export const getGuideStepById = (state: RootState, guideId: string, stepId: number, isEdit: boolean): IGuideItem => {
-    if(isEdit) return state.guides.editionGuide.items.filter(item => item.id === stepId)[0]
-    return getGuideById(state, guideId,isEdit).items.filter(item => item.id === stepId)[0]
+export const getGuideStepById = (state: RootState, guideId: string, stepId: number, isEdit: boolean, isNewGuide: boolean): IGuideItem => {
+    if (isEdit || isNewGuide) return state.guides.editionGuide.items.filter(item => item.id === stepId)[0]
+    return getGuideById(state, guideId, isEdit, isNewGuide).items.filter(item => item.id === stepId)[0]
 }
 
 export const geiIsGuidesLoading = (state: RootState): boolean => {
@@ -39,7 +39,8 @@ export const getGuideCategoryNameById = (state: RootState, categoryId: string): 
     }
     return categoryName
 }
-export const getCountGuideSteps = (state: RootState, guideId: string) => {
+export const getCountGuideSteps = (state: RootState, guideId: string, isEdit?: boolean, isNewGuide?: boolean) => {
+    if (isEdit || isNewGuide) return state.guides.editionGuide.items.length
     return state.guides.guides.filter(guide => guide.id === guideId)[0].items.length
 }
 export const getIsEdit = (state: RootState) => {
@@ -47,6 +48,8 @@ export const getIsEdit = (state: RootState) => {
 }
 
 export const getEditionGuideResults = (state: RootState): IGuideItem [] => {
-    return [...state.guides.editionGuide.items.filter(item => item.type === GUIDE_ITEM_TYPE.result )]
+    return [...state.guides.editionGuide.items.filter(item => item.type === GUIDE_ITEM_TYPE.result)]
 }
-
+export const getIsNewGuide = (state: RootState): boolean => {
+    return state.guides.isNewGuideEdition
+}

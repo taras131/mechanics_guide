@@ -6,6 +6,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import SendIcon from '@mui/icons-material/Send';
 import {FormControl, Input, InputAdornment, InputLabel} from "@mui/material";
 import IconButton from "@mui/material/IconButton";
+import {useAppDispatch} from "../hooks/redux";
 
 interface IGuideStepAnswerProps {
     option: IGuideItemOption
@@ -13,31 +14,32 @@ interface IGuideStepAnswerProps {
     questionId: number
     index: number
     isEdit: boolean
-    handleOptionTextChange: (e: React.ChangeEvent<HTMLInputElement>, optionId: number) => void
+    handleOptionTextChange: (newValue: string, optionId: number) => void
     handleNextQuestionClick: (optionId: number, optionText: string, nextId: number) => void
     handleOptionRemove: (guideStepId: number, optionId: number) => void
 }
 
 const GuideStepAnswersItem: FC<IGuideStepAnswerProps> = ({
-                                                        option,
-                                                        questionText,
-                                                        questionId,
-                                                        index,
-                                                        isEdit,
-                                                        handleOptionTextChange,
-                                                        handleNextQuestionClick,
-                                                        handleOptionRemove
-                                                    }) => {
+                                                             option,
+                                                             questionText,
+                                                             questionId,
+                                                             index,
+                                                             isEdit,
+                                                             handleOptionTextChange,
+                                                             handleNextQuestionClick,
+                                                             handleOptionRemove
+                                                         }) => {
+    const dispatch = useAppDispatch()
     const onRemoveOptionClick = () => {
         handleOptionRemove(questionId, option.id)
     }
     const onOptionTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        handleOptionTextChange(e, option.id)
+        e.preventDefault()
+        handleOptionTextChange(e.target.value, option.id)
     }
     const onNextClick = () => {
         handleNextQuestionClick(option.id, option.text, option.nextId)
     }
-
     return (
         <Box>
             {isEdit

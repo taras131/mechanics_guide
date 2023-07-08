@@ -4,12 +4,13 @@ import Grid from '@mui/material/Unstable_Grid2';
 import Typography from "@mui/material/Typography";
 import {Card, CardActions, CardContent} from "@mui/material";
 import Button from "@mui/material/Button";
-import {useAppSelector} from "../hooks/redux";
+import {useAppDispatch, useAppSelector} from "../hooks/redux";
 import {getCountGuideSteps, getGuideCategoryNameById} from "../services/selectors/guidesSelectors";
 import {deepPurple} from "@mui/material/colors";
 import Avatar from "@mui/material/Avatar";
 import {useNavigate} from "react-router-dom";
 import {routes} from "../utils/routes";
+import {setIsNewGuideEdition} from "../services/reducers/guides";
 
 interface IGuidePreviewProps {
     guide: IGuide
@@ -17,10 +18,12 @@ interface IGuidePreviewProps {
 
 const GuidePreview: FC<IGuidePreviewProps> = ({guide}) => {
     const navigate = useNavigate()
+    const dispatch = useAppDispatch()
     const categoryName = useAppSelector(state => getGuideCategoryNameById(state, guide.categoryId))
     const countGuideSteps = useAppSelector(state => getCountGuideSteps(state, guide.id))
     const handleGuideClick = () => {
-        navigate(routes.guide+"/"+guide.id+"/0")
+        dispatch(setIsNewGuideEdition(false))
+        navigate(routes.guide + "/" + guide.id + "/0")
     }
     return (
         <Grid xs={12} sm={6} md={4}>
