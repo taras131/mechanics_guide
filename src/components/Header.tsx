@@ -27,24 +27,6 @@ const Header = () => {
         <Box sx={{flexGrow: 1}}>
             <AppBar position="static">
                 <Toolbar>
-                    <IconButton
-                        size="large"
-                        edge="start"
-                        color="inherit"
-                        aria-label="menu"
-                        sx={{mr: 2}}
-                        id="basic-button"
-                        aria-controls={open ? 'basic-menu' : undefined}
-                        aria-haspopup="true"
-                        aria-expanded={open ? 'true' : undefined}
-                        onClick={handleClick}
-                    >
-                        <MenuIcon/>
-                    </IconButton>
-                    <Navigation anchorEl={anchorEl}
-                                handleClose={handleClose}
-                                open={open}/>
-
                     <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
                         <Link to={routes.main} style={{color: "white", textDecoration: "none"}}>
                             Mechanics guide

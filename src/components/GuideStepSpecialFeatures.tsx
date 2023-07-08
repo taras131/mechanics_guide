@@ -5,8 +5,8 @@ import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import {GUIDE_ITEM_TYPE} from "../utils/const";
 import {useAppSelector} from "../hooks/redux";
-import {getEditionGuideResults} from "../services/selectors/guidesSelectors";
-import SelectGuideStepResult from "./SelectGuideStepResult";
+import {getEditionGuideStepsByType} from "../services/selectors/guidesSelectors";
+import SelectRedirectGuideStep from "./SelectRedirectGuideStep";
 
 interface IGuideStepSpecialFeaturesProps {
     guideStepType: GUIDE_ITEM_TYPE
@@ -17,7 +17,7 @@ const GuideStepSpecialFeatures: FC<IGuideStepSpecialFeaturesProps> = ({
                                                                           guideStepType,
                                                                           currentGuideStepId
                                                                       }) => {
-    const results = useAppSelector(state => getEditionGuideResults(state))
+    const guideSteps = useAppSelector(state => getEditionGuideStepsByType(state, guideStepType))
         .filter(result => result.id !== currentGuideStepId)
     const [isOpenSelectResultWindow, setIsOpenSelectResultWindow] = useState(false)
     const toggleIsOpenSelectResultWindow = () => {
@@ -29,20 +29,37 @@ const GuideStepSpecialFeatures: FC<IGuideStepSpecialFeaturesProps> = ({
                 Специальные возможности
             </Typography>
             {guideStepType === GUIDE_ITEM_TYPE.question
-                ? (<Grid container alignItems="center" justifyContent="start">
-                    <Grid item>
-                        <Button>Перенаправить на другой гайд</Button>
+                ? (<>
+                    <Grid container alignItems="center" justifyContent="start">
+                        <Grid item xs={4}>
+                            <Button onClick={toggleIsOpenSelectResultWindow} disabled={guideSteps.length === 0}>
+                                Перенаправить на другой вопрос
+                            </Button>
+                        </Grid>
+                        <Grid item xs={8}>
+                            <Typography fontSize="12px" color="inherit" fontWeight={300}>
+                                Вы можете перенаправить текущий этап на другой вопрос, выбрав нужный из
+                                выпадающего
+                                списка. Если кнопка не активна, значит у вас ещё нет вопросов из которых можно
+                                выбрать.
+                            </Typography>
+                        </Grid>
                     </Grid>
-                    <Grid item>
-                        <Typography fontSize="12px" color="inherit" fontWeight={300}>
-                            Вы можете перенаправить текущий этап на уже готовый гайд, выбрав нужный из выпадающего
-                            списка.
-                        </Typography>
+                    <Grid container alignItems="center" justifyContent="start">
+                        <Grid item xs={4}>
+                            <Button>Перенаправить на другой гайд</Button>
+                        </Grid>
+                        <Grid item xs={8}>
+                            <Typography fontSize="12px" color="inherit" fontWeight={300}>
+                                Вы можете перенаправить текущий этап на уже готовый гайд, выбрав нужный из выпадающего
+                                списка.
+                            </Typography>
+                        </Grid>
                     </Grid>
-                </Grid>)
+                </>)
                 : (<Grid container alignItems="center" justifyContent="start">
                     <Grid item>
-                        <Button onClick={toggleIsOpenSelectResultWindow} disabled={results.length === 0}>
+                        <Button onClick={toggleIsOpenSelectResultWindow} disabled={guideSteps.length === 0}>
                             Перенаправить на другой результат
                         </Button>
                     </Grid>
@@ -53,9 +70,9 @@ const GuideStepSpecialFeatures: FC<IGuideStepSpecialFeaturesProps> = ({
                         </Typography>
                     </Grid>
                 </Grid>)}
-            <SelectGuideStepResult isOpenSelectResultWindow={isOpenSelectResultWindow}
-                                   toggleIsOpenSelectResultWindow={toggleIsOpenSelectResultWindow}
-                                   results={results}/>
+            <SelectRedirectGuideStep isOpenSelectResultWindow={isOpenSelectResultWindow}
+                                     toggleIsOpenSelectResultWindow={toggleIsOpenSelectResultWindow}
+                                     guideSteps={guideSteps}/>
         </Stack>
     );
 };

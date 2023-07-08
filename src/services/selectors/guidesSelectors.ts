@@ -47,8 +47,8 @@ export const getIsEdit = (state: RootState) => {
     return state.guides.isEdit
 }
 
-export const getEditionGuideResults = (state: RootState): IGuideItem [] => {
-    return [...state.guides.editionGuide.items.filter(item => item.type === GUIDE_ITEM_TYPE.result)]
+export const getEditionGuideStepsByType = (state: RootState, type: GUIDE_ITEM_TYPE): IGuideItem [] => {
+    return [...state.guides.editionGuide.items.filter(item => item.type === type)]
 }
 export const getIsNewGuide = (state: RootState): boolean => {
     return state.guides.isNewGuideEdition

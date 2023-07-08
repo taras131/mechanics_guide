@@ -49,7 +49,7 @@ const GuidePreview: FC<IGuidePreviewProps> = ({guide}) => {
                             </Grid>
                         </Grid>
                         <Typography variant="h5" component="div">
-                            {guide.title.substring(0, 50)}
+                            {guide.title && guide.title.length > 50 ? guide.title.substring(0, 50) : guide.title}
                         </Typography>
                         <Typography sx={{marginTop: 1}} color="text.secondary">
                             Автор

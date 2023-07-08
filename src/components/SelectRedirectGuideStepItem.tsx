@@ -10,16 +10,16 @@ import {useNavigate, useParams} from "react-router-dom";
 
 interface ISelectGuideStepResultItemProps {
     index: number
-    result: IGuideItem
+    guideStep: IGuideItem
     toggleIsOpenSelectResultWindow: () => void
 }
 
 
-const SelectGuideStepResultItem: FC<ISelectGuideStepResultItemProps> = ({
-                                                                            index,
-                                                                            result,
-                                                                            toggleIsOpenSelectResultWindow
-                                                                        }) => {
+const SelectRedirectGuideStepItem: FC<ISelectGuideStepResultItemProps> = ({
+                                                                              index,
+                                                                              guideStep,
+                                                                              toggleIsOpenSelectResultWindow
+                                                                          }) => {
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
     const lastBreadCrumb = useAppSelector(state => getLastBreadCrumbs(state))
@@ -27,7 +27,7 @@ const SelectGuideStepResultItem: FC<ISelectGuideStepResultItemProps> = ({
     const guideStepId = useParams().stepId || "0";
     const handleResultClick = () => {
         if (lastBreadCrumb) {
-            dispatch(editionGuideResultRedirect({lastBreadCrumb: lastBreadCrumb, newNextId: result.id}))
+            dispatch(editionGuideResultRedirect({lastBreadCrumb: lastBreadCrumb, newNextId: guideStep.id}))
 //            dispatch(removeGuideStep(+guideStepId))
             navigate(routes.guide + "/" + guideId + "/" + lastBreadCrumb?.questionId)
             dispatch(removeLastBreadCrumb())
@@ -35,10 +35,10 @@ const SelectGuideStepResultItem: FC<ISelectGuideStepResultItemProps> = ({
         }
     }
     return (
-        <ListItemButton key={result.id} onClick={handleResultClick}>
-            <ListItemText primary={`${index + 1}. ${result.text}`}/>
+        <ListItemButton key={guideStep.id} onClick={handleResultClick}>
+            <ListItemText primary={`${index + 1}. ${guideStep.text}`}/>
         </ListItemButton>
     );
 };
 
-export default SelectGuideStepResultItem;
+export default SelectRedirectGuideStepItem;
