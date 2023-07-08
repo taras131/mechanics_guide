@@ -17,6 +17,7 @@ import {useAppDispatch, useAppSelector} from "../hooks/redux";
 import {fetchLogin, fetchRegister} from "../services/actions/authActionsCreators";
 import {getAuthErrorMessage, getIsAuth, getIsAuthLoading} from "../services/selectors/authSelector";
 import MessageWindow from "../components/MessageWindow";
+import {validateEmail} from "../utils/services";
 
 
 const Auth = () => {
@@ -26,6 +27,10 @@ const Auth = () => {
     const isLoading = useAppSelector(state => getIsAuthLoading(state))
     const errorMessage = useAppSelector(state => getAuthErrorMessage(state))
     const [inputValues, setInputValues] = useState({
+        email: "",
+        password: ""
+    })
+    const [validationErrors, setValidationErrors] = useState({
         email: "",
         password: ""
     })
@@ -44,6 +49,17 @@ const Auth = () => {
         if (isAuth) navigate(routes.profile)
     }, [isAuth])
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.name === "email") {
+            setValidationErrors({...validationErrors, email: ""})
+            if (!validateEmail(e.target.value)) {
+                setValidationErrors({...validationErrors, email: "Введён не email"})
+            }
+        } else {
+            setValidationErrors({...validationErrors, password: ""})
+            if (e.target.value.length < 6) {
+                setValidationErrors({...validationErrors, password: "Пароль должен быть не менее 6 символов"})
+            }
+        }
         setInputValues({...inputValues, [e.target.name]: e.target.value})
     }
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -86,6 +102,8 @@ const Auth = () => {
                         name="email"
                         autoComplete="email"
                         autoFocus
+                        error={!!validationErrors.email}
+                        helperText={validationErrors.email}
                     />
                     <TextField
                         onChange={handleInputChange}
@@ -98,6 +116,8 @@ const Auth = () => {
                         type="password"
                         id="password"
                         autoComplete="current-password"
+                        error={!!validationErrors.password}
+                        helperText={validationErrors.password}
                     />
                     <FormControlLabel
                         control={<Checkbox value="remember" color="primary"/>}
@@ -110,6 +130,10 @@ const Auth = () => {
                         fullWidth
                         variant="contained"
                         sx={{mt: 3, mb: 2}}
+                        disabled={!!validationErrors.email
+                        || !!validationErrors.password
+                        || inputValues.password.length === 0
+                        || inputValues.email.length === 0}
                     >
                         {isRegister
                             ? "Регистрация"
