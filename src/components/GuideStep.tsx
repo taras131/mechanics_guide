@@ -101,8 +101,6 @@ const GuideStep: FC<IGuideStepProps> = ({guideStep, isEdit}) => {
                                       guideStepId={guideStep.id}/>
                 )}
             </Stack>
-            {isEdit && guideStep.id !== 0 && (<GuideStepSpecialFeatures guideStepType={guideStep.type}
-                                                                        currentGuideStepId={guideStep.id}/>)}
         </Paper>
     );
 };

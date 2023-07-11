@@ -9,6 +9,7 @@ import {cleanBreadCrumbs, setBreadCrumbs} from "../services/reducers/breadCrumbs
 import GuideHeader from "../components/GuideHeader";
 import GuideStep from "../components/GuideStep";
 import {setIsEdit} from "../services/reducers/guides"
+import GuideStepSpecialFeatures from "../components/GuideStepSpecialFeatures";
 
 const Guide = () => {
         const dispatch = useAppDispatch()
@@ -42,10 +43,13 @@ const Guide = () => {
         }, [dispatch])
 
         return (
-            <Stack spacing={2}>
+            <Stack spacing={3}>
                 <GuideHeader guide={guide} isEdit={isEdit} isNewGuide={isNewGuide}/>
                 <BreadCrumbs/>
                 <GuideStep guideStep={guideStep} isEdit={isEdit}/>
+                {isEdit && (<GuideStepSpecialFeatures guideStepType={guideStep.type}
+                                                      currentGuideStepId={guideStep.id}
+                                                      guideId={guide.id}/>)}
             </Stack>
         );
     }
