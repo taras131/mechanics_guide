@@ -54,6 +54,7 @@ export const getIsNewGuide = (state: RootState): boolean => {
     return state.guides.isNewGuideEdition
 }
 export const gitIsMyEditionGuide = (state: RootState): boolean => {
+    if (!state.guides.editionGuide.authorId) return true
     if (state.auth.user.id === "" || state.guides.editionGuide.authorId !== state.auth.user.id) {
         return false
     } else {

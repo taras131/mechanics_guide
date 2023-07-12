@@ -74,7 +74,7 @@ const GuideHeader: FC<IGuideHeaderProps> = ({isEdit, guide, isNewGuide}) => {
         dispatch(setIsEdit(false))
     }
     const addCategoryButton = (
-        <Button onClick={handleAddCategoryClick} variant="text" startIcon={<AddCircleOutlineIcon/>}>
+        <Button key={"add_button"} onClick={handleAddCategoryClick} variant="text" startIcon={<AddCircleOutlineIcon/>}>
             Добавить категорию
         </Button>)
     return (
@@ -106,7 +106,10 @@ const GuideHeader: FC<IGuideHeaderProps> = ({isEdit, guide, isNewGuide}) => {
                                         Отмена
                                     </Button>
                                 )}
-                                <Button onClick={handleSaveClick} variant="contained" startIcon={<SaveIcon/>}>
+                                <Button onClick={handleSaveClick}
+                                        variant="contained"
+                                        startIcon={<SaveIcon/>}
+                                        disabled={!guide.title}>
                                     Сохранить
                                 </Button>
                             </>)

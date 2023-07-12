@@ -13,8 +13,10 @@ interface IAddNewCategoryProps {
     toggleIsOpenNewCategoryWindow: () => void
 }
 
-const AddNewCategory: FC<IAddNewCategoryProps> = ({isOpenNewCategoryWindow,
-                                                      toggleIsOpenNewCategoryWindow}) => {
+const AddNewCategory: FC<IAddNewCategoryProps> = ({
+                                                      isOpenNewCategoryWindow,
+                                                      toggleIsOpenNewCategoryWindow
+                                                  }) => {
     const dispatch = useAppDispatch()
     const [newCategoryName, setNewCategoryName] = useState("")
     const handleCategoryNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -27,7 +29,7 @@ const AddNewCategory: FC<IAddNewCategoryProps> = ({isOpenNewCategoryWindow,
         <ModalWindow isOpenModal={isOpenNewCategoryWindow} handleToggleOpen={toggleIsOpenNewCategoryWindow}>
             <Stack spacing={1}>
                 <Typography variant={"h3"} fontSize={16} fontWeight={600}>
-                    Добавление категории
+                    Добавление категории.
                 </Typography>
                 <CategoryList/>
                 <TextField value={newCategoryName}
@@ -35,7 +37,7 @@ const AddNewCategory: FC<IAddNewCategoryProps> = ({isOpenNewCategoryWindow,
                            id="outlined-basic"
                            label="Новая категория"
                            variant="outlined"/>
-                <Button onClick={handleAddCategoryClick}>Добавить</Button>
+                <Button onClick={handleAddCategoryClick} disabled={!newCategoryName}>Добавить</Button>
             </Stack>
         </ModalWindow>
     );
