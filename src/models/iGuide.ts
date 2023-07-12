@@ -8,7 +8,8 @@ export interface IGuideCategory {
 export interface IGuideItemOption {
     id: number
     text: string,
-    nextId: number
+    nextId: number,
+    redirectAnotherGuide? :string
 }
 
 export interface IGuideItem {

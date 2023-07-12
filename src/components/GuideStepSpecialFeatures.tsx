@@ -5,12 +5,18 @@ import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import {GUIDE_ITEM_TYPE} from "../utils/const";
 import {useAppDispatch, useAppSelector} from "../hooks/redux";
-import {getEditionGuideStepsByType, gitIsMyGuide} from "../services/selectors/guidesSelectors";
+import {
+    getEditionGuideStepsByType,
+    getGuideById,
+    getGuidesWithFilter,
+    gitIsMyEditionGuide
+} from "../services/selectors/guidesSelectors";
 import SelectRedirectGuideStep from "./SelectRedirectGuideStep";
 import {Paper} from "@mui/material";
 import {fetchRemoveGuide} from "../services/actions/guidesActionsCreators";
 import {useNavigate} from "react-router-dom";
 import {routes} from "../utils/routes";
+import SelectRedirectAnotherGuide from "./SelectRedirectAnotherGuide";
 
 interface IGuideStepSpecialFeaturesProps {
     guideStepType: GUIDE_ITEM_TYPE
@@ -27,10 +33,16 @@ const GuideStepSpecialFeatures: FC<IGuideStepSpecialFeaturesProps> = ({
     const navigate = useNavigate()
     const guideSteps = useAppSelector(state => getEditionGuideStepsByType(state, guideStepType))
         .filter(result => result.id !== currentGuideStepId)
-    const [isOpenSelectResultWindow, setIsOpenSelectResultWindow] = useState(false)
-    const isMyGuide = useAppSelector(state => gitIsMyGuide(state, guideId))
-    const toggleIsOpenSelectResultWindow = () => {
-        setIsOpenSelectResultWindow(prev => !prev)
+    const currentGuide = useAppSelector(state => getGuideById(state, guideId, true, false))
+    const anotherGuides = useAppSelector(state => getGuidesWithFilter(state, currentGuide.categoryId, false))
+    const [isOpenSelectRedirectWindow, setIsOpenSelectRedirectWindow] = useState(false)
+    const [isOpenSelectRedirectAnotherGuideWindow, setIsOpenSelectRedirectAnotherGuideWindow] = useState(false)
+    const isMyGuide = useAppSelector(state => gitIsMyEditionGuide(state))
+    const toggleIsOpenSelectRedirectWindow = () => {
+        setIsOpenSelectRedirectWindow(prev => !prev)
+    }
+    const toggleIsOpenSelectRedirectAnotherGuideWindow = () => {
+        setIsOpenSelectRedirectAnotherGuideWindow(prev => !prev)
     }
     const handleRemoveGuideClick = () => {
         navigate(routes.main)
@@ -44,9 +56,9 @@ const GuideStepSpecialFeatures: FC<IGuideStepSpecialFeaturesProps> = ({
                 </Typography>
                 {guideStepType === GUIDE_ITEM_TYPE.question && currentGuideStepId !== 0 && (
                     <>
-                        <Grid container alignItems="center" justifyContent="start">
+                        <Grid container alignItems="center">
                             <Grid item xs={4}>
-                                <Button onClick={toggleIsOpenSelectResultWindow} disabled={guideSteps.length === 0}>
+                                <Button onClick={toggleIsOpenSelectRedirectWindow} disabled={guideSteps.length === 0}>
                                     Перенаправить на другой вопрос
                                 </Button>
                             </Grid>
@@ -61,7 +73,9 @@ const GuideStepSpecialFeatures: FC<IGuideStepSpecialFeaturesProps> = ({
                         </Grid>
                         <Grid container alignItems="center" justifyContent="start">
                             <Grid item xs={4}>
-                                <Button>Перенаправить на другой гайд</Button>
+                                <Button onClick={toggleIsOpenSelectRedirectAnotherGuideWindow}>
+                                    Перенаправить на другой гайд
+                                </Button>
                             </Grid>
                             <Grid item xs={8}>
                                 <Typography fontSize="12px" color="inherit" fontWeight={300}>
@@ -75,7 +89,7 @@ const GuideStepSpecialFeatures: FC<IGuideStepSpecialFeaturesProps> = ({
                 {guideStepType === GUIDE_ITEM_TYPE.result && currentGuideStepId !== 0 && (
                     <Grid container alignItems="center" justifyContent="start">
                         <Grid item xs={4}>
-                            <Button onClick={toggleIsOpenSelectResultWindow} disabled={guideSteps.length === 0}>
+                            <Button onClick={toggleIsOpenSelectRedirectWindow} disabled={guideSteps.length === 0}>
                                 Перенаправить на другой результат
                             </Button>
                         </Grid>
@@ -90,7 +104,7 @@ const GuideStepSpecialFeatures: FC<IGuideStepSpecialFeaturesProps> = ({
                     </Grid>)}
                 <Grid container alignItems="center" justifyContent="start">
                     <Grid item xs={4}>
-                        <Button onClick={handleRemoveGuideClick} disabled={isMyGuide}>
+                        <Button onClick={handleRemoveGuideClick} disabled={!isMyGuide}>
                             Удалить гайд
                         </Button>
                     </Grid>
@@ -101,9 +115,12 @@ const GuideStepSpecialFeatures: FC<IGuideStepSpecialFeaturesProps> = ({
                         </Typography>
                     </Grid>
                 </Grid>
-                <SelectRedirectGuideStep isOpenSelectResultWindow={isOpenSelectResultWindow}
-                                         toggleIsOpenSelectResultWindow={toggleIsOpenSelectResultWindow}
+                <SelectRedirectGuideStep isOpenSelectRedirectWindow={isOpenSelectRedirectWindow}
+                                         toggleIsOpenSelectRedirectWindow={toggleIsOpenSelectRedirectWindow}
                                          guideSteps={guideSteps}/>
+                <SelectRedirectAnotherGuide isOpen={isOpenSelectRedirectAnotherGuideWindow}
+                                            toggleIsOpen={toggleIsOpenSelectRedirectAnotherGuideWindow}
+                                            anotherGuides={anotherGuides}/>
             </Stack>
         </Paper>
     );

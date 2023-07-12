@@ -119,13 +119,18 @@ const GuideHeader: FC<IGuideHeaderProps> = ({isEdit, guide, isNewGuide}) => {
                                 </Button>
                             </>)}
                     </ButtonGroup>
+                    <Typography fontSize="11px" fontWeight={300} align="center">
+                        {isEdit && !isNewGuide && "Не забудьте сохранить внесённые изменения"}
+                    </Typography>
                 </Stack>
             </Grid>
             <Box sx={{marginTop: 3}}>
                 <Grid container spacing={{xs: 4, md: 6}} columns={{xs: 3, sm: 8, md: 12}}>
                     <GuideHeaderInformationBox title={"Автор:"}>
                         <Typography fontWeight={600}>
-                            {guide.authorId ? guide.authorId : "Автор неизвестен"}
+                            {isNewGuide && "Вы"}
+                            {!isNewGuide && guide.authorId && guide.authorId}
+                            {!isNewGuide && !guide.authorId && "Автор неизвестен"}
                         </Typography>
                     </GuideHeaderInformationBox>
                     <GuideHeaderInformationBox title={isEdit ? "" : "Категория:"}>

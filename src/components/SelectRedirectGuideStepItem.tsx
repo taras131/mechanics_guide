@@ -11,14 +11,14 @@ import {useNavigate, useParams} from "react-router-dom";
 interface ISelectGuideStepResultItemProps {
     index: number
     guideStep: IGuideItem
-    toggleIsOpenSelectResultWindow: () => void
+    toggleIsOpenSelectRedirectWindow: () => void
 }
 
 
 const SelectRedirectGuideStepItem: FC<ISelectGuideStepResultItemProps> = ({
                                                                               index,
                                                                               guideStep,
-                                                                              toggleIsOpenSelectResultWindow
+                                                                              toggleIsOpenSelectRedirectWindow
                                                                           }) => {
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
@@ -31,7 +31,7 @@ const SelectRedirectGuideStepItem: FC<ISelectGuideStepResultItemProps> = ({
 //            dispatch(removeGuideStep(+guideStepId))
             navigate(routes.guide + "/" + guideId + "/" + lastBreadCrumb?.questionId)
             dispatch(removeLastBreadCrumb())
-            toggleIsOpenSelectResultWindow()
+            toggleIsOpenSelectRedirectWindow()
         }
     }
     return (

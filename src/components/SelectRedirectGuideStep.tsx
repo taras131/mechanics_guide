@@ -10,22 +10,22 @@ import ListSubheader from "@mui/material/ListSubheader";
 import {List} from "@mui/material";
 
 interface ISelectGuideStepResultProps {
-    isOpenSelectResultWindow: boolean
+    isOpenSelectRedirectWindow: boolean
     guideSteps: IGuideItem []
-    toggleIsOpenSelectResultWindow: () => void
+    toggleIsOpenSelectRedirectWindow: () => void
 }
 
 const SelectRedirectGuideStep: FC<ISelectGuideStepResultProps> = ({
-                                                                      isOpenSelectResultWindow,
-                                                                      toggleIsOpenSelectResultWindow,
+                                                                      isOpenSelectRedirectWindow,
+                                                                      toggleIsOpenSelectRedirectWindow,
                                                                       guideSteps
                                                                   }) => {
     const resultsList = guideSteps.map((guideStep, index) => (<SelectRedirectGuideStepItem key={guideStep.id}
                                                                                          index={index}
                                                                                            guideStep={guideStep}
-                                                                                         toggleIsOpenSelectResultWindow={toggleIsOpenSelectResultWindow}/>))
+                                                                                           toggleIsOpenSelectRedirectWindow={toggleIsOpenSelectRedirectWindow}/>))
     return (
-        <ModalWindow isOpenModal={isOpenSelectResultWindow} handleToggleOpen={toggleIsOpenSelectResultWindow}>
+        <ModalWindow isOpenModal={isOpenSelectRedirectWindow} handleToggleOpen={toggleIsOpenSelectRedirectWindow}>
             <Stack spacing={2}>
                 <Typography variant={"h3"} fontSize={16} fontWeight={600}>
                     Выберите на какой этап перенаправить текущий шаг

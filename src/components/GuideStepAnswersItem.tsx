@@ -7,6 +7,10 @@ import SendIcon from '@mui/icons-material/Send';
 import {FormControl, Input, InputAdornment, InputLabel} from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import {useAppDispatch} from "../hooks/redux";
+import NextPlanIcon from '@mui/icons-material/NextPlan';
+import {useNavigate} from "react-router-dom";
+import {routes} from "../utils/routes";
+import {setIsEdit} from "../services/reducers/guides";
 
 interface IGuideStepAnswerProps {
     option: IGuideItemOption
@@ -17,6 +21,7 @@ interface IGuideStepAnswerProps {
     handleOptionTextChange: (newValue: string, optionId: number) => void
     handleNextQuestionClick: (optionId: number, optionText: string, nextId: number) => void
     handleOptionRemove: (guideStepId: number, optionId: number) => void
+    handleRedirectGuideClick: (redirectAnotherGuide: string) => void
 }
 
 const GuideStepAnswersItem: FC<IGuideStepAnswerProps> = ({
@@ -27,25 +32,31 @@ const GuideStepAnswersItem: FC<IGuideStepAnswerProps> = ({
                                                              isEdit,
                                                              handleOptionTextChange,
                                                              handleNextQuestionClick,
-                                                             handleOptionRemove
+                                                             handleOptionRemove,
+                                                             handleRedirectGuideClick
                                                          }) => {
-    const dispatch = useAppDispatch()
     const onRemoveOptionClick = () => {
         handleOptionRemove(questionId, option.id)
     }
     const onOptionTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        e.preventDefault()
         handleOptionTextChange(e.target.value, option.id)
     }
     const onNextClick = () => {
-        handleNextQuestionClick(option.id, option.text, option.nextId)
+        if (option.redirectAnotherGuide) {
+            handleRedirectGuideClick(option.redirectAnotherGuide)
+        } else {
+            handleNextQuestionClick(option.id, option.text, option.nextId)
+        }
     }
     return (
-        <Box>
+        <Box key={option.id}>
             {isEdit
                 ? (<FormControl sx={{m: 1, width: '100%'}} variant="standard">
                         <InputLabel htmlFor="standard-adornment-password">
-                            {`Вариант ответа № ${index + 1}`}
+                            {option.redirectAnotherGuide
+                                ? `Перенаправление  на другой гайд`
+                                : `Вариант ответа № ${index + 1}`}
+
                         </InputLabel>
                         <Input
                             key={option.id}
@@ -69,17 +80,17 @@ const GuideStepAnswersItem: FC<IGuideStepAnswerProps> = ({
                                     <IconButton
                                         aria-label="toggle password visibility"
                                         onClick={onNextClick}
-                                        onMouseDown={() => {
-                                        }}
                                     >
-                                        <SendIcon/>
+                                        {option.redirectAnotherGuide ? (<NextPlanIcon/>) : (<SendIcon/>)}
                                     </IconButton>
                                 </InputAdornment>
                             }
                         />
                     </FormControl>
                 )
-                : (<Button variant="outlined" onClick={onNextClick}>
+                : (<Button variant="outlined"
+                           onClick={onNextClick}
+                           endIcon={option.redirectAnotherGuide ? (<NextPlanIcon/>) : (<SendIcon/>)}>
                     {option.text}
                 </Button>)}
         </Box>

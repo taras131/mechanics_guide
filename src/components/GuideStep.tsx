@@ -1,6 +1,6 @@
 import React, {FC, useEffect} from 'react';
 import {IGuideItem} from "../models/iGuide";
-import {FormControl, FormLabel, Paper, Radio} from "@mui/material";
+import {Divider, FormControl, FormLabel, Paper, Radio} from "@mui/material";
 import {GUIDE_ITEM_TYPE} from "../utils/const";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
@@ -48,7 +48,7 @@ const GuideStep: FC<IGuideStepProps> = ({guideStep, isEdit}) => {
         }
     }
     return (
-        <Paper sx={{padding: 2}}>
+        <Paper sx={{padding: "30px 20px"}}>
             <Stack spacing={3}>
                 <Grid container alignItems="center" justifyContent="space-between">
                     {isEdit && guideStep.id !== 0 && (
@@ -93,6 +93,7 @@ const GuideStep: FC<IGuideStepProps> = ({guideStep, isEdit}) => {
                     : (<Typography fontWeight={400}>
                         {guideStep.text ? guideStep.text : "Эта часть гайда пока не наполнена, перейдите в режим редактирования для заполнения"}
                     </Typography>)}
+                {!isEdit && guideStep.type === GUIDE_ITEM_TYPE.question && (<Divider/>)}
                 {guideStep.type === GUIDE_ITEM_TYPE.question && (
                     <GuideStepAnswers options={[...guideStep.options]}
                                       questionText={guideStep.text}

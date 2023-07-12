@@ -1,6 +1,6 @@
 import React, {FC, useEffect} from 'react';
-import {changeEditionGuideOptionText, editionGuideStepRemoveOption} from "../services/reducers/guides";
-import {addBreadCrumb} from "../services/reducers/breadCrumbs";
+import {changeEditionGuideOptionText, editionGuideStepRemoveOption, setIsEdit} from "../services/reducers/guides";
+import {addBreadCrumb, cleanBreadCrumbs} from "../services/reducers/breadCrumbs";
 import {routes} from "../utils/routes";
 import {IGuideItemOption} from "../models/iGuide";
 import {useNavigate, useParams} from "react-router-dom";
@@ -42,15 +42,24 @@ const GuideStepAnswersList: FC<IGuideStepAnswersListProps> = ({
         }))
         navigate(routes.guide + "/" + guideId + "/" + nextId)
     }
-    const answersList = options.map((option, index) => (<GuideStepAnswersItem
-        key={`${option.id}_${option.text}_${option.nextId}`} option={option}
-        questionText={questionText}
-        questionId={questionId}
-        index={index}
-        isEdit={isEdit}
-        handleOptionTextChange={handleOptionTextChange}
-        handleNextQuestionClick={handleNextQuestionClick}
-        handleOptionRemove={handleOptionRemove}/>))
+    const handleRedirectGuideClick = (redirectAnotherGuide: string) => {
+        navigate(`${routes.guide}/${redirectAnotherGuide}/0`)
+        dispatch(setIsEdit(false))
+        dispatch(cleanBreadCrumbs())
+    }
+    const answersList = options.map((option, index) => {
+        return GuideStepAnswersItem({
+            option: option,
+            questionText: questionText,
+            questionId: questionId,
+            index: index,
+            isEdit: isEdit,
+            handleOptionTextChange: handleOptionTextChange,
+            handleNextQuestionClick: handleNextQuestionClick,
+            handleOptionRemove: handleOptionRemove,
+            handleRedirectGuideClick: handleRedirectGuideClick
+        })
+    })
     return (
         <>
             {answersList}

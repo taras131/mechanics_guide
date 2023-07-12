@@ -7,7 +7,7 @@ import {IBreadCrumb} from "./breadCrumbs";
 interface IGuideState {
     isLoading: boolean,
     isEdit: boolean,
-    isNewGuideEdition : boolean,
+    isNewGuideEdition: boolean,
     errorMessage: string,
     categories: IGuideCategory []
     guides: IGuide[],
@@ -90,7 +90,6 @@ export const GuidesSlice = createSlice({
                 optionId: number
                 newValue: string
             }>) => {
-                console.log(action.payload.newValue)
                 state.editionGuide.items = [...state.editionGuide.items.map(item => {
                     if (item.id === action.payload.guideStepId) {
                         return {
@@ -115,14 +114,12 @@ export const GuidesSlice = createSlice({
                 state.editionGuide = {
                     ...state.editionGuide, items: [...state.editionGuide.items.map(item => {
                         if (guideStepId === item.id) {
-                            console.log(guideStepId, item.id)
                             return {...item, options: [...item.options, newOption]}
                         } else {
                             return item
                         }
                     })]
                 }
-                console.log("completed")
                 state.editionGuide.items = [...state.editionGuide.items, {
                     id: newOption.nextId,
                     text: "",
@@ -175,8 +172,31 @@ export const GuidesSlice = createSlice({
                     ]
                 }
             },
-            setIsNewGuideEdition: (state, action:PayloadAction<boolean>) => {
+            setIsNewGuideEdition: (state, action: PayloadAction<boolean>) => {
                 state.isNewGuideEdition = action.payload
+            },
+            editionGuideRedirectAnotherGuide: (state, action: PayloadAction<{
+                lastBreadCrumb: IBreadCrumb,
+                redirectAnotherGuide: string
+            }>) => {
+                const {lastBreadCrumb, redirectAnotherGuide} = action.payload
+                state.editionGuide = {
+                    ...state.editionGuide, items: [...state.editionGuide.items.map(item => {
+                        if (item.id === lastBreadCrumb.questionId) {
+                            return {
+                                ...item, options: [...item.options.map(option => {
+                                    if (option.id === lastBreadCrumb.optionId) {
+                                        return {...option, redirectAnotherGuide: redirectAnotherGuide}
+                                    } else {
+                                        return option
+                                    }
+                                })]
+                            }
+                        } else {
+                            return item
+                        }
+                    })]
+                }
             }
         },
         extraReducers: {
@@ -224,6 +244,7 @@ export const {
     setGuides, setIsGuidesLoading, setGuideCategories, setIsEdit, setEditionGuide,
     setEditionGuideCategory, changeEditionGuideTitle, changeEditionGuideItemsText,
     changeEditionGuideItemsType, changeEditionGuideOptionText, editionGuideStepAddOption,
-    editionGuideStepRemoveOption, editionGuideResultRedirect, removeGuideStep, setIsNewGuideEdition
+    editionGuideStepRemoveOption, editionGuideResultRedirect, removeGuideStep, setIsNewGuideEdition,
+    editionGuideRedirectAnotherGuide
 } = GuidesSlice.actions
 export default GuidesSlice.reducer;

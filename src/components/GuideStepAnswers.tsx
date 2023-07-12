@@ -64,7 +64,7 @@ const GuideStepAnswers: FC<IGuideStepAnswersProps> = ({
                                          questionId={questionId}
                                          questionText={questionText}
                                          isEdit={isEdit}/>)
-                : (<Typography variant="subtitle2" fontSize={12}>
+                : (<Typography fontSize={14} fontWeight={300} sx={{paddingTop: "15px"}}>
                     У вас пока нет вариантов ответа, перейдите в режим редактирования и нажмите на кнопку "Добавить
                     вариант ответа" чтобы добавить вариант ответа
                 </Typography>)}

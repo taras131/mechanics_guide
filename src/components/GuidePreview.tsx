@@ -2,7 +2,7 @@ import React, {FC} from 'react';
 import {IGuide} from "../models/iGuide";
 import Grid from '@mui/material/Unstable_Grid2';
 import Typography from "@mui/material/Typography";
-import {Card, CardActions, CardContent} from "@mui/material";
+import {Card, CardActions, CardContent, Divider} from "@mui/material";
 import Button from "@mui/material/Button";
 import {useAppDispatch, useAppSelector} from "../hooks/redux";
 import {getCountGuideSteps, getGuideCategoryNameById} from "../services/selectors/guidesSelectors";
@@ -48,7 +48,8 @@ const GuidePreview: FC<IGuidePreviewProps> = ({guide}) => {
                                 <Avatar sx={{bgcolor: deepPurple[500]}}>{countGuideSteps}</Avatar>
                             </Grid>
                         </Grid>
-                        <Typography variant="h5" component="div">
+                        <Divider sx={{marginTop: "10px"}}/>
+                        <Typography variant="h5" component="div" sx={{marginTop: "10px"}}>
                             {guide.title && guide.title.length > 50 ? guide.title.substring(0, 50) : guide.title}
                         </Typography>
                         <Typography sx={{marginTop: 1}} color="text.secondary">
