@@ -128,7 +128,7 @@ const GuideHeader: FC<IGuideHeaderProps> = ({isEdit, guide, isNewGuide}) => {
                             </>)}
                     </ButtonGroup>
                     <Typography fontSize="11px" fontWeight={300} align="center">
-                        {isEdit && !isNewGuide && "Не забудьте сохранить внесённые изменения. Если у гайда есть автор , внести изменения может только он"}
+                        {isEdit && !isNewGuide && "Не забудьте сохранить внесённые изменения."}
                         {!!guide.authorId && user.id !== guide.authorId && "вы можете редактировать только свои гайды или гайды без автора"}
                     </Typography>
                 </Stack>
