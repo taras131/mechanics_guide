@@ -4,6 +4,8 @@ import GuidesHeaderSelectMyGuides from "./GuidesHeaderSelectMyGuides";
 import SelectGuideCategory from "./SelectGuideCategory";
 import Grid from "@mui/material/Grid";
 import {SelectChangeEvent} from "@mui/material";
+import {useAppSelector} from "../hooks/redux";
+import {getIsAuth} from "../services/selectors/authSelector";
 
 interface IGuidesHeaderProps {
     selectedGuideCategoryId: string
@@ -18,6 +20,7 @@ const GuidesHeader: FC<IGuidesHeaderProps> = ({
                                                   handleGuideCategoryChange,
                                                   handleMyGuideSelected
                                               }) => {
+    const isAuth = useAppSelector(state => getIsAuth(state))
     return (
         <Grid container
               direction="row"
@@ -29,10 +32,13 @@ const GuidesHeader: FC<IGuidesHeaderProps> = ({
             </Grid>
             <Grid item>
                 <Grid container>
-                    <Grid item>
-                        <GuidesHeaderSelectMyGuides isSelectedMyGuides={isSelectedMyGuides}
-                                                    handleMyGuideSelected={handleMyGuideSelected}/>
-                    </Grid>
+                    {isAuth && (
+                        <Grid item>
+                            <GuidesHeaderSelectMyGuides isSelectedMyGuides={isSelectedMyGuides}
+                                                        handleMyGuideSelected={handleMyGuideSelected}/>
+                        </Grid>
+                    )}
+
                     <Grid item>
                         <SelectGuideCategory selectedGuideCategoryId={selectedGuideCategoryId}
                                              handleGuideCategoryChange={handleGuideCategoryChange}/>

@@ -35,6 +35,7 @@ const GuideStepSpecialFeatures: FC<IGuideStepSpecialFeaturesProps> = ({
         .filter(result => result.id !== currentGuideStepId)
     const currentGuide = useAppSelector(state => getGuideById(state, guideId, true, false))
     const anotherGuides = useAppSelector(state => getGuidesWithFilter(state, currentGuide.categoryId, false))
+        .filter(guide => guide.id !== guideId)
     const [isOpenSelectRedirectWindow, setIsOpenSelectRedirectWindow] = useState(false)
     const [isOpenSelectRedirectAnotherGuideWindow, setIsOpenSelectRedirectAnotherGuideWindow] = useState(false)
     const isMyGuide = useAppSelector(state => gitIsMyEditionGuide(state))

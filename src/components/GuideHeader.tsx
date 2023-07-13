@@ -27,6 +27,7 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import AddNewCategory from "./AddNewCategory";
 import TextField from "@mui/material/TextField";
 import {fetchNewGuide, fetchUpdateGuide} from "../services/actions/guidesActionsCreators";
+import {getUser} from "../services/selectors/authSelector";
 
 interface IGuideHeaderProps {
     isEdit: boolean,
@@ -37,6 +38,7 @@ interface IGuideHeaderProps {
 const GuideHeader: FC<IGuideHeaderProps> = ({isEdit, guide, isNewGuide}) => {
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
+    const user = useAppSelector(state => getUser(state))
     const categoryName = useAppSelector(state => getGuideCategoryNameById(state, guide.categoryId))
     const countSteps = useAppSelector(state => getCountGuideSteps(state, guide.id, isEdit, isNewGuide))
     const [isOpenNewCategoryWindow, setIsOpenNewCategoryWindow] = useState(false)
@@ -109,12 +111,15 @@ const GuideHeader: FC<IGuideHeaderProps> = ({isEdit, guide, isNewGuide}) => {
                                 <Button onClick={handleSaveClick}
                                         variant="contained"
                                         startIcon={<SaveIcon/>}
-                                        disabled={!guide.title}>
+                                        disabled={!guide.title || !!guide.authorId && user.id !== guide.authorId}>
                                     Сохранить
                                 </Button>
                             </>)
                             : (<>
-                                <Button onClick={handleEditClick} variant="contained" startIcon={<EditIcon/>}>
+                                <Button onClick={handleEditClick}
+                                        variant="contained"
+                                        startIcon={<EditIcon/>}
+                                        disabled={!!guide.authorId && user.id !== guide.authorId}>
                                     Редактировать
                                 </Button>
                                 <Button onClick={handleBackClick} startIcon={<KeyboardReturnIcon/>}>
@@ -123,7 +128,8 @@ const GuideHeader: FC<IGuideHeaderProps> = ({isEdit, guide, isNewGuide}) => {
                             </>)}
                     </ButtonGroup>
                     <Typography fontSize="11px" fontWeight={300} align="center">
-                        {isEdit && !isNewGuide && "Не забудьте сохранить внесённые изменения"}
+                        {isEdit && !isNewGuide && "Не забудьте сохранить внесённые изменения. Если у гайда есть автор , внести изменения может только он"}
+                        {!!guide.authorId && user.id !== guide.authorId && "вы можете редактировать только свои гайды или гайды без автора"}
                     </Typography>
                 </Stack>
             </Grid>
