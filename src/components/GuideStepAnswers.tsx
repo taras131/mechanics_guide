@@ -24,6 +24,10 @@ interface IGuideStepAnswersProps {
     guideStepId: number
 }
 
+const emptyAnswerMessage = " У вас пока нет вариантов ответа, если вы являетесь автором этого гайда," +
+    " перейдите в режим редактирования и нажмите на кнопку \"Добавить\n" +
+    "                    вариант ответа\" чтобы добавить новый вариант"
+
 const GuideStepAnswers: FC<IGuideStepAnswersProps> = ({
                                                           options,
                                                           questionText,
@@ -65,8 +69,7 @@ const GuideStepAnswers: FC<IGuideStepAnswersProps> = ({
                                          questionText={questionText}
                                          isEdit={isEdit}/>)
                 : (<Typography fontSize={14} fontWeight={300} sx={{paddingTop: "15px"}}>
-                    У вас пока нет вариантов ответа, перейдите в режим редактирования и нажмите на кнопку "Добавить
-                    вариант ответа" чтобы добавить вариант ответа
+                    {emptyAnswerMessage}
                 </Typography>)}
         </Stack>
     );

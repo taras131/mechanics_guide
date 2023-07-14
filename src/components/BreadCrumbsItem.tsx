@@ -1,7 +1,8 @@
 import React, {FC} from 'react';
-import {Stack, TableCell, TableRow} from "@mui/material";
+import {Divider, ListItem, ListItemButton, ListItemText, Stack, TableCell, TableRow} from "@mui/material";
 import {IBreadCrumb} from "../services/reducers/breadCrumbs";
 import Typography from "@mui/material/Typography";
+import Grid from "@mui/material/Unstable_Grid2";
 
 interface IBreadCrumbsItemProps extends IBreadCrumb {
     index: number
@@ -9,15 +10,20 @@ interface IBreadCrumbsItemProps extends IBreadCrumb {
 
 const BreadCrumbsItem: FC<IBreadCrumbsItemProps> = ({questionText, answerText, index}) => {
     return (
-        <TableRow sx={{'&:last-child td, &:last-child th': {border: 0}}}>
-            <TableCell component="th" scope="row">
-                <Stack direction="row" spacing={2}>
-                    <Typography fontWeight={600}>{index + 1}.</Typography>
-                    <Typography fontWeight={400}>{questionText}</Typography>
-                </Stack>
-            </TableCell>
-            <TableCell align="right">{answerText}</TableCell>
-        </TableRow>
+        <>
+            <Divider variant="inset" component="li"/>
+            <ListItem key={index}
+                      sx={{width: "100%"}}
+                      onClick={() => {
+                      }}
+                      secondaryAction={
+                          <ListItemText primary={answerText}/>
+                      }
+            >
+                <ListItemText primary={`${index + 1}. ${questionText}`}/>
+            </ListItem>
+
+        </>
     );
 };
 
