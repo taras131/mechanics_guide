@@ -11,6 +11,7 @@ import Avatar from "@mui/material/Avatar";
 import {useNavigate} from "react-router-dom";
 import {routes} from "../utils/routes";
 import {setIsNewGuideEdition} from "../services/reducers/guides";
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 interface IGuidePreviewProps {
     guide: IGuide
@@ -21,6 +22,7 @@ const GuidePreview: FC<IGuidePreviewProps> = ({guide}) => {
     const dispatch = useAppDispatch()
     const categoryName = useAppSelector(state => getGuideCategoryNameById(state, guide.categoryId))
     const countGuideSteps = useAppSelector(state => getCountGuideSteps(state, guide.id))
+    const matches = useMediaQuery('(min-width:1200px)');
     const handleGuideClick = () => {
         dispatch(setIsNewGuideEdition(false))
         navigate(routes.guide + "/" + guide.id + "/0")
@@ -41,10 +43,13 @@ const GuidePreview: FC<IGuidePreviewProps> = ({guide}) => {
                                 {categoryName}
                             </Typography>
                             <Grid container alignItems="center" justifyContent="space-between">
-                                <Typography sx={{fontSize: 12, fontWeight: 100, marginRight: 1}} color="text.secondary"
-                                            gutterBottom>
-                                    Глубина гайда
-                                </Typography>
+                                {matches && (
+                                    <Typography sx={{fontSize: 12, fontWeight: 100, marginRight: 1}}
+                                                color="text.secondary"
+                                                gutterBottom>
+                                        Количество шагов
+                                    </Typography>
+                                )}
                                 <Avatar sx={{bgcolor: deepPurple[500]}}>{countGuideSteps}</Avatar>
                             </Grid>
                         </Grid>

@@ -28,7 +28,6 @@ const SelectRedirectGuideStepItem: FC<ISelectGuideStepResultItemProps> = ({
     const handleResultClick = () => {
         if (lastBreadCrumb) {
             dispatch(editionGuideResultRedirect({lastBreadCrumb: lastBreadCrumb, newNextId: guideStep.id}))
-//            dispatch(removeGuideStep(+guideStepId))
             navigate(routes.guide + "/" + guideId + "/" + lastBreadCrumb?.questionId)
             dispatch(removeLastBreadCrumb())
             toggleIsOpenSelectRedirectWindow()

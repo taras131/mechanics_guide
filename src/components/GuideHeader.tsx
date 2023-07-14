@@ -134,36 +134,42 @@ const GuideHeader: FC<IGuideHeaderProps> = ({isEdit, guide, isNewGuide}) => {
                 </Stack>
             </Grid>
             <Box sx={{marginTop: 3}}>
-                <Grid container spacing={{xs: 4, md: 6}} columns={{xs: 3, sm: 8, md: 12}}>
-                    <GuideHeaderInformationBox title={"Автор:"}>
-                        <Typography fontWeight={600}>
-                            {isNewGuide && "Вы"}
-                            {!isNewGuide && guide.authorId && guide.authorId}
-                            {!isNewGuide && !guide.authorId && "Автор неизвестен"}
-                        </Typography>
-                    </GuideHeaderInformationBox>
-                    <GuideHeaderInformationBox title={isEdit ? "" : "Категория:"}>
-                        {isEdit
-                            ? (
-                                <Grid container justifyContent="space-around">
-                                    <Grid>
-                                        <SelectGuideCategory selectedGuideCategoryId={guide.categoryId}
-                                                             addCategoryButton={addCategoryButton}
-                                                             handleGuideCategoryChange={handleGuideCategoryChange}/>
+                <Grid container spacing={2}>
+                    <Grid  xs={12} md={4}>
+                        <GuideHeaderInformationBox title={"Автор:"}>
+                            <Typography fontWeight={400}>
+                                {isNewGuide && "Вы"}
+                                {!isNewGuide && guide.authorId && guide.authorId}
+                                {!isNewGuide && !guide.authorId && "Автор неизвестен"}
+                            </Typography>
+                        </GuideHeaderInformationBox>
+                    </Grid>
+                    <Grid  xs={12} md={4}>
+                        <GuideHeaderInformationBox title={isEdit ? "" : "Категория:"}>
+                            {isEdit
+                                ? (
+                                    <Grid container justifyContent="space-around">
+                                        <Grid>
+                                            <SelectGuideCategory selectedGuideCategoryId={guide.categoryId}
+                                                                 addCategoryButton={addCategoryButton}
+                                                                 handleGuideCategoryChange={handleGuideCategoryChange}/>
+                                        </Grid>
                                     </Grid>
-                                </Grid>
-                            )
-                            : (
-                                <Typography fontWeight={600}>
-                                    {categoryName}
-                                </Typography>
-                            )}
-                    </GuideHeaderInformationBox>
-                    <GuideHeaderInformationBox title={"Количество шагов:"}>
-                        <Typography fontWeight={600}>
-                            {countSteps}
-                        </Typography>
-                    </GuideHeaderInformationBox>
+                                )
+                                : (
+                                    <Typography fontWeight={400}>
+                                        {categoryName}
+                                    </Typography>
+                                )}
+                        </GuideHeaderInformationBox>
+                    </Grid>
+                    <Grid  xs={12} md={4}>
+                        <GuideHeaderInformationBox title={"Количество шагов:"}>
+                            <Typography fontWeight={400}>
+                                {countSteps}
+                            </Typography>
+                        </GuideHeaderInformationBox>
+                    </Grid>
                 </Grid>
             </Box>
             <AddNewCategory isOpenNewCategoryWindow={isOpenNewCategoryWindow}
