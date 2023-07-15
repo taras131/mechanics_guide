@@ -1,5 +1,5 @@
 import {RootState} from "../store";
-import {IBreadCrumb} from "../reducers/breadCrumbs";
+import {IBreadCrumb} from "../../models/iBreadCrumbs";
 
 export const getBreadCrumbs = (state: RootState): IBreadCrumb[] | [] => {
     return state.breadCrumbs.list

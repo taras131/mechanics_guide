@@ -1,4 +1,4 @@
-import React, {FC, useEffect} from 'react';
+import React, {FC, useEffect, useId} from 'react';
 import {IGuideItem} from "../models/iGuide";
 import {Divider, FormControl, FormLabel, Paper, Radio} from "@mui/material";
 import {GUIDE_ITEM_TYPE} from "../utils/const";
@@ -29,10 +29,13 @@ const GuideStep: FC<IGuideStepProps> = ({guideStep, isEdit}) => {
     const lastBreadCrumbs = useAppSelector(state => getLastBreadCrumbs(state))
     const breadCrumbsCount = useAppSelector(state => getBreadCrumbsCount(state))
     const guideId = useParams().guideId || "0";
+    const radioButtonId = useId()
+    const questionInputId = useId()
     useEffect(() => {
         window.onpopstate = e => {
             dispatch(removeLastBreadCrumb())
         }
+        return
     }, [])
     const handleBackClick = () => {
         navigate(routes.guide + "/" + guideId + "/" + lastBreadCrumbs?.questionId)
@@ -53,11 +56,11 @@ const GuideStep: FC<IGuideStepProps> = ({guideStep, isEdit}) => {
                 <Grid container alignItems="center" justifyContent="space-between">
                     {isEdit && guideStep.id !== 0 && (
                         <FormControl>
-                            <FormLabel id="row-radio-buttons-group-label">Тип текущего шага</FormLabel>
+                            <FormLabel id={radioButtonId}>Тип текущего шага</FormLabel>
                             <RadioGroup
                                 row
-                                aria-labelledby="row-radio-buttons-group-label"
-                                name="row-radio-buttons-group"
+                                aria-labelledby={radioButtonId}
+                                name={radioButtonId}
                                 value={guideStep.type}
                                 onChange={handleGuideStepTypeChange}
                             >
@@ -82,7 +85,7 @@ const GuideStep: FC<IGuideStepProps> = ({guideStep, isEdit}) => {
                 {isEdit
                     ? (<TextField value={guideStep.text}
                                   onChange={handleGuideStepTextChange}
-                                  id="outlined-basic"
+                                  id={questionInputId}
                                   label={guideStep.type === GUIDE_ITEM_TYPE.result
                                       ? "Текст результата"
                                       : `Текст вопроса № ${breadCrumbsCount + 1}`}
