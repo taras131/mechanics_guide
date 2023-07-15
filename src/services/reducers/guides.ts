@@ -201,7 +201,6 @@ export const GuidesSlice = createSlice({
         },
         extraReducers: {
             [fetchAllGuides.fulfilled.type]: (state, action: PayloadAction<IGuide[]>) => {
-                console.log(action.payload)
                 state.guides = action.payload
                 state.isLoading = false;
             },

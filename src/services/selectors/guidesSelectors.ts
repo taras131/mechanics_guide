@@ -29,7 +29,14 @@ export const geiIsGuidesLoading = (state: RootState): boolean => {
 }
 
 export const getGuideCategories = (state: RootState): IGuideCategory[] => {
-    return state.guides.categories
+    const categories = [...state.guides.categories]
+    categories.sort((a, b) => {
+        const textA = a.categoryName.toUpperCase();
+        const textB = b.categoryName.toUpperCase();
+        return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+    });
+    categories.unshift(ALL_CATEGORIES)
+    return categories
 }
 
 export const getGuideCategoryNameById = (state: RootState, categoryId: string): string => {

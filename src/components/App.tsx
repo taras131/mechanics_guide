@@ -48,7 +48,6 @@ const App = () => {
                 querySnapshot.forEach((doc: any) => {
                     categoriesArr.push({...doc.data(), id: doc.id});
                 });
-                categoriesArr.unshift(ALL_CATEGORIES)
                 dispatch(setGuideCategories(categoriesArr))
                 dispatch(setIsGuidesLoading(false))
             } catch (e) {

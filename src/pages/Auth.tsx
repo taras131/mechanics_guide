@@ -10,7 +10,7 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import {useEffect, useState} from "react";
+import {useEffect, useId, useState} from "react";
 import {Link, useLocation, useNavigate} from "react-router-dom";
 import {routes} from "../utils/routes";
 import {useAppDispatch, useAppSelector} from "../hooks/redux";
@@ -25,6 +25,7 @@ const Auth = () => {
     const navigate = useNavigate()
     const isAuth = useAppSelector(state => getIsAuth(state))
     const isLoading = useAppSelector(state => getIsAuthLoading(state))
+    const checkboxId = useId()
     const errorMessage = useAppSelector(state => getAuthErrorMessage(state))
     const [inputValues, setInputValues] = useState({
         email: "",
@@ -120,7 +121,7 @@ const Auth = () => {
                         helperText={validationErrors.password}
                     />
                     <FormControlLabel
-                        control={<Checkbox value="remember" color="primary"/>}
+                        control={<Checkbox id={checkboxId} value="remember" color="primary"/>}
                         label="Remember me"
                     />
                     <LoadingButton

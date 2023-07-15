@@ -1,4 +1,4 @@
-import React, {FC, useEffect} from 'react';
+import React, {FC, useEffect, useId} from 'react';
 import {IGuideItemOption} from "../models/iGuide";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
@@ -35,6 +35,7 @@ const GuideStepAnswersItem: FC<IGuideStepAnswerProps> = ({
                                                              handleOptionRemove,
                                                              handleRedirectGuideClick
                                                          }) => {
+    const inputId = useId()
     const onRemoveOptionClick = () => {
         handleOptionRemove(questionId, option.id)
     }
@@ -52,21 +53,21 @@ const GuideStepAnswersItem: FC<IGuideStepAnswerProps> = ({
         <Box key={option.id}>
             {isEdit
                 ? (<FormControl sx={{m: 1, width: '100%'}} variant="standard">
-                        <InputLabel htmlFor="standard-adornment-password">
+                        <InputLabel htmlFor={inputId}>
                             {option.redirectAnotherGuide
                                 ? `Перенаправление  на другой гайд`
                                 : `Вариант ответа № ${index + 1}`}
 
                         </InputLabel>
                         <Input
-                            key={option.id}
+                            id={inputId}
                             value={option.text}
                             onChange={onOptionTextChange}
                             sx={{height: "50px"}}
                             startAdornment={
                                 <InputAdornment position="start">
                                     <IconButton
-                                        aria-label="toggle password visibility"
+                                        aria-label="delete"
                                         onClick={onRemoveOptionClick}
                                         onMouseDown={() => {
                                         }}
@@ -78,7 +79,7 @@ const GuideStepAnswersItem: FC<IGuideStepAnswerProps> = ({
                             endAdornment={
                                 <InputAdornment position="end">
                                     <IconButton
-                                        aria-label="toggle password visibility"
+                                        aria-label="next"
                                         onClick={onNextClick}
                                     >
                                         {option.redirectAnotherGuide ? (<NextPlanIcon/>) : (<SendIcon/>)}

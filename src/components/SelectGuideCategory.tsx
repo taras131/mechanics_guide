@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, {FC, useId} from 'react';
 import {FormControl, InputLabel, MenuItem, Select, SelectChangeEvent} from "@mui/material";
 import {useAppSelector} from "../hooks/redux";
 import {getGuideCategories} from "../services/selectors/guidesSelectors";
@@ -15,17 +15,22 @@ const SelectGuideCategory: FC<ISelectGuideCategoryProps> = ({
                                                                 addCategoryButton
                                                             }) => {
     const guidesCategory = useAppSelector(state => getGuideCategories(state))
+    const labelId = useId()
+    const selectId = useId()
+    const selectName = useId()
     const categoryList = guidesCategory.map(category => (
-        <MenuItem key={`${category.id}_${category.categoryName}`} value={category.id}>{category.categoryName}</MenuItem>))
+        <MenuItem key={`${category.id}_${category.categoryName}`}
+                  value={category.id}>{category.categoryName}</MenuItem>))
     return (
         <FormControl fullWidth sx={{minWidth: "250px"}}>
-            <InputLabel id="simple-select-label">Категория</InputLabel>
+            <InputLabel id={labelId}>Категория</InputLabel>
             <Select
-                labelId="simple-select-label"
-                id="simple-select"
+                id={selectId}
+                name={selectName}
+                labelId={labelId}
                 defaultValue=""
                 value={selectedGuideCategoryId}
-                label="Category"
+                label="Категория"
                 onChange={handleGuideCategoryChange}
             >
                 {addCategoryButton ? [...categoryList, addCategoryButton] : categoryList}

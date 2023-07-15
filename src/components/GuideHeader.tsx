@@ -159,14 +159,9 @@ const GuideHeader: FC<IGuideHeaderProps> = ({isEdit, guide, isNewGuide}) => {
                     <Grid xs={12} md={4}>
                         <GuideHeaderInformationBox title={isEdit ? "" : "Категория:"}>
                             {isEdit
-                                ? (
-                                    <Grid container justifyContent="space-around">
-                                        <Grid>
-                                            <SelectGuideCategory selectedGuideCategoryId={guide.categoryId}
+                                ? (<SelectGuideCategory selectedGuideCategoryId={guide.categoryId}
                                                                  addCategoryButton={addCategoryButton}
                                                                  handleGuideCategoryChange={handleGuideCategoryChange}/>
-                                        </Grid>
-                                    </Grid>
                                 )
                                 : (
                                     <Typography fontWeight={400}>
