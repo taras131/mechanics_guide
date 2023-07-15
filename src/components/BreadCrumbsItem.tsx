@@ -1,8 +1,6 @@
 import React, {FC} from 'react';
 import {Divider, ListItem, ListItemButton, ListItemText, Stack, TableCell, TableRow} from "@mui/material";
-import {IBreadCrumb} from "../services/reducers/breadCrumbs";
-import Typography from "@mui/material/Typography";
-import Grid from "@mui/material/Unstable_Grid2";
+import {IBreadCrumb} from "../models/iBreadCrumbs";
 
 interface IBreadCrumbsItemProps extends IBreadCrumb {
     index: number

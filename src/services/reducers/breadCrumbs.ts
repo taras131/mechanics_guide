@@ -1,11 +1,5 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-
-export interface IBreadCrumb {
-    questionText: string
-    answerText: string
-    questionId: number
-    optionId: number
-}
+import {IBreadCrumb} from "../../models/iBreadCrumbs";
 
 interface IBreadCrumbsState {
     list: IBreadCrumb [] | []

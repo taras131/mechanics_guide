@@ -23,6 +23,7 @@ const SelectGuideCategory: FC<ISelectGuideCategoryProps> = ({
             <Select
                 labelId="simple-select-label"
                 id="simple-select"
+                defaultValue=""
                 value={selectedGuideCategoryId}
                 label="Category"
                 onChange={handleGuideCategoryChange}

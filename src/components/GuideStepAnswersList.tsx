@@ -39,6 +39,7 @@ const GuideStepAnswersList: FC<IGuideStepAnswersListProps> = ({
             answerText: optionText,
             questionId: questionId,
             optionId: optionId,
+            nextId: nextId
         }))
         navigate(routes.guide + "/" + guideId + "/" + nextId)
     }

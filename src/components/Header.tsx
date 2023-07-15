@@ -4,9 +4,6 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import Navigation from "./Navigation";
 import {Link} from "react-router-dom";
 import {routes} from "../utils/routes";
 import {useAppSelector} from "../hooks/redux";
@@ -16,13 +13,6 @@ const Header = () => {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const isAuth = useAppSelector(state => getIsAuth(state))
     const user = useAppSelector(state => getUser(state))
-    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-        setAnchorEl(event.currentTarget);
-    };
-    const open = Boolean(anchorEl);
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
     return (
         <Box sx={{flexGrow: 1}}>
             <AppBar position="static">

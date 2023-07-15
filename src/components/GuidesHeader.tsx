@@ -2,10 +2,11 @@ import React, {FC} from 'react';
 import GuidesHeaderAddNewGuide from "./GuidesHeaderAddNewGuide";
 import GuidesHeaderSelectMyGuides from "./GuidesHeaderSelectMyGuides";
 import SelectGuideCategory from "./SelectGuideCategory";
-import Grid from "@mui/material/Grid";
 import {SelectChangeEvent} from "@mui/material";
 import {useAppSelector} from "../hooks/redux";
 import {getIsAuth} from "../services/selectors/authSelector";
+import Grid from "@mui/material/Unstable_Grid2";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 interface IGuidesHeaderProps {
     selectedGuideCategoryId: string
@@ -21,25 +22,27 @@ const GuidesHeader: FC<IGuidesHeaderProps> = ({
                                                   handleMyGuideSelected
                                               }) => {
     const isAuth = useAppSelector(state => getIsAuth(state))
+    const matches_730 = useMediaQuery('(min-width:730px)');
+    const matches_500 = useMediaQuery('(min-width:500px)');
     return (
         <Grid container
-              direction="row"
+              direction={matches_730 ? "row" : "column"}
               justifyContent="space-between"
               alignItems="center"
-              spacing={2}>
-            <Grid item>
+              spacing={3}>
+            <Grid>
                 <GuidesHeaderAddNewGuide/>
             </Grid>
-            <Grid item>
-                <Grid container>
+            <Grid>
+                <Grid container direction={matches_500 ? "row" : "column"} spacing={2}>
                     {isAuth && (
-                        <Grid item>
+                        <Grid>
                             <GuidesHeaderSelectMyGuides isSelectedMyGuides={isSelectedMyGuides}
                                                         handleMyGuideSelected={handleMyGuideSelected}/>
                         </Grid>
                     )}
 
-                    <Grid item>
+                    <Grid>
                         <SelectGuideCategory selectedGuideCategoryId={selectedGuideCategoryId}
                                              handleGuideCategoryChange={handleGuideCategoryChange}/>
                     </Grid>

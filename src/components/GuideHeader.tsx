@@ -81,8 +81,8 @@ const GuideHeader: FC<IGuideHeaderProps> = ({isEdit, guide, isNewGuide}) => {
         </Button>)
     return (
         <Box>
-            <Grid container spacing={2} columns={12} alignItems="center" justifyContent="space-between" mt={3}>
-                <Grid xs={8} sm={8} md={8}>
+            <Grid container spacing={1} alignItems="center" justifyContent="space-between" mt={3}>
+                <Grid xs={12} sm={12} md={8}>
                     {isEdit
                         ? (<TextField value={guide.title}
                                       onChange={handleGuideNameChange}
@@ -94,48 +94,60 @@ const GuideHeader: FC<IGuideHeaderProps> = ({isEdit, guide, isNewGuide}) => {
                             {guide.title}
                         </Typography>)}
                 </Grid>
-                <Stack spacing={1}>
-                    <Typography fontSize="14px" fontWeight={500} align="center">
-                        {isNewGuide && "Новый гайд"}
-                        {!isNewGuide && isEdit && "Режим редактирования"}
-                        {!isNewGuide && !isEdit && "Режим просмотра"}
-                    </Typography>
-                    <ButtonGroup>
-                        {isEdit
-                            ? (<>
-                                {!isNewGuide && (
-                                    <Button onClick={handleCancelClick} startIcon={<CancelIcon/>}>
-                                        Отмена
-                                    </Button>
-                                )}
-                                <Button onClick={handleSaveClick}
-                                        variant="contained"
-                                        startIcon={<SaveIcon/>}
-                                        disabled={!guide.title || !!guide.authorId && user.id !== guide.authorId}>
-                                    Сохранить
-                                </Button>
-                            </>)
-                            : (<>
-                                <Button onClick={handleEditClick}
-                                        variant="contained"
-                                        startIcon={<EditIcon/>}
-                                        disabled={!!guide.authorId && user.id !== guide.authorId}>
-                                    Редактировать
-                                </Button>
-                                <Button onClick={handleBackClick} startIcon={<KeyboardReturnIcon/>}>
-                                    На главную
-                                </Button>
-                            </>)}
-                    </ButtonGroup>
-                    <Typography fontSize="11px" fontWeight={300} align="center">
-                        {isEdit && !isNewGuide && "Не забудьте сохранить внесённые изменения."}
-                        {!!guide.authorId && user.id !== guide.authorId && "вы можете редактировать только свои гайды или гайды без автора"}
-                    </Typography>
-                </Stack>
+                <Grid xs={12} sm={12} md={4}>
+                    <Grid container alignItems="center"
+                          justifyContent="center"
+                          direction="column"
+                          spacing={1}
+                          sx={{height: "100px"}}>
+                        <Grid>
+                            <Typography fontSize="14px" fontWeight={500} align="center">
+                                {isNewGuide && "Новый гайд"}
+                                {!isNewGuide && isEdit && "Режим редактирования"}
+                                {!isNewGuide && !isEdit && "Режим просмотра"}
+                            </Typography>
+                        </Grid>
+                        <Grid>
+                            <ButtonGroup>
+                                {isEdit
+                                    ? (<>
+                                        {!isNewGuide && (
+                                            <Button onClick={handleCancelClick} startIcon={<CancelIcon/>}>
+                                                Отмена
+                                            </Button>
+                                        )}
+                                        <Button onClick={handleSaveClick}
+                                                variant="contained"
+                                                startIcon={<SaveIcon/>}
+                                                disabled={!guide.title || !!guide.authorId && user.id !== guide.authorId}>
+                                            Сохранить
+                                        </Button>
+                                    </>)
+                                    : (<>
+                                        <Button onClick={handleEditClick}
+                                                variant="contained"
+                                                startIcon={<EditIcon/>}
+                                                disabled={!!guide.authorId && user.id !== guide.authorId}>
+                                            Редактировать
+                                        </Button>
+                                        <Button onClick={handleBackClick} startIcon={<KeyboardReturnIcon/>}>
+                                            Главная
+                                        </Button>
+                                    </>)}
+                            </ButtonGroup>
+                        </Grid>
+                        <Grid>
+                            <Typography fontSize="11px" fontWeight={300} align="center">
+                                {isEdit && !isNewGuide && "Не забудьте сохранить внесённые изменения."}
+                                {!!guide.authorId && user.id !== guide.authorId && "вы можете редактировать только свои гайды или гайды без автора"}
+                            </Typography>
+                        </Grid>
+                    </Grid>
+                </Grid>
             </Grid>
             <Box sx={{marginTop: 3}}>
                 <Grid container spacing={2}>
-                    <Grid  xs={12} md={4}>
+                    <Grid xs={12} md={4}>
                         <GuideHeaderInformationBox title={"Автор:"}>
                             <Typography fontWeight={400}>
                                 {isNewGuide && "Вы"}
@@ -144,7 +156,7 @@ const GuideHeader: FC<IGuideHeaderProps> = ({isEdit, guide, isNewGuide}) => {
                             </Typography>
                         </GuideHeaderInformationBox>
                     </Grid>
-                    <Grid  xs={12} md={4}>
+                    <Grid xs={12} md={4}>
                         <GuideHeaderInformationBox title={isEdit ? "" : "Категория:"}>
                             {isEdit
                                 ? (
@@ -163,7 +175,7 @@ const GuideHeader: FC<IGuideHeaderProps> = ({isEdit, guide, isNewGuide}) => {
                                 )}
                         </GuideHeaderInformationBox>
                     </Grid>
-                    <Grid  xs={12} md={4}>
+                    <Grid xs={12} md={4}>
                         <GuideHeaderInformationBox title={"Количество шагов:"}>
                             <Typography fontWeight={400}>
                                 {countSteps}

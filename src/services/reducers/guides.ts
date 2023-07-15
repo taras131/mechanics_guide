@@ -2,7 +2,7 @@ import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {fetchAllGuides, fetchNewGuide, fetchRemoveGuide} from "../actions/guidesActionsCreators";
 import {IGuide, IGuideCategory, IGuideItemOption} from "../../models/iGuide";
 import {GUIDE_ITEM_TYPE} from "../../utils/const";
-import {IBreadCrumb} from "./breadCrumbs";
+import {IBreadCrumb} from "../../models/iBreadCrumbs";
 
 interface IGuideState {
     isLoading: boolean,
