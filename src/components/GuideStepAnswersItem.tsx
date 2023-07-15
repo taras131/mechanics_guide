@@ -35,7 +35,6 @@ const GuideStepAnswersItem: FC<IGuideStepAnswerProps> = ({
                                                              handleOptionRemove,
                                                              handleRedirectGuideClick
                                                          }) => {
-    const inputId = useId()
     const onRemoveOptionClick = () => {
         handleOptionRemove(questionId, option.id)
     }
@@ -53,14 +52,14 @@ const GuideStepAnswersItem: FC<IGuideStepAnswerProps> = ({
         <Box key={option.id}>
             {isEdit
                 ? (<FormControl sx={{m: 1, width: '100%'}} variant="standard">
-                        <InputLabel htmlFor={inputId}>
+                        <InputLabel htmlFor={option.id + ""}>
                             {option.redirectAnotherGuide
                                 ? `Перенаправление  на другой гайд`
                                 : `Вариант ответа № ${index + 1}`}
 
                         </InputLabel>
                         <Input
-                            id={inputId}
+                            id={option.id + ""}
                             value={option.text}
                             onChange={onOptionTextChange}
                             sx={{height: "50px"}}
