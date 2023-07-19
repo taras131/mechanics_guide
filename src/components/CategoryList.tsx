@@ -1,12 +1,16 @@
-import React from 'react';
+import React, {FC} from 'react';
 import {useAppSelector} from "../hooks/redux";
 import {getGuideCategories} from "../services/selectors/guidesSelectors";
 import {List, ListItem, ListItemText} from "@mui/material";
 import ListSubheader from '@mui/material/ListSubheader';
+import {IGuideCategory} from "../models/iGuide";
 
 
-const CategoryList = () => {
-    const categories = useAppSelector(state => getGuideCategories(state))
+interface ICategoryListProps {
+    categories: IGuideCategory []
+}
+
+const CategoryList: FC<ICategoryListProps> = ({categories}) => {
     const categoriesList = categories.map((category, index) => {
         return (
             <ListItem key={category.id}>
@@ -18,7 +22,7 @@ const CategoryList = () => {
         <List
             sx={{
                 width: '100%',
-                maxWidth: 360,
+                maxWidth: 390,
                 bgcolor: 'background.paper',
                 position: 'relative',
                 overflow: 'auto',

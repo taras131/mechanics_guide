@@ -11,21 +11,25 @@ interface IGuideHeaderInformationBoxProps {
 
 const GuideHeaderInformationBox: FC<IGuideHeaderInformationBoxProps> = ({title, children}) => {
     return (
-        <Card
-            sx={{
-                minHeight: "90px",
-                padding: "5px 15px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "start"
-            }}>
-            <Stack spacing={2} sx={{width: "100%"}}>
-                <Typography variant="h4" fontSize="16px" color="inherit" fontWeight={500}>
-                    {title}
-                </Typography>
-                {children}
-            </Stack>
-        </Card>
+        <Grid xs={12} md={4}>
+            <Card
+                sx={{
+                    minHeight: "90px",
+                    padding: "5px 15px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "start"
+                }}>
+                <Stack spacing={2} sx={{width: "100%"}}>
+                    {title && (
+                        <Typography variant="h4" fontSize="16px" color="inherit" fontWeight={500}>
+                            {title}
+                        </Typography>
+                    )}
+                    {children}
+                </Stack>
+            </Card>
+        </Grid>
     );
 };
 
