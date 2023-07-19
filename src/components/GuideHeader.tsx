@@ -28,6 +28,7 @@ import AddNewCategory from "./AddNewCategory";
 import TextField from "@mui/material/TextField";
 import {fetchNewGuide, fetchUpdateGuide} from "../services/actions/guidesActionsCreators";
 import {getUser} from "../services/selectors/authSelector";
+import GuideHeaderInformation from "./GuideHeaderInformation";
 
 interface IGuideHeaderProps {
     isEdit: boolean,
@@ -39,15 +40,11 @@ const GuideHeader: FC<IGuideHeaderProps> = ({isEdit, guide, isNewGuide}) => {
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
     const user = useAppSelector(state => getUser(state))
-    const categoryName = useAppSelector(state => getGuideCategoryNameById(state, guide.categoryId))
-    const countSteps = useAppSelector(state => getCountGuideSteps(state, guide.id, isEdit, isNewGuide))
-    const [isOpenNewCategoryWindow, setIsOpenNewCategoryWindow] = useState(false)
+
     const handleGuideNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         dispatch(changeEditionGuideTitle(e.target.value))
     }
-    const toggleIsOpenNewCategoryWindow = () => {
-        setIsOpenNewCategoryWindow(prev => !prev)
-    }
+
     const handleBackClick = () => {
         navigate(routes.main)
     }
@@ -59,12 +56,7 @@ const GuideHeader: FC<IGuideHeaderProps> = ({isEdit, guide, isNewGuide}) => {
         dispatch(setEditionGuide(guide))
         dispatch(setIsEdit(true))
     }
-    const handleGuideCategoryChange = (e: SelectChangeEvent) => {
-        dispatch(setEditionGuideCategory(e.target.value))
-    }
-    const handleAddCategoryClick = () => {
-        toggleIsOpenNewCategoryWindow()
-    }
+
     const handleSaveClick = () => {
         if (isNewGuide) {
             dispatch(fetchNewGuide(guide))
@@ -75,10 +67,7 @@ const GuideHeader: FC<IGuideHeaderProps> = ({isEdit, guide, isNewGuide}) => {
         }
         dispatch(setIsEdit(false))
     }
-    const addCategoryButton = (
-        <Button key={"add_button"} onClick={handleAddCategoryClick} variant="text" startIcon={<AddCircleOutlineIcon/>}>
-            Добавить категорию
-        </Button>)
+
     return (
         <Box>
             <Grid container spacing={1} alignItems="center" justifyContent="space-between" mt={3}>
@@ -145,42 +134,7 @@ const GuideHeader: FC<IGuideHeaderProps> = ({isEdit, guide, isNewGuide}) => {
                     </Grid>
                 </Grid>
             </Grid>
-            <Box sx={{marginTop: 3}}>
-                <Grid container spacing={2}>
-                    <Grid xs={12} md={4}>
-                        <GuideHeaderInformationBox title={"Автор:"}>
-                            <Typography fontWeight={400}>
-                                {isNewGuide && "Вы"}
-                                {!isNewGuide && guide.authorId && guide.authorId}
-                                {!isNewGuide && !guide.authorId && "Автор неизвестен"}
-                            </Typography>
-                        </GuideHeaderInformationBox>
-                    </Grid>
-                    <Grid xs={12} md={4}>
-                        <GuideHeaderInformationBox title={isEdit ? "" : "Категория:"}>
-                            {isEdit
-                                ? (<SelectGuideCategory selectedGuideCategoryId={guide.categoryId}
-                                                                 addCategoryButton={addCategoryButton}
-                                                                 handleGuideCategoryChange={handleGuideCategoryChange}/>
-                                )
-                                : (
-                                    <Typography fontWeight={400}>
-                                        {categoryName}
-                                    </Typography>
-                                )}
-                        </GuideHeaderInformationBox>
-                    </Grid>
-                    <Grid xs={12} md={4}>
-                        <GuideHeaderInformationBox title={"Количество шагов:"}>
-                            <Typography fontWeight={400}>
-                                {countSteps}
-                            </Typography>
-                        </GuideHeaderInformationBox>
-                    </Grid>
-                </Grid>
-            </Box>
-            <AddNewCategory isOpenNewCategoryWindow={isOpenNewCategoryWindow}
-                            toggleIsOpenNewCategoryWindow={toggleIsOpenNewCategoryWindow}/>
+            <GuideHeaderInformation isNewGuide={isNewGuide} isEdit={isEdit} guide={guide}/>
         </Box>
     );
 };

@@ -100,6 +100,7 @@ const GuidePreview: FC<IGuidePreviewProps> = ({guide}) => {
                             </Button>
                             {breadCrumbs && (
                                 <Button size="small"
+                                        variant="outlined"
                                         onClick={handleContinueClick}
                                         endIcon={<ArrowForwardIcon/>}>
                                     Продолжить

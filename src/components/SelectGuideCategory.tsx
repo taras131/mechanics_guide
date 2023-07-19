@@ -5,14 +5,14 @@ import {getGuideCategories} from "../services/selectors/guidesSelectors";
 
 interface ISelectGuideCategoryProps {
     selectedGuideCategoryId: string
-    addCategoryButton?: React.ReactNode
+
     handleGuideCategoryChange: (e: SelectChangeEvent) => void
 }
 
 const SelectGuideCategory: FC<ISelectGuideCategoryProps> = ({
                                                                 selectedGuideCategoryId,
                                                                 handleGuideCategoryChange,
-                                                                addCategoryButton
+
                                                             }) => {
     const guidesCategory = useAppSelector(state => getGuideCategories(state))
     const labelId = useId()
@@ -33,7 +33,7 @@ const SelectGuideCategory: FC<ISelectGuideCategoryProps> = ({
                 label="Категория"
                 onChange={handleGuideCategoryChange}
             >
-                {addCategoryButton ? [...categoryList, addCategoryButton] : categoryList}
+                {categoryList}
             </Select>
         </FormControl>
     );

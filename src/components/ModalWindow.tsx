@@ -1,6 +1,9 @@
 import React, {FC} from 'react';
 import {Modal} from "@mui/material";
 import Box from "@mui/material/Box";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from '@mui/icons-material/Close';
+import Grid from "@mui/material/Unstable_Grid2";
 
 interface IModalWindowProps {
     isOpenModal: boolean
@@ -29,6 +32,11 @@ const ModalWindow: FC<IModalWindowProps> = ({isOpenModal, handleToggleOpen, chil
             aria-describedby="modal-modal-description"
         >
             <Box sx={modalStyle}>
+                <Grid container justifyContent="end">
+                    <IconButton aria-label="close" onClick={handleToggleOpen}>
+                        <CloseIcon/>
+                    </IconButton>
+                </Grid>
                 {children}
             </Box>
         </Modal>
