@@ -49,7 +49,7 @@ const GuideStepAnswersItem: FC<IGuideStepAnswerProps> = ({
         }
     }
     return (
-        <Box key={option.id}>
+        <Box key={option.id + "_" + option.nextId}>
             {isEdit
                 ? (<FormControl sx={{m: 1, width: '100%'}} variant="standard">
                         <InputLabel htmlFor={option.id + ""}>

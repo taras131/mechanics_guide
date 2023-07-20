@@ -1,11 +1,12 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {fetchAllGuides, fetchNewGuide, fetchRemoveGuide} from "../actions/guidesActionsCreators";
+import {fetchAllGuides, fetchNewGuide, fetchRemoveGuide, fetchUploadFile} from "../actions/guidesActionsCreators";
 import {IGuide, IGuideCategory, IGuideItemOption} from "../../models/iGuide";
 import {GUIDE_ITEM_TYPE} from "../../utils/const";
 import {IBreadCrumb} from "../../models/iBreadCrumbs";
 
 interface IGuideState {
     isLoading: boolean,
+    isUploadFileLoading: boolean,
     isEdit: boolean,
     isNewGuideEdition: boolean,
     errorMessage: string,
@@ -31,6 +32,7 @@ export const emptyGuide = {
 
 export const initialState: IGuideState = {
     isLoading: true,
+    isUploadFileLoading: false,
     isEdit: false,
     isNewGuideEdition: false,
     errorMessage: "",
@@ -197,6 +199,17 @@ export const GuidesSlice = createSlice({
                         }
                     })]
                 }
+            },
+            editionGuideUpdateFile: (state, action: PayloadAction<{ guideStepId: number, filePath: string, fileName: string }>) => {
+                state.editionGuide = {
+                    ...state.editionGuide, items: [...state.editionGuide.items.map(item => {
+                        if (item.id === action.payload.guideStepId) {
+                            return {...item, file: {name: action.payload.fileName, path: action.payload.filePath}}
+                        } else {
+                            return item
+                        }
+                    })]
+                }
             }
         },
         extraReducers: {
@@ -235,6 +248,17 @@ export const GuidesSlice = createSlice({
                 state.isLoading = false;
                 state.errorMessage = action.payload;
             },
+            [fetchUploadFile.fulfilled.type]: (state) => {
+                state.isUploadFileLoading = false;
+            },
+            [fetchUploadFile.pending.type]: (state) => {
+                state.isUploadFileLoading = true
+                state.errorMessage = '';
+            },
+            [fetchUploadFile.rejected.type]: (state, action: PayloadAction<string>) => {
+                state.isUploadFileLoading = false;
+                state.errorMessage = action.payload;
+            },
         }
     }
 )
@@ -244,6 +268,6 @@ export const {
     setEditionGuideCategory, changeEditionGuideTitle, changeEditionGuideItemsText,
     changeEditionGuideItemsType, changeEditionGuideOptionText, editionGuideStepAddOption,
     editionGuideStepRemoveOption, editionGuideResultRedirect, removeGuideStep, setIsNewGuideEdition,
-    editionGuideRedirectAnotherGuide
+    editionGuideRedirectAnotherGuide, editionGuideUpdateFile
 } = GuidesSlice.actions
 export default GuidesSlice.reducer;

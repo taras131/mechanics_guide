@@ -16,7 +16,9 @@ import {getBreadCrumbsCount, getLastBreadCrumbs} from "../services/selectors/bre
 import TextField from "@mui/material/TextField";
 import {changeEditionGuideItemsText, changeEditionGuideItemsType} from "../services/reducers/guides";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import GuideStepSpecialFeatures from "./GuideStepSpecialFeatures";
+import HelpCenterIcon from '@mui/icons-material/HelpCenter';
+import ArticleIcon from '@mui/icons-material/Article';
+import GuideStepUploadFile from "./GuideStepUploadFile";
 
 interface IGuideStepProps {
     guideStep: IGuideItem,
@@ -50,13 +52,23 @@ const GuideStep: FC<IGuideStepProps> = ({guideStep, isEdit}) => {
             dispatch(changeEditionGuideItemsType({guideStepId: guideStep.id, newValue: newType}))
         }
     }
+
     return (
-        <Paper sx={{padding: "30px 20px"}}>
+        <Paper sx={{padding: "30px 16px"}}>
             <Stack spacing={3}>
-                <Grid container alignItems="center" justifyContent="space-between">
+                <Grid container alignItems="start" justifyContent="space-between">
                     {isEdit && guideStep.id !== 0 && (
                         <FormControl>
-                            <FormLabel id={radioButtonId}>Тип текущего шага</FormLabel>
+                            <FormLabel id={radioButtonId}>
+                                <Grid container alignItems="center" sx={{marginBottom: "10px"}}>
+                                    {guideStep.type === GUIDE_ITEM_TYPE.result
+                                        ? (<ArticleIcon/>)
+                                        : (<HelpCenterIcon/>)}
+                                    <Typography sx={{marginLeft: "10px"}}>
+                                        Тип текущего шага
+                                    </Typography>
+                                </Grid>
+                            </FormLabel>
                             <RadioGroup
                                 row
                                 aria-labelledby={radioButtonId}
@@ -73,9 +85,18 @@ const GuideStep: FC<IGuideStepProps> = ({guideStep, isEdit}) => {
                             </RadioGroup>
                         </FormControl>
                     )}
-                    {!isEdit && (<Typography variant="h4" fontSize="18px" color="inherit" fontWeight={600}>
-                        {guideStep.type === GUIDE_ITEM_TYPE.result ? "Результат" : ` Вопрос № ${breadCrumbsCount + 1}`}
-                    </Typography>)}
+                    {!isEdit && (
+                        <Stack direction="row" spacing={1} alignItems="center">
+                            {guideStep.type === GUIDE_ITEM_TYPE.result
+                                ? (<ArticleIcon color="primary"/>)
+                                : (<HelpCenterIcon color="primary"/>)}
+                            <Typography variant="h4" fontSize="18px" color="inherit" fontWeight={600}>
+                                {guideStep.type === GUIDE_ITEM_TYPE.result
+                                    ? "Результат"
+                                    : ` Вопрос № ${breadCrumbsCount + 1}`}
+                            </Typography>
+                        </Stack>
+                    )}
                     {guideStep.id !== 0 && (
                         <Button onClick={handleBackClick} disabled={!lastBreadCrumbs}>
                             Назад
@@ -97,6 +118,9 @@ const GuideStep: FC<IGuideStepProps> = ({guideStep, isEdit}) => {
                         {guideStep.text ? guideStep.text : "Эта часть гайда пока не наполнена, перейдите в режим редактирования для заполнения"}
                     </Typography>)}
                 {!isEdit && guideStep.type === GUIDE_ITEM_TYPE.question && (<Divider/>)}
+                {guideStep.type === GUIDE_ITEM_TYPE.result && (<GuideStepUploadFile guideStep={guideStep}
+                                                                                    isEdit={isEdit}
+                                                                                    guideId={guideId}/>)}
                 {guideStep.type === GUIDE_ITEM_TYPE.question && (
                     <GuideStepAnswers options={[...guideStep.options]}
                                       questionText={guideStep.text}
