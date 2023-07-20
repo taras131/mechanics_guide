@@ -12,10 +12,16 @@ export interface IGuideItemOption {
     redirectAnotherGuide? :string
 }
 
+export interface IFile {
+    name: string
+    path: string
+}
+
 export interface IGuideItem {
     id: number,
     text: string,
     type: GUIDE_ITEM_TYPE,
+    file?: IFile
     options: IGuideItemOption[] | []
 }
 

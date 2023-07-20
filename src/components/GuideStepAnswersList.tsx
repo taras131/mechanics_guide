@@ -49,7 +49,7 @@ const GuideStepAnswersList: FC<IGuideStepAnswersListProps> = ({
         dispatch(cleanBreadCrumbs())
     }
     const answersList = options.map((option, index) => {
-        return GuideStepAnswersItem({
+        return GuideStepAnswersItem( {
             option: option,
             questionText: questionText,
             questionId: questionId,

@@ -62,3 +62,34 @@ export const fetchNewGuideCategory = createAsyncThunk(
         }
     }
 )
+export interface IFile {
+    inputFile: any, fileName: string
+}
+
+export interface IFetchUploadFile {
+    file: File
+    guideStepId: number
+    updateFilePath: (fileName: string, guidePath: string) => void
+}
+export const fetchUploadFile = createAsyncThunk(
+    'upload_file',
+    async (fileData : IFetchUploadFile, ThunkAPI) => {
+        try {
+            const res = await api.uploadFile(fileData)
+            console.log(res)
+            return {guideStepId: fileData.guideStepId, filePatch: res}
+        } catch (e) {
+            return ThunkAPI.rejectWithValue(handlerError(e))
+        }
+    }
+)
+export const fetchRemoveFile = createAsyncThunk(
+    'upload_file',
+    async (fileName: string, ThunkAPI) => {
+        try {
+            const res = await api.removeFile(fileName)
+        } catch (e) {
+            return ThunkAPI.rejectWithValue(handlerError(e))
+        }
+    }
+)

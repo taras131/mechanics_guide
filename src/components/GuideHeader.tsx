@@ -18,13 +18,9 @@ import {
     changeEditionGuideTitle,
     emptyGuide,
     setEditionGuide,
-    setEditionGuideCategory,
     setIsEdit,
     setIsNewGuideEdition
 } from "../services/reducers/guides";
-import SelectGuideCategory from "./SelectGuideCategory";
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import AddNewCategory from "./AddNewCategory";
 import TextField from "@mui/material/TextField";
 import {fetchNewGuide, fetchUpdateGuide} from "../services/actions/guidesActionsCreators";
 import {getUser} from "../services/selectors/authSelector";

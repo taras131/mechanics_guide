@@ -1,4 +1,4 @@
-import {db} from "../firebase";
+import {db, storage} from "../firebase";
 import {
     addDoc,
     collection,
@@ -10,7 +10,9 @@ import {
 } from "firebase/firestore";
 import {IAuthData} from "../models/iAuth";
 import {getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut} from "firebase/auth";
+import {ref, deleteObject, uploadBytesResumable, getDownloadURL} from "firebase/storage";
 import {IGuide} from "../models/iGuide";
+import {IFetchUploadFile, IFile} from "../services/actions/guidesActionsCreators";
 
 class Api {
     auth = getAuth();
@@ -45,14 +47,55 @@ class Api {
             categoryName: categoryName
         });
     }
+    uploadFile = async (fileData: IFetchUploadFile) => {
+        const name = new Date().getTime() + fileData.file.name;
+        const storageRef = ref(storage, name);
+        const uploadTask = uploadBytesResumable(storageRef, fileData.file);
+        uploadTask.on("state_changed",
+            (snapshot) => {
+                switch (snapshot.state) {
+                    case "paused":
+                        break;
+                    case "running":
+                        break;
+                    default:
+                        break;
+                }
+            },
+            (error) => {
+                alert("Ошибка загрузки");
+                switch (error.code) {
+                    case "storage/unauthorized":
+                        break;
+                    case "storage/canceled":
+                        break;
+                    case "storage/unknown":
+                        break;
+                    default:
+                        break;
+                }
+            },
+            async () => {
+                getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                    fileData.updateFilePath(name, downloadURL)
+                });
+            }
+        );
+    };
+    removeFile = async (fileName: string) => {
+        const desertRef = ref(storage, fileName);
+        deleteObject(desertRef).then(() => {
+            // File deleted successfully
+        }).catch((e) => {
+            alert(e);
+        });
+    };
     login = async (authData: IAuthData) => {
         const res = await signInWithEmailAndPassword(this.auth, authData.email, authData.password)
-        console.log(res)
         return {email: res.user.email, id: res.user.uid}
     }
     register = async (authData: IAuthData) => {
         const res = await createUserWithEmailAndPassword(this.auth, authData.email, authData.password)
-        console.log(res)
         return {email: res.user.email, id: res.user.uid}
     }
     out = async () => {
