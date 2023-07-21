@@ -1,14 +1,27 @@
 import React, {FC, useEffect, useId, useState} from 'react';
-import ModalWindow from "./ModalWindow";
+import Button from "@mui/material/Button";
+import {FormControl} from "@mui/material";
+import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
 import CategoryList from "./CategoryList";
-import {useAppDispatch, useAppSelector} from "../hooks/redux";
-import {fetchNewGuideCategory} from "../services/actions/guidesActionsCreators";
+import ModalWindow from "./ModalWindow";
 import {getGuideCategories} from "../services/selectors/guidesSelectors";
-import {FormControl, InputLabel} from "@mui/material";
+import {fetchNewGuideCategory} from "../services/actions/guidesActionsCreators";
+import {useAppDispatch, useAppSelector} from "../hooks/redux";
+import {validateText} from "../utils/services";
+import {
+    ADD_CATEGORY_FORM_CONTROL_HEIGHT_PX,
+    ADD_CATEGORY_TEXT_FIELD_MAX_WIDTH_PX,
+    CENTER,
+    H3,
+    OUTLINED, STRING_EMPTY, STRING_WITH_SPACE
+} from "../utils/const";
+
+const addCategoryTitle = "Добавление категории.";
+const newCategoryLabel = "Новая категория";
+const addCategoryButtonText = "Добавить";
+
 
 interface IAddNewCategoryProps {
     isOpenNewCategoryWindow: boolean
@@ -20,67 +33,42 @@ const AddNewCategory: FC<IAddNewCategoryProps> = ({
                                                       toggleIsOpenNewCategoryWindow
                                                   }) => {
     const dispatch = useAppDispatch()
-    const [newCategoryName, setNewCategoryName] = useState("")
-    const [newCategoryError, setNewCategoryError] = useState(" ")
-    const textFieldId = useId()
     const categories = useAppSelector(state => getGuideCategories(state))
-    const checkExistsCategory = (newValue: string): boolean => {
-        let isExist = false
-        categories.forEach(category => {
-            if (category.categoryName.toUpperCase() === newValue.toUpperCase()) {
-                isExist = true
-                return
-            }
-        })
-        return isExist
-    }
-    const validateCategoryName = (newValue: string) => {
-        setNewCategoryError("")
-        const newValueNumberLetters = newValue.match(/[a-zA-Zа-яА-Я]/g)
-        if (!newValueNumberLetters) {
-            setNewCategoryError("Поле должно содержать буквы")
-        } else {
-            if (newValueNumberLetters.length < 3) {
-                setNewCategoryError("Поле должно содержать не меньше трёх букв")
-            } else {
-                if (checkExistsCategory(newValue)) {
-                    setNewCategoryError("Такая категория уже существует")
-                }
-            }
-        }
-    }
-    const handleCategoryNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        validateCategoryName(e.target.value)
-        setNewCategoryName(e.target.value)
-    }
+    const textFieldId = useId()
+    const [newCategoryError, setNewCategoryError] = useState(STRING_WITH_SPACE)
+    const [newCategoryName, setNewCategoryName] = useState(STRING_EMPTY)
+    const categoriesNames = categories.map(category => category.categoryName)
     const handleAddCategoryClick = () => {
         dispatch(fetchNewGuideCategory(newCategoryName))
         toggleIsOpenNewCategoryWindow()
 
     }
+    const handleCategoryNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        validateText(e.target.value, setNewCategoryError, categoriesNames)
+        setNewCategoryName(e.target.value)
+    }
     useEffect(() => {
-        setNewCategoryName("")
-        setNewCategoryError(" ")
-    }, [setNewCategoryName, setNewCategoryError])
+        setNewCategoryError(STRING_WITH_SPACE)
+        setNewCategoryName(STRING_EMPTY)
+    }, [setNewCategoryError, setNewCategoryName])
     return (
-        <ModalWindow isOpenModal={isOpenNewCategoryWindow} handleToggleOpen={toggleIsOpenNewCategoryWindow}>
+        <ModalWindow handleToggleOpen={toggleIsOpenNewCategoryWindow} isOpenModal={isOpenNewCategoryWindow}>
             <Stack spacing={2}>
-                <Typography variant={"h3"} fontSize={16} fontWeight={600} align="center">
-                    Добавление категории.
+                <Typography align={CENTER} fontSize={16} fontWeight={600} variant={H3}>
+                    {addCategoryTitle}
                 </Typography>
                 <CategoryList categories={categories}/>
-                <FormControl sx={{minHeight: "80px"}}>
-                    <TextField value={newCategoryName}
-                               onChange={handleCategoryNameChange}
+                <FormControl sx={{minHeight: ADD_CATEGORY_FORM_CONTROL_HEIGHT_PX}}>
+                    <TextField helperText={newCategoryError}
                                id={textFieldId}
-                               label="Новая категория"
-                               variant="outlined"
-                               sx={{maxWidth: "390px"}}
-                               helperText={newCategoryError}/>
+                               label={newCategoryLabel}
+                               onChange={handleCategoryNameChange}
+                               sx={{maxWidth: ADD_CATEGORY_TEXT_FIELD_MAX_WIDTH_PX}}
+                               variant={OUTLINED}
+                               value={newCategoryName}/>
                 </FormControl>
-                <Button onClick={handleAddCategoryClick}
-                        disabled={!!newCategoryError}>
-                    Добавить
+                <Button disabled={!!newCategoryError} onClick={handleAddCategoryClick}>
+                    {addCategoryButtonText}
                 </Button>
             </Stack>
         </ModalWindow>

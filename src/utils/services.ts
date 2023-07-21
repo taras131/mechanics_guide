@@ -8,3 +8,28 @@ export const validateEmail = (email: string) => {
             /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
         );
 };
+export const checkExists = (newValue: string, existingValuesArr: string[]): boolean => {
+    let isExist = false
+    existingValuesArr.forEach(value => {
+        if (value.toUpperCase() === newValue.toUpperCase()) {
+            isExist = true
+            return
+        }
+    })
+    return isExist
+}
+export const validateText = (newValue: string, setError: (newValue:string) => void, existingValuesArr: string[]) => {
+    setError("")
+    const newValueNumberLetters = newValue.match(/[a-zA-Zа-яА-Я]/g)
+    if (!newValueNumberLetters) {
+        setError("Поле должно содержать буквы")
+    } else {
+        if (newValueNumberLetters.length < 3) {
+            setError("Поле должно содержать не меньше трёх букв")
+        } else {
+            if (checkExists(newValue, existingValuesArr)) {
+                setError("Такое значение уже существует")
+            }
+        }
+    }
+}
