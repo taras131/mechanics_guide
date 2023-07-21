@@ -1,6 +1,6 @@
 import {RootState} from "../store";
 import {ALL_CATEGORIES, GUIDE_ITEM_TYPE} from "../../utils/const";
-import {IGuide, IGuideCategory, IGuideItem} from "../../models/iGuide";
+import {IGuide, IGuideCategory, IGuideItem, IGuideItemOption} from "../../models/iGuide";
 
 export const getGuidesWithFilter = (state: RootState,
                                     selectedGuideCategoryId: string,
@@ -67,5 +67,15 @@ export const gitIsMyEditionGuide = (state: RootState): boolean => {
     } else {
         return true
     }
+}
+export const getEditionGuideOptionsByGuideStepId = (state: RootState, guideStepId: number) => {
+    const guideItem = state.guides.editionGuide.items.find(item => item.id === guideStepId)
+    if (guideItem) {
+        return guideItem.options
+    } else {
+        return []
+    }
+
+
 }
 

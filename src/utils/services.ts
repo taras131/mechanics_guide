@@ -18,14 +18,14 @@ export const checkExists = (newValue: string, existingValuesArr: string[]): bool
     })
     return isExist
 }
-export const validateText = (newValue: string, setError: (newValue:string) => void, existingValuesArr: string[]) => {
+export const validateText = (newValue: string, setError: (newValue:string) => void, existingValuesArr: string[], newValueMinLength: number) => {
     setError("")
     const newValueNumberLetters = newValue.match(/[a-zA-Zа-яА-Я]/g)
     if (!newValueNumberLetters) {
         setError("Поле должно содержать буквы")
     } else {
-        if (newValueNumberLetters.length < 3) {
-            setError("Поле должно содержать не меньше трёх букв")
+        if (newValueNumberLetters.length < newValueMinLength) {
+            setError(`Поле должно содержать не меньше ${newValueMinLength} букв`)
         } else {
             if (checkExists(newValue, existingValuesArr)) {
                 setError("Такое значение уже существует")

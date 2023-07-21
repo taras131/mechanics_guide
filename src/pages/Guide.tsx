@@ -10,6 +10,8 @@ import GuideHeader from "../components/GuideHeader";
 import GuideStep from "../components/GuideStep";
 import {setIsEdit} from "../services/reducers/guides"
 import GuideStepSpecialFeatures from "../components/GuideStepSpecialFeatures";
+import GuideInformationList from "../components/GuideInformationList";
+import Box from "@mui/material/Box";
 
 const Guide = () => {
         const dispatch = useAppDispatch()
@@ -45,6 +47,7 @@ const Guide = () => {
         return (
             <Stack spacing={3}>
                 <GuideHeader guide={guide} isEdit={isEdit} isNewGuide={isNewGuide}/>
+                <GuideInformationList isNewGuide={isNewGuide} isEdit={isEdit} guide={guide}/>
                 <BreadCrumbs/>
                 <GuideStep guideStep={guideStep} isEdit={isEdit}/>
                 {isEdit && (<GuideStepSpecialFeatures guideStepType={guideStep.type}

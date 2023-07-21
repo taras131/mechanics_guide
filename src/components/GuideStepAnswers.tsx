@@ -1,20 +1,16 @@
 import React, {FC, useState} from 'react';
 import {IGuideItemOption} from "../models/iGuide";
-import GuideStepAnswersItem from "./GuideStepAnswersItem";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
-import Box from "@mui/material/Box";
-import {changeEditionGuideOptionText} from "../services/reducers/guides";
-import {useAppDispatch, useAppSelector} from "../hooks/redux";
-import AddNewOption from "./AddNewOption";
-import {useNavigate, useParams} from "react-router-dom";
-import {getIsEdit} from "../services/selectors/guidesSelectors";
-import {addBreadCrumb} from "../services/reducers/breadCrumbs";
-import {routes} from "../utils/routes";
+import {editionGuideStepAddOption} from "../services/reducers/guides";
+import {useAppDispatch} from "../hooks/redux";
 import GuideStepAnswersList from "./GuideStepAnswersList";
+import AddNewStringValueModal from "./AddNewStringValueModal";
+import {ADD_OPTION_LABEL, ADD_OPTION_SUBHEADER_TEXT, ADD_OPTION_TITLE} from "../utils/const";
+import {getNextId} from "../utils/services";
 
 interface IGuideStepAnswersProps {
     options: IGuideItemOption []
@@ -35,9 +31,21 @@ const GuideStepAnswers: FC<IGuideStepAnswersProps> = ({
                                                           isEdit,
                                                           guideStepId
                                                       }) => {
+    const dispatch = useAppDispatch()
     const [isOpenNewOptionWindow, setIsOpenNewOptionWindow] = useState(false)
+    const optionsTexts = options.map(option => option.text)
     const toggleIsOpenNewOptionWindow = () => {
         setIsOpenNewOptionWindow(prev => !prev)
+    }
+    const handleAddOptionClick = (newOptionText: string) => {
+        dispatch(editionGuideStepAddOption({
+            guideStepId: guideStepId,
+            newOption: {
+                id: getNextId() - 200,
+                nextId: getNextId(),
+                text: newOptionText
+            }
+        }))
     }
     return (
         <Stack spacing={3}>
@@ -56,9 +64,15 @@ const GuideStepAnswers: FC<IGuideStepAnswersProps> = ({
                                     startIcon={<AddCircleOutlineOutlinedIcon/>}>
                                 Добавить вариант ответа
                             </Button>
-                            <AddNewOption isOpenNewOptionWindow={isOpenNewOptionWindow}
-                                          toggleIsOpenNewOptionWindow={toggleIsOpenNewOptionWindow}
-                                          guideStepId={guideStepId}/>
+                            <AddNewStringValueModal
+                                existingValues={optionsTexts}
+                                fieldLabelText={ADD_OPTION_LABEL}
+                                isOpenWindow={isOpenNewOptionWindow}
+                                listSubHeaderText={ADD_OPTION_SUBHEADER_TEXT}
+                                newValueMinLength={2}
+                                onAddNewValueClick={handleAddOptionClick}
+                                title={ADD_OPTION_TITLE}
+                                toggleIsOpenWindow={toggleIsOpenNewOptionWindow}/>
                         </>
                     )}
                 </Grid>
