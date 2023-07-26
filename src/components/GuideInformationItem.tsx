@@ -9,7 +9,7 @@ interface IGuideHeaderInformationBoxProps {
     children: React.ReactNode
 }
 
-const GuideHeaderInformationBox: FC<IGuideHeaderInformationBoxProps> = ({title, children}) => {
+const GuideInformationItem: FC<IGuideHeaderInformationBoxProps> = ({title, children}) => {
     return (
         <Grid xs={12} md={4}>
             <Card
@@ -33,4 +33,4 @@ const GuideHeaderInformationBox: FC<IGuideHeaderInformationBoxProps> = ({title, 
     );
 };
 
-export default GuideHeaderInformationBox;
+export default GuideInformationItem;

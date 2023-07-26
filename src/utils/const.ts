@@ -11,6 +11,22 @@ export const ALL_CATEGORIES: IGuideCategory = {
 };
 
 export const EDITION_GUIDE_ID = "edition_guide_id"
+export const OUTLINED  = "outlined"
+export const CENTER  = "center"
+export const H3 ="h3"
+export const FORM_CONTROL_HEIGHT_PX = "80px"
+export const TEXT_FIELD_MAX_WIDTH_PX = "390px"
+export const STRING_EMPTY = ""
+export const STRING_WITH_SPACE = " "
+export const ADD_BUTTON_TEXT = "Добавить"
+export const EMPTY_EXISTING_VALUES_TEXT = "Существующих значений пока нет"
+export const ADD_CATEGORY_TITLE = "Добавление категории."
+export const ADD_CATEGORY_LABEL = "Новая категория"
+export const ADD_CATEGORY_SUBHEADER_TEXT = "Существующие категории"
+export const ADD_OPTION_TITLE = "Добавление варианта ответа."
+export const ADD_OPTION_LABEL = "Новый вариант ответа"
+export const ADD_OPTION_SUBHEADER_TEXT = "Существующие варианты"
+export const GUIDE_STEPS_COUNT_TITLE = "Количество шагов:"
 
 
 
