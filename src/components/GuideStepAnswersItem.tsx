@@ -11,6 +11,7 @@ import Grid from "@mui/material/Unstable_Grid2";
 import TripOriginIcon from '@mui/icons-material/TripOrigin';
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
+import {START} from "../utils/const";
 
 interface IGuideStepAnswerProps {
     option: IGuideItemOption
@@ -89,15 +90,12 @@ const GuideStepAnswersItem: FC<IGuideStepAnswerProps> = ({
                     </FormControl>
                 )
                 : (<Button fullWidth
-                           sx={{justifyContent: "space-between"}}
+                           sx={{justifyContent: START}}
                            onClick={onNextClick}
-                           endIcon={option.redirectAnotherGuide ? (<NextPlanIcon/>) : (<SendIcon/>)}>
-                    <Stack direction={"row"} spacing={2} alignItems={"center"} justifyContent="center">
-                        <TripOriginIcon/>
-                        <Typography>
-                            {option.text}
-                        </Typography>
-                    </Stack>
+                           startIcon={<TripOriginIcon/>}>
+                    <Typography>
+                        {option.text}
+                    </Typography>
                 </Button>)}
         </Grid>
     );

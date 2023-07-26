@@ -46,7 +46,7 @@ const GuideInformationList: FC<IGuideHeaderInformationProps> = ({isNewGuide, isE
         dispatch(fetchNewGuideCategory(newCategoryName))
     }
     return (
-        <Grid container spacing={2} sx={{marginTop: 1}}>
+        <Grid container spacing={2}>
             <GuideInformationItem title={"Автор:"}>
                 <Typography fontWeight={400}>
                     {isNewGuide && "Вы"}

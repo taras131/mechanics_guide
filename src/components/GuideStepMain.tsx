@@ -1,11 +1,11 @@
 import React, {FC, useId} from 'react';
-import TextField from "@mui/material/TextField";
-import {GUIDE_ITEM_TYPE} from "../utils/const";
-import Typography from "@mui/material/Typography";
 import {Divider} from "@mui/material";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
 import GuideStepAnswers from "./GuideStepAnswers";
 import {changeEditionGuideItemsText} from "../services/reducers/guides";
 import {useAppDispatch} from "../hooks/redux";
+import {EMPTY_GUIDE_ITEM_MESSAGE, GUIDE_ITEM_TYPE, OUTLINED} from "../utils/const";
 import {IGuideItem} from "../models/iGuide";
 
 interface IProps {
@@ -14,6 +14,8 @@ interface IProps {
     isEdit: boolean
 }
 
+const textResultLabel = "Текст результата"
+const textQuestionLabel = "Текст вопроса №"
 const GuideStepMain: FC<IProps> = ({breadCrumbsCount, guideStep, isEdit}) => {
     const dispatch = useAppDispatch()
     const questionInputId = useId()
@@ -27,15 +29,19 @@ const GuideStepMain: FC<IProps> = ({breadCrumbsCount, guideStep, isEdit}) => {
                               onChange={handleGuideStepTextChange}
                               id={questionInputId}
                               label={guideStep.type === GUIDE_ITEM_TYPE.result
-                                  ? "Текст результата"
-                                  : `Текст вопроса № ${breadCrumbsCount + 1}`}
-                              variant="outlined"
-                              multiline={guideStep.type === GUIDE_ITEM_TYPE.result}
+                                  ? textResultLabel
+                                  : `${textQuestionLabel} ${breadCrumbsCount + 1}`}
+                              variant={OUTLINED}
+                              multiline
                               rows={4}
                               fullWidth/>)
-                : (<Typography fontWeight={400}>
-                    {guideStep.text ? guideStep.text : "Эта часть гайда пока не наполнена, перейдите в режим редактирования для заполнения"}
-                </Typography>)}
+                : (<pre style={{
+                    whiteSpace: "pre-wrap",
+                }}>
+                    <Typography fontWeight={400}>
+                    {guideStep.text ? guideStep.text : EMPTY_GUIDE_ITEM_MESSAGE}
+                </Typography>
+                        </pre>)}
             {!isEdit && guideStep.type === GUIDE_ITEM_TYPE.question && (<Divider/>)}
             {guideStep.type === GUIDE_ITEM_TYPE.question && (
                 <GuideStepAnswers options={[...guideStep.options]}

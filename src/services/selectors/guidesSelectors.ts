@@ -75,7 +75,9 @@ export const getEditionGuideOptionsByGuideStepId = (state: RootState, guideStepI
     } else {
         return []
     }
-
-
+}
+export const getGuidesTitlesWithGuideIdFilter = (state: RootState, guideId: string): string [] => {
+    const filteredGuides = [...state.guides.guides.filter(guide => guide.id !== guideId)]
+    return filteredGuides.map(guide => guide.title)
 }
 

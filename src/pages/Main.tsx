@@ -8,7 +8,6 @@ import {SelectChangeEvent} from "@mui/material";
 import {getGuidesWithFilter} from "../services/selectors/guidesSelectors";
 
 const Main = () => {
-    const dispatch = useAppDispatch()
     const [selectedGuideCategoryId, setSelectedGuideCategoryId] = useState(ALL_CATEGORIES.id)
     const [isSelectedMyGuides, setIsSelectedMyGuides] = useState(false)
     const guides = useAppSelector(state => getGuidesWithFilter(state, selectedGuideCategoryId, isSelectedMyGuides))

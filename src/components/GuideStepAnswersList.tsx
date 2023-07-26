@@ -63,7 +63,7 @@ const GuideStepAnswersList: FC<IGuideStepAnswersListProps> = ({
         })
     })
     return (
-        <Grid container spacing={6}>
+        <Grid container spacing={3}>
             {answersList}
         </Grid>
     );
