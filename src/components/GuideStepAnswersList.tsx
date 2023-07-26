@@ -1,4 +1,4 @@
-import React, {FC, useEffect} from 'react';
+import React, {FC} from 'react';
 import {changeEditionGuideOptionText, editionGuideStepRemoveOption, setIsEdit} from "../services/reducers/guides";
 import {addBreadCrumb, cleanBreadCrumbs} from "../services/reducers/breadCrumbs";
 import {routes} from "../utils/routes";
@@ -6,6 +6,7 @@ import {IGuideItemOption} from "../models/iGuide";
 import {useNavigate, useParams} from "react-router-dom";
 import {useAppDispatch} from "../hooks/redux";
 import GuideStepAnswersItem from "./GuideStepAnswersItem";
+import Grid from "@mui/material/Unstable_Grid2";
 
 interface IGuideStepAnswersListProps {
     options: IGuideItemOption []
@@ -49,7 +50,7 @@ const GuideStepAnswersList: FC<IGuideStepAnswersListProps> = ({
         dispatch(cleanBreadCrumbs())
     }
     const answersList = options.map((option, index) => {
-        return GuideStepAnswersItem( {
+        return GuideStepAnswersItem({
             option: option,
             questionText: questionText,
             questionId: questionId,
@@ -62,9 +63,9 @@ const GuideStepAnswersList: FC<IGuideStepAnswersListProps> = ({
         })
     })
     return (
-        <>
+        <Grid container spacing={6}>
             {answersList}
-        </>
+        </Grid>
     );
 };
 

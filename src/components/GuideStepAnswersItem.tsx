@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useId} from 'react';
+import React, {FC} from 'react';
 import {IGuideItemOption} from "../models/iGuide";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
@@ -6,11 +6,11 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import SendIcon from '@mui/icons-material/Send';
 import {FormControl, Input, InputAdornment, InputLabel} from "@mui/material";
 import IconButton from "@mui/material/IconButton";
-import {useAppDispatch} from "../hooks/redux";
 import NextPlanIcon from '@mui/icons-material/NextPlan';
-import {useNavigate} from "react-router-dom";
-import {routes} from "../utils/routes";
-import {setIsEdit} from "../services/reducers/guides";
+import Grid from "@mui/material/Unstable_Grid2";
+import TripOriginIcon from '@mui/icons-material/TripOrigin';
+import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
 
 interface IGuideStepAnswerProps {
     option: IGuideItemOption
@@ -49,7 +49,7 @@ const GuideStepAnswersItem: FC<IGuideStepAnswerProps> = ({
         }
     }
     return (
-        <Box key={option.id + "_" + option.nextId}>
+        <Grid key={option.id + "_" + option.nextId} xs={12} sm={6} md={6}>
             {isEdit
                 ? (<FormControl sx={{m: 1, width: '100%'}} variant="standard">
                         <InputLabel htmlFor={option.id + ""}>
@@ -88,12 +88,18 @@ const GuideStepAnswersItem: FC<IGuideStepAnswerProps> = ({
                         />
                     </FormControl>
                 )
-                : (<Button variant="outlined"
+                : (<Button fullWidth
+                           sx={{justifyContent: "space-between"}}
                            onClick={onNextClick}
                            endIcon={option.redirectAnotherGuide ? (<NextPlanIcon/>) : (<SendIcon/>)}>
-                    {option.text}
+                    <Stack direction={"row"} spacing={2} alignItems={"center"} justifyContent="center">
+                        <TripOriginIcon/>
+                        <Typography>
+                            {option.text}
+                        </Typography>
+                    </Stack>
                 </Button>)}
-        </Box>
+        </Grid>
     );
 };
 

@@ -5,8 +5,7 @@ import GuidesList from "../components/GuidesList";
 import GuidesHeader from "../components/GuidesHeader";
 import Stack from '@mui/material/Stack';
 import {SelectChangeEvent} from "@mui/material";
-import {geiIsGuidesLoading, getGuidesWithFilter} from "../services/selectors/guidesSelectors";
-import Preloader from "../components/Preloader";
+import {getGuidesWithFilter} from "../services/selectors/guidesSelectors";
 
 const Main = () => {
     const dispatch = useAppDispatch()
