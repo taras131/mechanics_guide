@@ -1,42 +1,43 @@
 import React, {FC, useState} from 'react';
-import {IGuideItemOption} from "../models/iGuide";
+import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
+import Button from "@mui/material/Button";
+import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import Grid from "@mui/material/Grid";
-import Button from "@mui/material/Button";
-import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
+import AddNewStringValueModal from "./AddNewStringValueModal";
+import GuideStepAnswersList from "./GuideStepAnswersList";
+import {getNextId} from "../utils/services";
 import {editionGuideStepAddOption} from "../services/reducers/guides";
 import {useAppDispatch} from "../hooks/redux";
-import GuideStepAnswersList from "./GuideStepAnswersList";
-import AddNewStringValueModal from "./AddNewStringValueModal";
-import {ADD_OPTION_LABEL, ADD_OPTION_SUBHEADER_TEXT, ADD_OPTION_TITLE} from "../utils/const";
-import {getNextId} from "../utils/services";
+import {IGuideItemOption} from "../models/iGuide";
+import {
+    ADD_OPTION_LABEL,
+    ADD_OPTION_SUBHEADER_TEXT,
+    ADD_OPTION_TITLE,
+    CENTER,
+    EMPTY_GUIDE_ITEM_MESSAGE, H4,
+    SPACE_BETWEEN
+} from "../utils/const";
+
 
 interface IGuideStepAnswersProps {
-    options: IGuideItemOption []
-    questionText: string
-    questionId: number
-    isEdit: boolean
     guideStepId: number
+    isEdit: boolean
+    options: IGuideItemOption []
+    questionId: number
+    questionText: string
 }
 
-const emptyAnswerMessage = " У вас пока нет вариантов ответа, если вы являетесь автором этого гайда," +
-    " перейдите в режим редактирования и нажмите на кнопку \"Добавить\n" +
-    "                    вариант ответа\" чтобы добавить новый вариант"
-
 const GuideStepAnswers: FC<IGuideStepAnswersProps> = ({
-                                                          options,
-                                                          questionText,
-                                                          questionId,
+                                                          guideStepId,
                                                           isEdit,
-                                                          guideStepId
+                                                          options,
+                                                          questionId,
+                                                          questionText,
                                                       }) => {
     const dispatch = useAppDispatch()
     const [isOpenNewOptionWindow, setIsOpenNewOptionWindow] = useState(false)
     const optionsTexts = options.map(option => option.text)
-    const toggleIsOpenNewOptionWindow = () => {
-        setIsOpenNewOptionWindow(prev => !prev)
-    }
     const handleAddOptionClick = (newOptionText: string) => {
         dispatch(editionGuideStepAddOption({
             guideStepId: guideStepId,
@@ -47,11 +48,14 @@ const GuideStepAnswers: FC<IGuideStepAnswersProps> = ({
             }
         }))
     }
+    const toggleIsOpenNewOptionWindow = () => {
+        setIsOpenNewOptionWindow(prev => !prev)
+    }
     return (
         <Stack spacing={3}>
-            <Grid alignItems="center" justifyContent="space-between" container sx={{marginTop: "10px"}}>
+            <Grid alignItems={CENTER} justifyContent={SPACE_BETWEEN} container sx={{marginTop: "10px"}}>
                 <Grid>
-                    <Typography variant="h4" fontSize={14} fontWeight={500}>
+                    <Typography variant={H4} fontSize={14} fontWeight={500}>
                         Варианты ответа:
                     </Typography>
                 </Grid>
@@ -83,7 +87,7 @@ const GuideStepAnswers: FC<IGuideStepAnswersProps> = ({
                                          questionText={questionText}
                                          isEdit={isEdit}/>)
                 : (<Typography fontSize={14} fontWeight={300} sx={{paddingTop: "15px"}}>
-                    {emptyAnswerMessage}
+                    {EMPTY_GUIDE_ITEM_MESSAGE}
                 </Typography>)}
         </Stack>
     );

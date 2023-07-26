@@ -13,7 +13,19 @@ export const ALL_CATEGORIES: IGuideCategory = {
 export const EDITION_GUIDE_ID = "edition_guide_id"
 export const OUTLINED  = "outlined"
 export const CENTER  = "center"
+export const SPACE_BETWEEN  = "space-between"
 export const H3 ="h3"
+export const H4 ="h4"
+export const H5 ="h5"
+export const START ="start"
+export const END ="end"
+export const COLUMN ="column"
+export const ROW ="row"
+export const HIDDEN ="hidden"
+export const PRIMARY ="primary"
+export const DIV ="div"
+export const CONTAINED ="contained"
+export const SMALL ="small"
 export const FORM_CONTROL_HEIGHT_PX = "80px"
 export const TEXT_FIELD_MAX_WIDTH_PX = "390px"
 export const STRING_EMPTY = ""
@@ -27,6 +39,10 @@ export const ADD_OPTION_TITLE = "Добавление варианта отве�
 export const ADD_OPTION_LABEL = "Новый вариант ответа"
 export const ADD_OPTION_SUBHEADER_TEXT = "Существующие варианты"
 export const GUIDE_STEPS_COUNT_TITLE = "Количество шагов:"
+export const EMPTY_GUIDE_ITEM_MESSAGE  = "Эта часть гайда пока не наполнена, если вы являетесь автором, " +
+    "перейдите в режим редактирования для заполнения"
+
+
 
 
 

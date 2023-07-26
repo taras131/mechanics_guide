@@ -14,12 +14,13 @@ import {db} from "../firebase";
 import {setGuideCategories, setGuides, setIsGuidesLoading} from "../services/reducers/guides";
 import {IGuide, IGuideCategory} from "../models/iGuide";
 import {useAppDispatch, useAppSelector} from "../hooks/redux";
-import {ALL_CATEGORIES} from "../utils/const";
 import {geiIsGuidesLoading} from "../services/selectors/guidesSelectors";
 import Preloader from "./Preloader";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 const App = () => {
     const dispatch = useAppDispatch()
+    const matches_1000 = useMediaQuery('(min-width:900px)');
     const isLoading = useAppSelector(state => geiIsGuidesLoading(state))
     useEffect(() => {
         const q = query(collection(db, "guides"));
@@ -59,14 +60,14 @@ const App = () => {
     }, [])
     if (isLoading) return (<Preloader/>)
     return (
-        <Container sx={{backgroundColor: "WhiteSmoke", padding: "10px", minHeight: "97vh"}}>
+        <Container sx={{backgroundColor: "WhiteSmoke", padding: "5px", minHeight: "97vh"}}>
             <Header/>
             <Box mt={"40px"}>
                 <Routes>
                     <Route path={routes.main} element={<Main/>}/>
                     <Route path={routes.login} element={<Auth/>}/>
                     <Route path={routes.register} element={<Auth/>}/>
-                    <Route path={routes.guide+"/:guideId/:stepId"} element={<Guide/>}/>
+                    <Route path={routes.guide + "/:guideId/:stepId"} element={<Guide/>}/>
                     <Route path={routes.profile} element={<Profile/>}/>
                     <Route path={routes.not_found} element={<NotFound/>}/>
                 </Routes>
