@@ -48,56 +48,15 @@ const GuideStepSpecialFeatures: FC<IGuideStepSpecialFeaturesProps> = ({
                 <Typography variant="h4" fontSize="16px" color="inherit" fontWeight={600}>
                     Специальные возможности
                 </Typography>
-                {guideStepType === GUIDE_ITEM_TYPE.question && currentGuideStepId !== 0 && (
-                    <>
-                        <Grid container alignItems="center">
-                            <Grid item xs={4}>
-
-                            </Grid>
-                            <Grid item xs={8}>
-                                <Typography fontSize="12px" color="inherit" fontWeight={300}>
-                                    Вы можете перенаправить текущий этап на другой вопрос, выбрав нужный из
-                                    выпадающего
-                                    списка. Если кнопка не активна, значит у вас ещё нет вопросов из которых можно
-                                    выбрать.
-                                </Typography>
-                            </Grid>
-                        </Grid>
-                        <Grid container alignItems="center" justifyContent="start">
-
-                            <Grid item xs={8}>
-                                <Typography fontSize="12px" color="inherit" fontWeight={300}>
-                                    Вы можете перенаправить текущий этап на уже готовый гайд, выбрав нужный из
-                                    выпадающего
-                                    списка.
-                                </Typography>
-                            </Grid>
-                        </Grid>
-                    </>)}
-                {guideStepType === GUIDE_ITEM_TYPE.result && currentGuideStepId !== 0 && (
-                    <Grid container alignItems="center" justifyContent="start">
-                        <Grid item xs={4}>
-
-                        </Grid>
-                        <Grid item xs={8}>
-                            <Typography fontSize="12px" color="inherit" fontWeight={300}>
-                                Вы можете перенаправить текущий этап на уже готовый результат, выбрав нужный из
-                                выпадающего
-                                списка. Если кнопка не активна, значит у вас ещё нет результатов из которых можно
-                                выбрать.
-                            </Typography>
-                        </Grid>
-                    </Grid>)}
                 <Grid container alignItems="center" justifyContent="start">
                     <Grid item xs={4}>
-                        <Button onClick={handleRemoveGuideClick} disabled={!isMyGuide}>
+                        <Button onClick={handleRemoveGuideClick} disabled={isMyGuide}>
                             Удалить гайд
                         </Button>
                     </Grid>
                     <Grid item xs={8}>
                         <Typography fontSize="12px" color="inherit" fontWeight={300}>
-                            Вы можете удалить гайд , только в том случае, если вы являетесь его автором. Или у гайда нет
-                            установленного автора
+                            Вы можете удалить гайд , только в том случае, если вы являетесь его автором.
                         </Typography>
                     </Grid>
                 </Grid>
