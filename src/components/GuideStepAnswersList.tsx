@@ -7,6 +7,12 @@ import {useNavigate, useParams} from "react-router-dom";
 import {useAppDispatch} from "../hooks/redux";
 import GuideStepAnswersItem from "./GuideStepAnswersItem";
 import Grid from "@mui/material/Unstable_Grid2";
+import Stack from "@mui/material/Stack";
+import {CENTER, ROW} from "../utils/const";
+import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
+import Typography from "@mui/material/Typography";
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+
 
 interface IGuideStepAnswersListProps {
     options: IGuideItemOption []
@@ -63,9 +69,18 @@ const GuideStepAnswersList: FC<IGuideStepAnswersListProps> = ({
         })
     })
     return (
-        <Grid container spacing={3}>
-            {answersList}
-        </Grid>
+        <>
+            <Grid container spacing={2}>
+                {answersList}
+            </Grid>
+            {isEdit && (<Stack direction={ROW} spacing={1} alignItems={CENTER} sx={{marginTop: 3}}>
+                <ArrowForwardIcon/>
+                <Typography fontSize="12px" color="inherit" fontWeight={300}>
+                    Кликнув по стрелке вы перейдёте к заполнению следующего этапа.
+                </Typography>
+            </Stack>)}
+        </>
+
     );
 };
 

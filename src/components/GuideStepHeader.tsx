@@ -1,7 +1,7 @@
 import React, {FC, useEffect, useId} from 'react';
 import {FormControl, FormLabel, Radio} from "@mui/material";
 import Grid from "@mui/material/Grid";
-import {GUIDE_ITEM_TYPE} from "../utils/const";
+import {CENTER, GUIDE_ITEM_TYPE, SPACE_BETWEEN} from "../utils/const";
 import ArticleIcon from "@mui/icons-material/Article";
 import HelpCenterIcon from "@mui/icons-material/HelpCenter";
 import Typography from "@mui/material/Typography";
@@ -51,8 +51,8 @@ const GuideStepHeader: FC<IProps> = ({
         dispatch(removeLastBreadCrumb())
     }
     return (
-        <Grid container alignItems="start" justifyContent="space-between">
-            {isEdit && guideStep.id !== 0 && (
+        <Grid container alignItems={CENTER} justifyContent={SPACE_BETWEEN}>
+            {isEdit && (
                 <FormControl>
                     <FormLabel id={radioButtonId}>
                         <Grid container alignItems="center" sx={{marginBottom: "10px"}}>
@@ -60,7 +60,7 @@ const GuideStepHeader: FC<IProps> = ({
                                 ? (<ArticleIcon/>)
                                 : (<HelpCenterIcon/>)}
                             <Typography sx={{marginLeft: "10px"}}>
-                                Тип текущего шага
+                                Шаг № {breadCrumbsCount + 1}
                             </Typography>
                         </Grid>
                     </FormLabel>
@@ -70,11 +70,13 @@ const GuideStepHeader: FC<IProps> = ({
                         name={radioButtonId}
                         value={guideStep.type}
                         onChange={handleGuideStepTypeChange}
+
                     >
                         <FormControlLabel value={GUIDE_ITEM_TYPE.question}
                                           control={<Radio/>}
                                           label="Вопрос"/>
-                        <FormControlLabel value={GUIDE_ITEM_TYPE.result}
+                        <FormControlLabel disabled={guideStep.id === 0}
+                                          value={GUIDE_ITEM_TYPE.result}
                                           control={<Radio/>}
                                           label="Результат"/>
                     </RadioGroup>
@@ -85,18 +87,16 @@ const GuideStepHeader: FC<IProps> = ({
                     {guideStep.type === GUIDE_ITEM_TYPE.result
                         ? (<ArticleIcon color="primary"/>)
                         : (<HelpCenterIcon color="primary"/>)}
-                    <Typography variant="h4" fontSize="18px" color="inherit" fontWeight={600}>
+                    <Typography variant="h4" fontSize="14px" color="inherit" fontWeight={300}>
                         {guideStep.type === GUIDE_ITEM_TYPE.result
                             ? "Результат"
                             : ` Вопрос № ${breadCrumbsCount + 1}`}
                     </Typography>
                 </Stack>
             )}
-            {guideStep.id !== 0 && (
-                <Button onClick={handleBackClick} disabled={!lastBreadCrumbs}>
-                    Назад
-                </Button>
-            )}
+            <Button onClick={handleBackClick} disabled={!lastBreadCrumbs}>
+                Назад
+            </Button>
         </Grid>
     );
 };

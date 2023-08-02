@@ -1,7 +1,7 @@
 import React, {FC} from 'react';
 import Grid from "@mui/material/Unstable_Grid2";
 import {CENTER, COLUMN, CONTAINED, END, SPACE_BETWEEN, START} from "../utils/const";
-import {ButtonGroup} from "@mui/material";
+import {ButtonGroup, SelectChangeEvent} from "@mui/material";
 import Button from "@mui/material/Button";
 import CancelIcon from "@mui/icons-material/Cancel";
 import SaveIcon from "@mui/icons-material/Save";
@@ -11,10 +11,18 @@ import Typography from "@mui/material/Typography";
 import {useAppDispatch, useAppSelector} from "../hooks/redux";
 import {getUser} from "../services/selectors/authSelector";
 import {routes} from "../utils/routes";
-import {emptyGuide, setEditionGuide, setIsEdit, setIsNewGuideEdition} from "../services/reducers/guides";
+import {
+    emptyGuide,
+    setEditionGuide,
+    setEditionGuideCategory,
+    setIsEdit,
+    setIsNewGuideEdition
+} from "../services/reducers/guides";
 import {fetchNewGuide, fetchUpdateGuide} from "../services/actions/guidesActionsCreators";
 import {useNavigate} from "react-router-dom";
 import {IGuide} from "../models/iGuide";
+import SelectGuideCategory from "./SelectGuideCategory";
+import {getGuideCategoryNameById} from "../services/selectors/guidesSelectors";
 
 interface IProps {
     guide: IGuide
@@ -37,6 +45,7 @@ const GuideHeaderButtons: FC<IProps> = ({
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
     const user = useAppSelector(state => getUser(state))
+    const categoryName = useAppSelector(state => getGuideCategoryNameById(state, guide.categoryId))
     const handleBackClick = () => {
         navigate(routes.main)
     }
@@ -48,16 +57,18 @@ const GuideHeaderButtons: FC<IProps> = ({
         dispatch(setEditionGuide(guide))
         dispatch(setIsEdit(true))
     }
-
     const handleSaveClick = () => {
         if (isNewGuide) {
             dispatch(fetchNewGuide(guide))
             dispatch(setIsNewGuideEdition(false))
-            navigate(routes.main)
         } else {
             dispatch(fetchUpdateGuide(guide))
         }
         dispatch(setIsEdit(false))
+        navigate(routes.main)
+    }
+    const handleGuideCategoryChange = (e: SelectChangeEvent) => {
+        dispatch(setEditionGuideCategory(e.target.value))
     }
     return (
         <Grid container
@@ -100,6 +111,14 @@ const GuideHeaderButtons: FC<IProps> = ({
                     {isEdit && !isNewGuide && savingHelperText}
                     {!!guide.authorId && user.id !== guide.authorId && editingHelperText}
                 </Typography>
+            </Grid>
+            <Grid sx={{marginTop: 3}}>
+                {isEdit || isNewGuide
+                    ? (<SelectGuideCategory selectedGuideCategoryId={guide.categoryId}
+                                            handleGuideCategoryChange={handleGuideCategoryChange}/>)
+                    : (<Typography fontSize="16px" fontWeight={600} align={CENTER} sx={{marginTop: "-25px"}}>
+                        {categoryName}
+                    </Typography>)}
             </Grid>
         </Grid>
     );

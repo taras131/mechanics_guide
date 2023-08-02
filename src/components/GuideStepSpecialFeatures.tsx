@@ -31,20 +31,13 @@ const GuideStepSpecialFeatures: FC<IGuideStepSpecialFeaturesProps> = ({
                                                                       }) => {
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
-    const guideSteps = useAppSelector(state => getEditionGuideStepsByType(state, guideStepType))
-        .filter(result => result.id !== currentGuideStepId)
+
     const currentGuide = useAppSelector(state => getGuideById(state, guideId, true, false))
-    const anotherGuides = useAppSelector(state => getGuidesWithFilter(state, currentGuide.categoryId, false))
-        .filter(guide => guide.id !== guideId)
-    const [isOpenSelectRedirectWindow, setIsOpenSelectRedirectWindow] = useState(false)
-    const [isOpenSelectRedirectAnotherGuideWindow, setIsOpenSelectRedirectAnotherGuideWindow] = useState(false)
+
+
     const isMyGuide = useAppSelector(state => gitIsMyEditionGuide(state))
-    const toggleIsOpenSelectRedirectWindow = () => {
-        setIsOpenSelectRedirectWindow(prev => !prev)
-    }
-    const toggleIsOpenSelectRedirectAnotherGuideWindow = () => {
-        setIsOpenSelectRedirectAnotherGuideWindow(prev => !prev)
-    }
+
+
     const handleRemoveGuideClick = () => {
         navigate(routes.main)
         dispatch(fetchRemoveGuide(guideId))
@@ -59,9 +52,7 @@ const GuideStepSpecialFeatures: FC<IGuideStepSpecialFeaturesProps> = ({
                     <>
                         <Grid container alignItems="center">
                             <Grid item xs={4}>
-                                <Button onClick={toggleIsOpenSelectRedirectWindow} disabled={guideSteps.length === 0}>
-                                    Перенаправить на другой вопрос
-                                </Button>
+
                             </Grid>
                             <Grid item xs={8}>
                                 <Typography fontSize="12px" color="inherit" fontWeight={300}>
@@ -73,11 +64,7 @@ const GuideStepSpecialFeatures: FC<IGuideStepSpecialFeaturesProps> = ({
                             </Grid>
                         </Grid>
                         <Grid container alignItems="center" justifyContent="start">
-                            <Grid item xs={4}>
-                                <Button onClick={toggleIsOpenSelectRedirectAnotherGuideWindow}>
-                                    Перенаправить на другой гайд
-                                </Button>
-                            </Grid>
+
                             <Grid item xs={8}>
                                 <Typography fontSize="12px" color="inherit" fontWeight={300}>
                                     Вы можете перенаправить текущий этап на уже готовый гайд, выбрав нужный из
@@ -90,9 +77,7 @@ const GuideStepSpecialFeatures: FC<IGuideStepSpecialFeaturesProps> = ({
                 {guideStepType === GUIDE_ITEM_TYPE.result && currentGuideStepId !== 0 && (
                     <Grid container alignItems="center" justifyContent="start">
                         <Grid item xs={4}>
-                            <Button onClick={toggleIsOpenSelectRedirectWindow} disabled={guideSteps.length === 0}>
-                                Перенаправить на другой результат
-                            </Button>
+
                         </Grid>
                         <Grid item xs={8}>
                             <Typography fontSize="12px" color="inherit" fontWeight={300}>
@@ -116,12 +101,8 @@ const GuideStepSpecialFeatures: FC<IGuideStepSpecialFeaturesProps> = ({
                         </Typography>
                     </Grid>
                 </Grid>
-                <SelectRedirectGuideStep isOpenSelectRedirectWindow={isOpenSelectRedirectWindow}
-                                         toggleIsOpenSelectRedirectWindow={toggleIsOpenSelectRedirectWindow}
-                                         guideSteps={guideSteps}/>
-                <SelectRedirectAnotherGuide isOpen={isOpenSelectRedirectAnotherGuideWindow}
-                                            toggleIsOpen={toggleIsOpenSelectRedirectAnotherGuideWindow}
-                                            anotherGuides={anotherGuides}/>
+
+
             </Stack>
         </Paper>
     );
