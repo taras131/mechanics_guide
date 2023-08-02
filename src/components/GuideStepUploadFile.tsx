@@ -1,15 +1,16 @@
 import React, {FC} from 'react';
 import Button from "@mui/material/Button";
+import CloseIcon from '@mui/icons-material/Close';
+import {Chip} from "@mui/material";
+import DownloadIcon from '@mui/icons-material/Download';
+import Grid from "@mui/material/Unstable_Grid2";
+import IconButton from "@mui/material/IconButton";
+import Stack from "@mui/material/Stack";
 import {fetchRemoveFile, fetchUpdateGuide, fetchUploadFile} from "../services/actions/guidesActionsCreators";
 import {useAppDispatch, useAppSelector} from "../hooks/redux";
-import {IGuideItem} from "../models/iGuide";
-import CloseIcon from '@mui/icons-material/Close';
 import {editionGuideUpdateFile} from "../services/reducers/guides";
-import Grid from "@mui/material/Unstable_Grid2";
-import {Chip} from "@mui/material";
-import Stack from "@mui/material/Stack";
-import IconButton from "@mui/material/IconButton";
 import {getGuideById, getIsNewGuide} from "../services/selectors/guidesSelectors";
+import {IGuideItem} from "../models/iGuide";
 
 interface IGuideStepUploadFileProps {
     guideStep: IGuideItem
@@ -21,18 +22,8 @@ const GuideStepUploadFile: FC<IGuideStepUploadFileProps> = ({guideStep, isEdit, 
     const dispatch = useAppDispatch()
     const isNewGuide = useAppSelector(state => getIsNewGuide(state))
     const editionGuide = useAppSelector(state => getGuideById(state, guideId, isEdit, isNewGuide))
-    const updateFilePath = (fileName: string, filePath: string) => {
-        dispatch(editionGuideUpdateFile({fileName: fileName, filePath: filePath, guideStepId: guideStep.id}))
-    }
-    const handleChangeInputFile = (e: any) => {
-        if (guideStep.file && guideStep.file.name) {
-            dispatch(fetchRemoveFile(guideStep.file.name))
-        }
-        dispatch(fetchUploadFile({file: e.target.files[0], guideStepId: guideStep.id, updateFilePath: updateFilePath}))
-        if (!isNewGuide) {
-            dispatch(fetchUpdateGuide(editionGuide))
-        }
-    }
+
+
     const handleRemove = (e: any) => {
         if (guideStep.file && guideStep.file.name) {
             dispatch(fetchRemoveFile(guideStep.file.name))
@@ -51,7 +42,7 @@ const GuideStepUploadFile: FC<IGuideStepUploadFileProps> = ({guideStep, isEdit, 
                             label={guideStep.file.name.slice(13)}
                             component="a"
                             href={guideStep.file.path}
-
+                            icon={<DownloadIcon />}
                             color="primary"
                             clickable
                         />
@@ -61,21 +52,6 @@ const GuideStepUploadFile: FC<IGuideStepUploadFileProps> = ({guideStep, isEdit, 
                             </IconButton>
                         )}
                     </Stack>
-                )}
-            </Grid>
-            <Grid>
-                {isEdit && (
-                    <Button
-                        variant="outlined"
-                        component="label"
-                    >
-                        {guideStep.file && guideStep.file.name ? "Заменить файл" : "Прикрепить файл"}
-                        <input
-                            type="file"
-                            hidden
-                            onChange={handleChangeInputFile}
-                        />
-                    </Button>
                 )}
             </Grid>
         </Grid>

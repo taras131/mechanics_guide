@@ -76,14 +76,7 @@ const GuideInformationList: FC<IGuideHeaderInformationProps> = ({isNewGuide, isE
                     {countSteps}
                 </Typography>
             </GuideInformationItem>
-            <AddNewStringValueModal
-                existingValues={categoriesNames}
-                fieldLabelText={ADD_CATEGORY_LABEL}
-                isOpenWindow={isOpenNewCategoryWindow}
-                listSubHeaderText={ADD_CATEGORY_SUBHEADER_TEXT}
-                onAddNewValueClick={handleAddCategoryClick}
-                title={ADD_CATEGORY_TITLE}
-                toggleIsOpenWindow={toggleIsOpenNewCategoryWindow}/>
+
         </Grid>
     );
 };

@@ -8,7 +8,7 @@ import BreadCrumbs from "../components/BreadCrumbs";
 import {cleanBreadCrumbs, setBreadCrumbs} from "../services/reducers/breadCrumbs"
 import GuideHeader from "../components/GuideHeader";
 import GuideStep from "../components/GuideStep";
-import {setIsEdit} from "../services/reducers/guides"
+import {setIsEdit, setIsNewGuideEdition} from "../services/reducers/guides"
 import GuideStepSpecialFeatures from "../components/GuideStepSpecialFeatures";
 import GuideInformationList from "../components/GuideInformationList";
 import Box from "@mui/material/Box";
@@ -42,14 +42,16 @@ const Guide = () => {
                 }
             }
             dispatch(setIsEdit(false))
+            return () => {
+                dispatch(setIsEdit(false))
+            }
         }, [dispatch])
 
         return (
             <Stack spacing={3}>
                 <GuideHeader guide={guide} isEdit={isEdit} isNewGuide={isNewGuide}/>
-                <GuideInformationList isNewGuide={isNewGuide} isEdit={isEdit} guide={guide}/>
-                <BreadCrumbs/>
                 <GuideStep guideStep={guideStep} isEdit={isEdit}/>
+                <BreadCrumbs/>
                 {isEdit && (<GuideStepSpecialFeatures guideStepType={guideStep.type}
                                                       currentGuideStepId={guideStep.id}
                                                       guideId={guide.id}/>)}

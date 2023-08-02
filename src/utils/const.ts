@@ -17,6 +17,7 @@ export const SPACE_BETWEEN  = "space-between"
 export const H3 ="h3"
 export const H4 ="h4"
 export const H5 ="h5"
+export const H6 ="h6"
 export const START ="start"
 export const END ="end"
 export const COLUMN ="column"
@@ -41,6 +42,11 @@ export const ADD_OPTION_SUBHEADER_TEXT = "Существующие вариан�
 export const GUIDE_STEPS_COUNT_TITLE = "Количество шагов:"
 export const EMPTY_GUIDE_ITEM_MESSAGE  = "Эта часть гайда пока не наполнена, если вы являетесь автором, " +
     "перейдите в режим редактирования для заполнения"
+export const NONE = "none"
+export const WHITE = "white"
+export const INHERIT = "inherit"
+export const STATIC = "static"
+
 
 
 

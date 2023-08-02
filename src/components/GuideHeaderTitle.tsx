@@ -18,10 +18,7 @@ interface IProps {
     setTitleError: (errorText: string) => void
 }
 
-const editingText = "Режим редактирования";
-const newGuideText = "Новый гайд";
 const textFieldLabel = "Заголовок гайда";
-const viewingText = "Режим просмотра";
 
 const GuideHeaderTitle: FC<IProps> = ({
                                           guideTitle,
@@ -54,11 +51,6 @@ const GuideHeaderTitle: FC<IProps> = ({
                 : (<Typography variant={H3} fontSize={matches_900 ? "37px" : "25px"} fontWeight={800} gutterBottom>
                     {guideTitle}
                 </Typography>)}
-            <Typography fontSize="12px" fontWeight={400}>
-                {!isNewGuide && isEdit && editingText}
-                {isNewGuide && newGuideText}
-                {!isNewGuide && !isEdit && viewingText}
-            </Typography>
         </Stack>
     );
 };

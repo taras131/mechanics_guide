@@ -1,7 +1,6 @@
 import React, {FC} from 'react';
 import {IGuideItemOption} from "../models/iGuide";
 import Button from "@mui/material/Button";
-import Box from "@mui/material/Box";
 import DeleteIcon from '@mui/icons-material/Delete';
 import SendIcon from '@mui/icons-material/Send';
 import {FormControl, Input, InputAdornment, InputLabel} from "@mui/material";
@@ -9,9 +8,11 @@ import IconButton from "@mui/material/IconButton";
 import NextPlanIcon from '@mui/icons-material/NextPlan';
 import Grid from "@mui/material/Unstable_Grid2";
 import TripOriginIcon from '@mui/icons-material/TripOrigin';
-import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import {START} from "../utils/const";
+import {PRIMARY, START} from "../utils/const";
+import MergeTypeIcon from '@mui/icons-material/MergeType';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+
 
 interface IGuideStepAnswerProps {
     option: IGuideItemOption
@@ -81,8 +82,9 @@ const GuideStepAnswersItem: FC<IGuideStepAnswerProps> = ({
                                     <IconButton
                                         aria-label="next"
                                         onClick={onNextClick}
+                                        color={PRIMARY}
                                     >
-                                        {option.redirectAnotherGuide ? (<NextPlanIcon/>) : (<SendIcon/>)}
+                                        {option.redirectAnotherGuide ? (<MergeTypeIcon/>) : (<ArrowForwardIcon/>)}
                                     </IconButton>
                                 </InputAdornment>
                             }

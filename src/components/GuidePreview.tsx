@@ -15,18 +15,21 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import {setBreadCrumbs} from "../services/reducers/breadCrumbs";
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import {IBreadCrumb} from "../models/iBreadCrumbs";
-import {CENTER, COLUMN, DIV, H5, HIDDEN, OUTLINED, PRIMARY, SMALL, SPACE_BETWEEN} from "../utils/const";
+import {CENTER, COLUMN, DIV, H5, HIDDEN, OUTLINED, PRIMARY, ROW, SMALL, SPACE_BETWEEN, START} from "../utils/const";
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import IconButton from "@mui/material/IconButton";
+import Stack from "@mui/material/Stack";
 
 interface IGuidePreviewProps {
     guide: IGuide
 }
 
 const authorUnknownText = "неизвестен";
-const goToGuideButtonText = "Перейти к гайду"
+const goToGuideButtonText = "Перейти";
+const continueGuideButtonText = "Продолжить";
 const textColor = "text.secondary";
 const countStepsText = "Количество шагов";
+const authorTextTitle ="Автор:";
 
 const GuidePreview: FC<IGuidePreviewProps> = ({guide}) => {
     const dispatch = useAppDispatch()
@@ -59,8 +62,8 @@ const GuidePreview: FC<IGuidePreviewProps> = ({guide}) => {
     }
     return (
         <Grid xs={12} sm={6} md={4}>
-            <Card sx={{minWidth: 275}}>
-                <CardContent>
+            <Card sx={{minWidth: 200}}>
+                <CardContent sx={{paddingBottom: 0}}>
                     <Grid container alignItems={CENTER} justifyContent={SPACE_BETWEEN}>
                         <Typography sx={{fontSize: 14, fontWeight: 600}} color={textColor} gutterBottom>
                             {categoryName}
@@ -84,33 +87,33 @@ const GuidePreview: FC<IGuidePreviewProps> = ({guide}) => {
                         </Grid>
                     </Grid>
                     <Divider sx={{marginTop: "10px"}}/>
-
                     <Typography variant={H5}
                                 component={DIV}
                                 sx={{
                                     marginTop: "10px",
-                                    minHeight: "66px",
+                                    minHeight: "130px",
                                     overflow: {HIDDEN}
                                 }}>
-                        {guide.title && guide.title.length > 35 ? guide.title.substring(0, 35) + "..." : guide.title}
+                        {guide.title && guide.title.length > 70 ? guide.title.substring(0, 67) + "..." : guide.title}
                     </Typography>
-                    <Typography sx={{marginTop: 1}} color={textColor}>
-                        Автор
-                    </Typography>
-                    <Typography variant="body2">
-                        {guide.authorId ? guide.authorId : authorUnknownText}
-                    </Typography>
+                    <Stack spacing={1} direction={ROW} justifyContent={START} alignItems={CENTER} sx={{marginTop: 1}}>
+                        <Typography color={textColor}>
+                            {authorTextTitle}
+                        </Typography>
+                        <Typography variant="body2">
+                            {guide.authorId ? guide.authorId : authorUnknownText}
+                        </Typography>
+                    </Stack>
                 </CardContent>
                 <CardActions>
-                    <Grid spacing={1} container alignItems={CENTER} justifyContent={SPACE_BETWEEN} sx={{width: "100%"}}>
+                    <Grid container alignItems={CENTER} justifyContent={SPACE_BETWEEN} sx={{width: "100%"}}>
                         <Button startIcon={<ArrowUpwardIcon/>} size={SMALL} onClick={handleGuideClick}>
                             {goToGuideButtonText}
                         </Button>
                         {breadCrumbs && (
-                            <IconButton aria-label="continue" onClick={handleContinueClick} size={SMALL}
-                                        color={PRIMARY}>
-                                <ArrowForwardIcon/>
-                            </IconButton>
+                            <Button endIcon={<ArrowForwardIcon/>} size={SMALL} onClick={handleContinueClick}>
+                                {continueGuideButtonText}
+                            </Button>
                         )}
                     </Grid>
                 </CardActions>
