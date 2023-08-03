@@ -44,7 +44,7 @@ const SelectGuideCategory: FC<ISelectGuideCategoryProps> = ({
                   value={category.id}>{category.categoryName}</MenuItem>))
     if (isEdit || isNewGuide) {
         categoryList = [...categoryList, (
-            <SelectGuideCategoryAddNewButton handleClick={handleAddCategoryWindowClick}/>)]
+            <SelectGuideCategoryAddNewButton key="add_category_button" handleClick={handleAddCategoryWindowClick}/>)]
     }
     return (
         <>

@@ -200,6 +200,9 @@ export const GuidesSlice = createSlice({
                     })]
                 }
             },
+            setIsUploadFileLoading: (state, action: PayloadAction<boolean>) => {
+                state.isUploadFileLoading = action.payload
+            },
             editionGuideUpdateFile: (state, action: PayloadAction<{ guideStepId: number, filePath: string, fileName: string }>) => {
                 state.editionGuide = {
                     ...state.editionGuide, items: [...state.editionGuide.items.map(item => {
@@ -210,6 +213,7 @@ export const GuidesSlice = createSlice({
                         }
                     })]
                 }
+                state.isUploadFileLoading = false;
             }
         },
         extraReducers: {
@@ -249,14 +253,14 @@ export const GuidesSlice = createSlice({
                 state.errorMessage = action.payload;
             },
             [fetchUploadFile.fulfilled.type]: (state) => {
-                state.isUploadFileLoading = false;
+                state.errorMessage = '';
             },
             [fetchUploadFile.pending.type]: (state) => {
-                state.isUploadFileLoading = true
+
                 state.errorMessage = '';
             },
             [fetchUploadFile.rejected.type]: (state, action: PayloadAction<string>) => {
-                state.isUploadFileLoading = false;
+
                 state.errorMessage = action.payload;
             },
         }
@@ -268,6 +272,6 @@ export const {
     setEditionGuideCategory, changeEditionGuideTitle, changeEditionGuideItemsText,
     changeEditionGuideItemsType, changeEditionGuideOptionText, editionGuideStepAddOption,
     editionGuideStepRemoveOption, editionGuideResultRedirect, removeGuideStep, setIsNewGuideEdition,
-    editionGuideRedirectAnotherGuide, editionGuideUpdateFile
+    editionGuideRedirectAnotherGuide,setIsUploadFileLoading, editionGuideUpdateFile
 } = GuidesSlice.actions
 export default GuidesSlice.reducer;

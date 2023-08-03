@@ -35,6 +35,10 @@ const Auth = () => {
         email: "",
         password: ""
     })
+    const [textErrors, setTextErrors] = useState({
+        email: "",
+        password: ""
+    })
     const {pathname} = useLocation()
     const isRegister = pathname === routes.register
     const [isOpenErrorMessageWindow, setIsOpenErrorMessageWindow] = useState(false)
@@ -52,11 +56,13 @@ const Auth = () => {
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.name === "email") {
             setValidationErrors({...validationErrors, email: ""})
+            setTextErrors({...textErrors, email: ""});
             if (!validateEmail(e.target.value)) {
                 setValidationErrors({...validationErrors, email: "Введён не email"})
             }
         } else {
             setValidationErrors({...validationErrors, password: ""})
+            setTextErrors({...textErrors, password: ""});
             if (e.target.value.length < 6) {
                 setValidationErrors({...validationErrors, password: "Пароль должен быть не менее 6 символов"})
             }
@@ -71,6 +77,18 @@ const Auth = () => {
             dispatch(fetchLogin(inputValues))
         }
     };
+    useEffect(() => {
+        const validationTimeout = setTimeout(() => {
+            if (validationErrors.email) {
+                setTextErrors({...textErrors, email: validationErrors.email});
+            }
+            if (validationErrors.password) {
+                setTextErrors({...textErrors, password: validationErrors.password});
+            }
+        }, 1300);
+
+        return () => clearTimeout(validationTimeout);
+    }, [validationErrors.email, validationErrors.password, inputValues.email, inputValues.password])
     return (
         <Container component="div" maxWidth="xs">
             <CssBaseline/>
@@ -96,29 +114,27 @@ const Auth = () => {
                         onChange={handleInputChange}
                         value={inputValues.email}
                         margin="normal"
-                        required
                         fullWidth
                         id="email"
                         label="Email"
                         name="email"
                         autoComplete="email"
                         autoFocus
-                        error={!!validationErrors.email}
-                        helperText={validationErrors.email}
+                        error={!!textErrors.email}
+                        helperText={textErrors.email}
                     />
                     <TextField
                         onChange={handleInputChange}
                         value={inputValues.password}
                         margin="normal"
-                        required
                         fullWidth
                         name="password"
                         label="Пароль"
                         type="password"
                         id="password"
                         autoComplete="current-password"
-                        error={!!validationErrors.password}
-                        helperText={validationErrors.password}
+                        error={!!textErrors.password}
+                        helperText={textErrors.password}
                     />
                     <FormControlLabel
                         control={<Checkbox id={checkboxId} value="remember" color="primary"/>}
@@ -132,9 +148,9 @@ const Auth = () => {
                         variant="contained"
                         sx={{mt: 3, mb: 2}}
                         disabled={!!validationErrors.email
-                        || !!validationErrors.password
-                        || inputValues.password.length === 0
-                        || inputValues.email.length === 0}
+                            || !!validationErrors.password
+                            || inputValues.password.length === 0
+                            || inputValues.email.length === 0}
                     >
                         {isRegister
                             ? "Регистрация"

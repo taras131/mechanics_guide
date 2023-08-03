@@ -11,7 +11,7 @@ const addNewCategoryButtonText = "Добавить"
 
 const SelectGuideCategoryAddNewButton: FC<IProps> = ({handleClick}) => {
     return (
-        <div key="add_category_button">
+        <div>
             <Button onClick={handleClick} startIcon={(<AddBoxIcon/>)} color={PRIMARY}>
                 {addNewCategoryButtonText}
             </Button>
