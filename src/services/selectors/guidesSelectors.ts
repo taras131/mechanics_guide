@@ -80,4 +80,7 @@ export const getGuidesTitlesWithGuideIdFilter = (state: RootState, guideId: stri
     const filteredGuides = [...state.guides.guides.filter(guide => guide.id !== guideId)]
     return filteredGuides.map(guide => guide.title)
 }
+export const getIsUploadFileLoading = (state: RootState): boolean => {
+    return state.guides.isUploadFileLoading
+}
 

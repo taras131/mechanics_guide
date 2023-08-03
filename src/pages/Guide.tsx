@@ -8,10 +8,8 @@ import BreadCrumbs from "../components/BreadCrumbs";
 import {cleanBreadCrumbs, setBreadCrumbs} from "../services/reducers/breadCrumbs"
 import GuideHeader from "../components/GuideHeader";
 import GuideStep from "../components/GuideStep";
-import {setIsEdit, setIsNewGuideEdition} from "../services/reducers/guides"
+import {setIsEdit} from "../services/reducers/guides"
 import GuideStepSpecialFeatures from "../components/GuideStepSpecialFeatures";
-import GuideInformationList from "../components/GuideInformationList";
-import Box from "@mui/material/Box";
 
 const Guide = () => {
         const dispatch = useAppDispatch()
