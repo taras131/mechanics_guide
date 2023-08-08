@@ -18,7 +18,7 @@ const GuideStep: FC<IGuideStepProps> = ({guideStep, isEdit}) => {
     const breadCrumbsCount = useAppSelector(state => getBreadCrumbsCount(state))
     const guideId = useParams().guideId || "0";
     return (
-        <Paper sx={{padding: "30px 16px"}}>
+        <Paper sx={{padding: "16px"}}>
             <Stack spacing={3}>
                 <GuideStepHeader breadCrumbsCount={breadCrumbsCount}
                                  guideId={guideId}

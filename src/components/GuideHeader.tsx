@@ -1,9 +1,9 @@
 import React, {FC, useState} from 'react';
 import {IGuide} from "../models/iGuide";
 import Grid from '@mui/material/Unstable_Grid2';
-import {CENTER, COLUMN, ROW, SPACE_BETWEEN, START, STRING_EMPTY, STRING_WITH_SPACE} from "../utils/const";
+import {CENTER, SPACE_BETWEEN, START, STRING_EMPTY, STRING_WITH_SPACE} from "../utils/const";
 import GuideHeaderTitle from "./GuideHeaderTitle";
-import GuideHeaderButtons from "./GuideHeaderButtons";
+import GuideHeaderActions from "./GuideHeaderActions";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
 interface IGuideHeaderProps {
@@ -17,7 +17,8 @@ const GuideHeader: FC<IGuideHeaderProps> = ({isEdit, guide, isNewGuide}) => {
     const [titleError, setTitleError] = useState(isNewGuide ? STRING_WITH_SPACE : STRING_EMPTY)
     return (
         <Grid container
-              spacing={matches_900 ? 1 : 3}
+              mt={1}
+              spacing={matches_900 ? 3 : 2}
               alignItems={START}
               justifyContent={matches_900 ? SPACE_BETWEEN : CENTER}>
             <Grid xs={12} sm={12} md={8}>
@@ -26,10 +27,11 @@ const GuideHeader: FC<IGuideHeaderProps> = ({isEdit, guide, isNewGuide}) => {
                                   isNewGuide={isNewGuide}
                                   matches_900={matches_900}
                                   titleError={titleError}
-                                  setTitleError={setTitleError}/>
+                                  setTitleError={setTitleError}
+                />
             </Grid>
             <Grid xs={12} sm={12} md={4}>
-                <GuideHeaderButtons guide={guide}
+                <GuideHeaderActions guide={guide}
                                     isEdit={isEdit}
                                     isNewGuide={isNewGuide}
                                     matches_900={matches_900}

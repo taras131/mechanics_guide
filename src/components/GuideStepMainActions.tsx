@@ -89,7 +89,6 @@ const GuideStepMainActions: FC<IProps> = ({options, guideStep, guideStepType}) =
     const toggleIsOpenSelectRedirectWindow = () => {
         setIsOpenSelectRedirectWindow(prev => !prev)
     }
-    console.log(isUploadFileLoading)
     return (
         <>
             <Grid container spacing={1}>

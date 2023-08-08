@@ -62,7 +62,7 @@ const App = () => {
     return (
         <Container sx={{backgroundColor: "WhiteSmoke", padding: "5px", minHeight: "97vh"}}>
             <Header/>
-            <Box mt={"40px"}>
+            <Box mt={3}>
                 <Routes>
                     <Route path={routes.main} element={<Main/>}/>
                     <Route path={routes.login} element={<Auth/>}/>
