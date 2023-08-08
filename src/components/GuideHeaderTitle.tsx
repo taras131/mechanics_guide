@@ -4,7 +4,7 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import {changeEditionGuideTitle} from "../services/reducers/guides";
 import {useAppDispatch, useAppSelector} from "../hooks/redux";
-import {FORM_CONTROL_HEIGHT_PX, H3, OUTLINED, STRING_WITH_SPACE} from "../utils/const";
+import {CENTER, FORM_CONTROL_HEIGHT_PX, H3, LEFT, OUTLINED, STRING_WITH_SPACE} from "../utils/const";
 import {validateText} from "../utils/services";
 import {getGuidesTitlesWithGuideIdFilter} from "../services/selectors/guidesSelectors";
 import {useParams} from "react-router-dom";
@@ -37,7 +37,7 @@ const GuideHeaderTitle: FC<IProps> = ({
         dispatch(changeEditionGuideTitle(e.target.value))
     }
     return (
-        <Stack spacing={1}>
+        <Stack>
             {isEdit
                 ? (<FormControl sx={{minHeight: FORM_CONTROL_HEIGHT_PX}}>
                     <TextField value={guideTitle}
@@ -48,7 +48,12 @@ const GuideHeaderTitle: FC<IProps> = ({
                                fullWidth
                                helperText={titleError}/>
                 </FormControl>)
-                : (<Typography variant={H3} fontSize={matches_900 ? "37px" : "25px"} fontWeight={800} gutterBottom>
+                : (<Typography variant={H3}
+                               fontSize={matches_900 ? "37px" : "25px"}
+                               fontWeight={matches_900 ? 700 : 600}
+                               textAlign={matches_900 ? LEFT : CENTER}
+
+                               sx={{marginTop: "-5px", lineHeight: matches_900 ? "50px" : "40px"}}>
                     {guideTitle}
                 </Typography>)}
         </Stack>

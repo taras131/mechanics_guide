@@ -3,7 +3,13 @@ import {FormControl, InputLabel, MenuItem, Select, SelectChangeEvent} from "@mui
 import {useAppDispatch, useAppSelector} from "../hooks/redux";
 import {getGuideCategories, getIsEdit, getIsNewGuide} from "../services/selectors/guidesSelectors";
 import AddNewStringValueModal from "./AddNewStringValueModal";
-import {ADD_CATEGORY_LABEL, ADD_CATEGORY_SUBHEADER_TEXT, ADD_CATEGORY_TITLE, STRING_EMPTY} from "../utils/const";
+import {
+    ADD_CATEGORY_LABEL,
+    ADD_CATEGORY_SUBHEADER_TEXT,
+    ADD_CATEGORY_TITLE,
+    HIDDEN,
+    STRING_EMPTY
+} from "../utils/const";
 import {fetchNewGuideCategory} from "../services/actions/guidesActionsCreators";
 import SelectGuideCategoryAddNewButton from "./SelectGuideCategoryAddNewButton";
 
@@ -48,7 +54,7 @@ const SelectGuideCategory: FC<ISelectGuideCategoryProps> = ({
     }
     return (
         <>
-            <FormControl fullWidth sx={{minWidth: "250px"}}>
+            <FormControl fullWidth sx={{width: "260px"}}>
                 <InputLabel id={labelId}>Категория</InputLabel>
                 <Select
                     id={selectId}
@@ -58,6 +64,7 @@ const SelectGuideCategory: FC<ISelectGuideCategoryProps> = ({
                     value={selectedGuideCategoryId}
                     label={selectLabel}
                     onChange={handleGuideCategoryChange}
+                    sx={{overflow: HIDDEN}}
                 >
                     {categoryList}
                 </Select>

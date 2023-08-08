@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useRef} from 'react';
 import {useParams} from 'react-router-dom';
 import {Stack} from "@mui/material";
 import {useAppDispatch, useAppSelector} from "../hooks/redux";
@@ -8,7 +8,7 @@ import BreadCrumbs from "../components/BreadCrumbs";
 import {cleanBreadCrumbs, setBreadCrumbs} from "../services/reducers/breadCrumbs"
 import GuideHeader from "../components/GuideHeader";
 import GuideStep from "../components/GuideStep";
-import {setIsEdit} from "../services/reducers/guides"
+import {setEditionGuide, setIsEdit} from "../services/reducers/guides"
 import GuideStepSpecialFeatures from "../components/GuideStepSpecialFeatures";
 
 const Guide = () => {
@@ -45,8 +45,23 @@ const Guide = () => {
             }
         }, [dispatch])
 
+        useEffect(() => {
+            if (isNewGuide && guide.items.length > 1) {
+                console.log("Затираем" + guide.items.length)
+                localStorage.setItem("new_guide", JSON.stringify(guide))
+            }
+        }, [guide])
+        useEffect(() => {
+            if (isNewGuide) {
+                const getOldNewGuide = localStorage.getItem("new_guide")
+                console.log(getOldNewGuide)
+                if (getOldNewGuide) {
+                    dispatch(setEditionGuide(JSON.parse(getOldNewGuide)))
+                }
+            }
+        }, [dispatch])
         return (
-            <Stack spacing={3}>
+            <Stack spacing={4}>
                 <GuideHeader guide={guide} isEdit={isEdit} isNewGuide={isNewGuide}/>
                 <GuideStep guideStep={guideStep} isEdit={isEdit}/>
                 <BreadCrumbs/>

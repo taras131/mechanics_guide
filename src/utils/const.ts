@@ -14,12 +14,15 @@ export const EDITION_GUIDE_ID = "edition_guide_id"
 export const OUTLINED  = "outlined"
 export const CENTER  = "center"
 export const SPACE_BETWEEN  = "space-between"
+export const SPACE_AROUND  = "space-around"
 export const H3 ="h3"
 export const H4 ="h4"
 export const H5 ="h5"
 export const H6 ="h6"
 export const START ="start"
 export const END ="end"
+export const LEFT ="left"
+export const RIGHT ="right"
 export const COLUMN ="column"
 export const ROW ="row"
 export const HIDDEN ="hidden"
@@ -46,6 +49,7 @@ export const NONE = "none"
 export const WHITE = "white"
 export const INHERIT = "inherit"
 export const STATIC = "static"
+export const SECONDARY_TEXT_COLOR = "text.secondary";
 
 
 

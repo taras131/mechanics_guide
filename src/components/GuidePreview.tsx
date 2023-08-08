@@ -15,9 +15,20 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import {setBreadCrumbs} from "../services/reducers/breadCrumbs";
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import {IBreadCrumb} from "../models/iBreadCrumbs";
-import {CENTER, COLUMN, DIV, H5, HIDDEN, OUTLINED, PRIMARY, ROW, SMALL, SPACE_BETWEEN, START} from "../utils/const";
+import {
+    CENTER,
+    DIV,
+    H5,
+    HIDDEN,
+    OUTLINED,
+    PRIMARY,
+    ROW,
+    SECONDARY_TEXT_COLOR,
+    SMALL,
+    SPACE_BETWEEN,
+    START
+} from "../utils/const";
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
-import IconButton from "@mui/material/IconButton";
 import Stack from "@mui/material/Stack";
 
 interface IGuidePreviewProps {
@@ -25,11 +36,11 @@ interface IGuidePreviewProps {
 }
 
 const authorUnknownText = "неизвестен";
-const goToGuideButtonText = "Перейти";
+const goToGuideButtonText = "Начать";
 const continueGuideButtonText = "Продолжить";
-const textColor = "text.secondary";
+
 const countStepsText = "Количество шагов";
-const authorTextTitle ="Автор:";
+const authorTextTitle = "Автор:";
 
 const GuidePreview: FC<IGuidePreviewProps> = ({guide}) => {
     const dispatch = useAppDispatch()
@@ -65,13 +76,16 @@ const GuidePreview: FC<IGuidePreviewProps> = ({guide}) => {
             <Card sx={{minWidth: 200}}>
                 <CardContent sx={{paddingBottom: 0}}>
                     <Grid container alignItems={CENTER} justifyContent={SPACE_BETWEEN}>
-                        <Typography sx={{fontSize: 14, fontWeight: 600}} color={textColor} gutterBottom>
-                            {categoryName}
+                        <Typography
+                            sx={{fontSize: 14, fontWeight: 600}}
+                            color={SECONDARY_TEXT_COLOR}
+                            gutterBottom>
+                            {categoryName && categoryName.length > 26 ? categoryName.substring(0, 23) + "..." : categoryName}
                         </Typography>
                         <Grid container alignItems={CENTER} justifyContent={SPACE_BETWEEN}>
                             {matches && (
                                 <Typography sx={{fontSize: 12, fontWeight: 100, marginRight: 1}}
-                                            color={textColor}
+                                            color={SECONDARY_TEXT_COLOR}
                                             gutterBottom>
                                     {countStepsText}
                                 </Typography>
@@ -97,7 +111,7 @@ const GuidePreview: FC<IGuidePreviewProps> = ({guide}) => {
                         {guide.title && guide.title.length > 70 ? guide.title.substring(0, 67) + "..." : guide.title}
                     </Typography>
                     <Stack spacing={1} direction={ROW} justifyContent={START} alignItems={CENTER} sx={{marginTop: 1}}>
-                        <Typography color={textColor}>
+                        <Typography color={SECONDARY_TEXT_COLOR}>
                             {authorTextTitle}
                         </Typography>
                         <Typography variant="body2">
