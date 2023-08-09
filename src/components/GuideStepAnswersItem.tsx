@@ -2,16 +2,17 @@ import React, {FC} from 'react';
 import {IGuideItemOption} from "../models/iGuide";
 import Button from "@mui/material/Button";
 import DeleteIcon from '@mui/icons-material/Delete';
-import SendIcon from '@mui/icons-material/Send';
 import {FormControl, Input, InputAdornment, InputLabel} from "@mui/material";
 import IconButton from "@mui/material/IconButton";
-import NextPlanIcon from '@mui/icons-material/NextPlan';
 import Grid from "@mui/material/Unstable_Grid2";
 import TripOriginIcon from '@mui/icons-material/TripOrigin';
 import Typography from "@mui/material/Typography";
-import {PRIMARY, START} from "../utils/const";
+import {LEFT, PRIMARY, ROW, SECONDARY_TEXT_COLOR, START} from "../utils/const";
 import MergeTypeIcon from '@mui/icons-material/MergeType';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import Stack from "@mui/material/Stack";
+import RedoIcon from '@mui/icons-material/Redo';
+import {IBreadCrumb} from "../models/iBreadCrumbs";
 
 
 interface IGuideStepAnswerProps {
@@ -24,6 +25,7 @@ interface IGuideStepAnswerProps {
     handleNextQuestionClick: (optionId: number, optionText: string, nextId: number) => void
     handleOptionRemove: (guideStepId: number, optionId: number) => void
     handleRedirectGuideClick: (redirectAnotherGuide: string) => void
+    breadCrumbs: IBreadCrumb []
 }
 
 const GuideStepAnswersItem: FC<IGuideStepAnswerProps> = ({
@@ -35,8 +37,21 @@ const GuideStepAnswersItem: FC<IGuideStepAnswerProps> = ({
                                                              handleOptionTextChange,
                                                              handleNextQuestionClick,
                                                              handleOptionRemove,
-                                                             handleRedirectGuideClick
+                                                             handleRedirectGuideClick,
+                                                             breadCrumbs
                                                          }) => {
+    const isRedirectToOtherGuideBranch = option.id > option.nextId
+    const checkAnswerWas = (): boolean => {
+        let result = false
+        breadCrumbs.forEach(breadCrumb => {
+            if (breadCrumb.questionId === questionId && breadCrumb.optionId === option.id && isRedirectToOtherGuideBranch) {
+                result = true
+                return
+            }
+        })
+        return result
+    }
+    const isAnswerWas = checkAnswerWas()
     const onRemoveOptionClick = () => {
         handleOptionRemove(questionId, option.id)
     }
@@ -69,6 +84,7 @@ const GuideStepAnswersItem: FC<IGuideStepAnswerProps> = ({
                                 <InputAdornment position="start">
                                     <IconButton
                                         aria-label="delete"
+                                        color={PRIMARY}
                                         onClick={onRemoveOptionClick}
                                         onMouseDown={() => {
                                         }}
@@ -84,21 +100,37 @@ const GuideStepAnswersItem: FC<IGuideStepAnswerProps> = ({
                                         onClick={onNextClick}
                                         color={PRIMARY}
                                     >
-                                        {option.redirectAnotherGuide ? (<MergeTypeIcon/>) : (<ArrowForwardIcon/>)}
+                                        {!option.redirectAnotherGuide && !isRedirectToOtherGuideBranch && (
+                                            <ArrowForwardIcon/>)}
+                                        {option.redirectAnotherGuide && (<MergeTypeIcon/>)}
+                                        {isRedirectToOtherGuideBranch && !option.redirectAnotherGuide && (<RedoIcon/>)}
                                     </IconButton>
                                 </InputAdornment>
                             }
                         />
                     </FormControl>
                 )
-                : (<Button fullWidth
-                           sx={{justifyContent: START}}
-                           onClick={onNextClick}
-                           startIcon={<TripOriginIcon/>}>
-                    <Typography>
-                        {option.text}
-                    </Typography>
-                </Button>)}
+                : (<>
+                        <Button fullWidth
+                                sx={{justifyContent: START}}
+                                onClick={onNextClick}
+                                disabled={isAnswerWas}>
+                            <Stack spacing={2} direction={ROW} alignItems={START} justifyContent={START}>
+                                {!option.redirectAnotherGuide && !isRedirectToOtherGuideBranch && (<TripOriginIcon/>)}
+                                {option.redirectAnotherGuide && (<MergeTypeIcon/>)}
+                                {isRedirectToOtherGuideBranch && !option.redirectAnotherGuide && (<RedoIcon/>)}
+                                <Typography fontWeight={500} textAlign={LEFT}>
+                                    {option.text}
+                                </Typography>
+                            </Stack>
+                        </Button>
+                        {isAnswerWas && (
+                            <Typography fontSize={"12px"} fontWeight={400} color={SECONDARY_TEXT_COLOR}>
+                                Вы уже выбирали это перенаправление, попробуйте другие варианты или вернитесь назад.
+                            </Typography>
+                        )}
+                    </>
+                )}
         </Grid>
     );
 };

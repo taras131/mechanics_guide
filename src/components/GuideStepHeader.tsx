@@ -1,7 +1,7 @@
 import React, {FC, useEffect, useId} from 'react';
 import {ButtonGroup, Divider, FormControl, FormLabel, Radio} from "@mui/material";
 import Grid from "@mui/material/Grid";
-import {CENTER, GUIDE_ITEM_TYPE, SPACE_BETWEEN, START} from "../utils/const";
+import {CENTER, COLUMN, GUIDE_ITEM_TYPE, LEFT, ROW, SECONDARY_TEXT_COLOR, SPACE_BETWEEN, START} from "../utils/const";
 import ArticleIcon from "@mui/icons-material/Article";
 import HelpCenterIcon from "@mui/icons-material/HelpCenter";
 import Typography from "@mui/material/Typography";
@@ -19,6 +19,7 @@ import {IGuideItem} from "../models/iGuide";
 import Box from "@mui/material/Box";
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 interface IProps {
     breadCrumbsCount: number
@@ -34,6 +35,8 @@ const GuideStepHeader: FC<IProps> = ({
                                          isEdit
                                      }) => {
     const dispatch = useAppDispatch()
+    const matches_650 = useMediaQuery('(min-width:650px)');
+    const matches_500 = useMediaQuery('(min-width:500px)');
     const radioButtonId = useId()
     const navigate = useNavigate()
     const lastBreadCrumbs = useAppSelector(state => getLastBreadCrumbs(state))
@@ -59,35 +62,40 @@ const GuideStepHeader: FC<IProps> = ({
     }
     return (
         <Box>
-            <Grid container alignItems={isEdit ? START : CENTER} justifyContent={SPACE_BETWEEN}>
+            <Grid container alignItems={isEdit ? START : CENTER}
+                  justifyContent={isEdit && !matches_500 ? CENTER : SPACE_BETWEEN}>
                 {isEdit && (
                     <FormControl>
-                        <FormLabel id={radioButtonId}>
-                            <Grid container alignItems="center" sx={{marginBottom: "10px"}}>
-                                {guideStep.type === GUIDE_ITEM_TYPE.result
-                                    ? (<ArticleIcon/>)
-                                    : (<HelpCenterIcon/>)}
-                                <Typography sx={{marginLeft: "10px"}}>
-                                    Шаг № {breadCrumbsCount + 1}
-                                </Typography>
-                            </Grid>
-                        </FormLabel>
-                        <RadioGroup
-                            row
-                            aria-labelledby={radioButtonId}
-                            name={radioButtonId}
-                            value={guideStep.type}
-                            onChange={handleGuideStepTypeChange}
+                        <Stack direction={matches_650 ? ROW : COLUMN}
+                               spacing={matches_650 ? 3 : 1}
+                               alignItems={matches_650 ? CENTER : LEFT}>
+                            <FormLabel id={radioButtonId}>
+                                <Stack direction={ROW} alignItems={CENTER}>
+                                    {guideStep.type === GUIDE_ITEM_TYPE.result
+                                        ? (<ArticleIcon/>)
+                                        : (<HelpCenterIcon/>)}
+                                    <Typography sx={{marginLeft: "10px"}} color={SECONDARY_TEXT_COLOR} fontWeight={500}>
+                                        Шаг № {breadCrumbsCount + 1}
+                                    </Typography>
+                                </Stack>
+                            </FormLabel>
+                            <RadioGroup
+                                row
+                                aria-labelledby={radioButtonId}
+                                name={radioButtonId}
+                                value={guideStep.type}
+                                onChange={handleGuideStepTypeChange}
 
-                        >
-                            <FormControlLabel value={GUIDE_ITEM_TYPE.question}
-                                              control={<Radio/>}
-                                              label="Вопрос"/>
-                            <FormControlLabel disabled={guideStep.id === 0}
-                                              value={GUIDE_ITEM_TYPE.result}
-                                              control={<Radio/>}
-                                              label="Результат"/>
-                        </RadioGroup>
+                            >
+                                <FormControlLabel value={GUIDE_ITEM_TYPE.question}
+                                                  control={<Radio/>}
+                                                  label="Вопрос"/>
+                                <FormControlLabel disabled={guideStep.id === 0}
+                                                  value={GUIDE_ITEM_TYPE.result}
+                                                  control={<Radio/>}
+                                                  label="Результат"/>
+                            </RadioGroup>
+                        </Stack>
                     </FormControl>
                 )}
                 {!isEdit && (
@@ -95,7 +103,7 @@ const GuideStepHeader: FC<IProps> = ({
                         {guideStep.type === GUIDE_ITEM_TYPE.result
                             ? (<ArticleIcon color="primary"/>)
                             : (<HelpCenterIcon color="primary"/>)}
-                        <Typography variant="h4" fontSize="14px" color="inherit" fontWeight={300}>
+                        <Typography variant="h4" fontSize="16px" color={SECONDARY_TEXT_COLOR} fontWeight={500}>
                             {guideStep.type === GUIDE_ITEM_TYPE.result
                                 ? "Результат"
                                 : ` Вопрос № ${breadCrumbsCount + 1}`}
@@ -103,11 +111,16 @@ const GuideStepHeader: FC<IProps> = ({
                     </Stack>
                 )}
                 <ButtonGroup>
-                    <Button onClick={handleGoToStartClick} disabled={!lastBreadCrumbs}
-                            startIcon={<KeyboardDoubleArrowLeftIcon/>}>
+                    <Button onClick={handleGoToStartClick}
+                            disabled={!lastBreadCrumbs}
+                            startIcon={<KeyboardDoubleArrowLeftIcon/>}
+                            variant="text">
                         Заново
                     </Button>
-                    <Button onClick={handleBackClick} disabled={!lastBreadCrumbs} startIcon={<KeyboardArrowLeftIcon/>}>
+                    <Button onClick={handleBackClick}
+                            disabled={!lastBreadCrumbs}
+                            startIcon={<KeyboardArrowLeftIcon/>}
+                            variant="text">
                         Назад
                     </Button>
                 </ButtonGroup>

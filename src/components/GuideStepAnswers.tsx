@@ -35,6 +35,7 @@ const GuideStepAnswers: FC<IGuideStepAnswersProps> = ({
                 : (<Typography fontSize={14} fontWeight={300} sx={{paddingTop: "15px"}}>
                     {isEdit ? emptyAnswersListEditText : emptyAnswersListText}
                 </Typography>)}
+
         </Stack>
     );
 };

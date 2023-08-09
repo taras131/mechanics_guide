@@ -26,6 +26,9 @@ export const BreadCrumbsSlice = createSlice({
         },
         setBreadCrumbs: (state, action: PayloadAction<IBreadCrumb[]>) => {
             state.list = action.payload
+        },
+        cutBreadCrumbs: (state, action: PayloadAction<number>) => {
+            state.list = [...state.list.filter((item, index) => index < action.payload)]
         }
     },
     extraReducers: {}
@@ -35,6 +38,7 @@ export const {
     addBreadCrumb,
     removeLastBreadCrumb,
     cleanBreadCrumbs,
-    setBreadCrumbs
+    setBreadCrumbs,
+    cutBreadCrumbs
 } = BreadCrumbsSlice.actions
 export default BreadCrumbsSlice.reducer;
