@@ -11,3 +11,5 @@ export const getLastBreadCrumbs = (state: RootState): IBreadCrumb | null => {
 export const getBreadCrumbsCount = (state: RootState): number => {
     return state.breadCrumbs.list.length
 }
+
+

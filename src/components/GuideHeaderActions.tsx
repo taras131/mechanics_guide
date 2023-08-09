@@ -33,7 +33,7 @@ import {fetchNewGuide, fetchUpdateGuide} from "../services/actions/guidesActions
 import {useNavigate} from "react-router-dom";
 import {IGuide} from "../models/iGuide";
 import SelectGuideCategory from "./SelectGuideCategory";
-import {getGuideCategoryNameById} from "../services/selectors/guidesSelectors";
+import {getGuideCategoryNameById, gitIsMyEditionGuide} from "../services/selectors/guidesSelectors";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import {cleanBreadCrumbs} from "../services/reducers/breadCrumbs";
 import ModalWindowWithQuestion from "./ModalWindowWithQuestion";
@@ -47,7 +47,7 @@ interface IProps {
 }
 
 const editingHelperText = "Вы можете редактировать только свои гайды или гайды без автора"
-const savingHelperText = "Не забудьте сохранить внесённые изменения."
+const savingHelperText = "Не забудьте сохранить изменения."
 
 const GuideHeaderActions: FC<IProps> = ({
                                             guide,
@@ -92,11 +92,11 @@ const GuideHeaderActions: FC<IProps> = ({
             dispatch(fetchNewGuide(guide))
             dispatch(setIsNewGuideEdition(false))
             localStorage.removeItem("new_guide")
+            navigate(routes.main)
         } else {
-            dispatch(fetchUpdateGuide(guide))
+            dispatch(fetchUpdateGuide({...guide, authorId: user.id}))
         }
         dispatch(setIsEdit(false))
-        navigate(routes.main)
     }
     const handleGuideCategoryChange = (e: SelectChangeEvent) => {
         dispatch(setEditionGuideCategory(e.target.value))
@@ -135,7 +135,7 @@ const GuideHeaderActions: FC<IProps> = ({
                             <Button onClick={handleEditClick}
                                     variant={CONTAINED}
                                     startIcon={<EditIcon/>}
-                                    disabled={!!guide.authorId && user.id !== guide.authorId}>
+                                    disabled={user.id === ""}>
                                 Редактировать
                             </Button>
                             <Button onClick={handleBackClick} startIcon={<HomeIcon/>}>
@@ -143,9 +143,9 @@ const GuideHeaderActions: FC<IProps> = ({
                             </Button>
                         </>)}
                 </ButtonGroup>
-                <Typography fontSize="11px" fontWeight={300} align={CENTER} mt={1}>
+                <Typography fontSize="12px" fontWeight={400} align={RIGHT} mt={2} color={SECONDARY_TEXT_COLOR}>
                     {isEdit && !isNewGuide && savingHelperText}
-                    {!!guide.authorId && user.id !== guide.authorId && editingHelperText}
+                    {user.id === "" && !isEdit && ("Авторизуйтесь для редактирования")}
                 </Typography>
             </Grid>
 

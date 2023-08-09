@@ -55,7 +55,7 @@ const GuideStepMainActions: FC<IProps> = ({options, guideStep, guideStepType}) =
     const anotherGuides = useAppSelector(state => getGuidesWithFilter(state, currentGuide.categoryId, false))
         .filter(guide => guide.id !== guideId)
     const guideSteps = useAppSelector(state => getEditionGuideStepsByType(state, guideStepType))
-        .filter(result => result.id !== guideStep.id)
+        .filter(step => step.id !== guideStep.id).filter(step => step.text !== "")
     const optionsTexts = options.map(option => option.text)
     const handleAddOptionClick = (newOptionText: string) => {
         dispatch(editionGuideStepAddOption({
@@ -91,7 +91,7 @@ const GuideStepMainActions: FC<IProps> = ({options, guideStep, guideStepType}) =
     }
     return (
         <>
-            <Grid container spacing={1}>
+            <Grid container spacing={1} mt={3}>
                 <Grid xs={12} sm={6} md={3}>
                     <Button disabled={!lastBreadCrumbs || anotherGuides.length === 0}
                             startIcon={<MergeTypeIcon/>}
@@ -138,39 +138,42 @@ const GuideStepMainActions: FC<IProps> = ({options, guideStep, guideStepType}) =
                     </Button>
                 </Grid>
             </Grid>
-            <Stack direction={ROW} spacing={1} alignItems={CENTER}>
-                <MergeTypeIcon/>
-                <Typography fontSize="12px" color="inherit" fontWeight={300}>
-                    Вы можете перенаправить текущий шаг на другой уже существующий гайд тойже
-                    категории, что ваш гайд, если текущий шаг не является первым и существуют другие гайды той же
-                    категории.
-                </Typography>
-            </Stack>
-            <Stack direction={ROW} spacing={1} alignItems={CENTER} sx={{marginTop: 3}}>
-                <RedoIcon/>
-                <Typography fontSize="12px" color="inherit" fontWeight={300}>
-                    Вы можете перенаправить текущий шаг на уже существующий, такого же типа,если текущий шаг не является
-                    первым и существуют другие шаги текущего типа.
-                </Typography>
-            </Stack>
-            {guideStep.file && guideStep.file.name
-                ? (<Stack direction={ROW} spacing={1} alignItems={CENTER} sx={{marginTop: "10px"}}>
-                    <AutorenewIcon/>
+            <Stack spacing={2}>
+                <Stack direction={ROW} spacing={1} alignItems={CENTER}>
+                    <MergeTypeIcon/>
                     <Typography fontSize="12px" color="inherit" fontWeight={300}>
-                        Вы можете заменить уже прикреплённый файл.
+                        Вы можете перенаправить текущий шаг на другой уже существующий гайд тойже
+                        категории, что ваш гайд, если текущий шаг не является первым и существуют другие гайды той же
+                        категории.
                     </Typography>
-                </Stack>)
-                : (<Stack direction={ROW} spacing={1} alignItems={CENTER} sx={{marginTop: 3}}>
-                    <AttachFileIcon/>
+                </Stack>
+                <Stack direction={ROW} spacing={1} alignItems={CENTER}>
+                    <RedoIcon/>
                     <Typography fontSize="12px" color="inherit" fontWeight={300}>
-                        Вы можете прикрепить файл.
+                        Вы можете перенаправить текущий шаг на уже существующий, такого же типа,если текущий шаг не
+                        является
+                        первым и существуют другие шаги текущего типа.
                     </Typography>
-                </Stack>)}
-            <Stack direction={ROW} spacing={1} alignItems={CENTER} sx={{marginTop: 3}}>
-                <AddCircleOutlineOutlinedIcon/>
-                <Typography fontSize="12px" color="inherit" fontWeight={300}>
-                    Вы можете добавить вариант ответа, если тип текущего шага, - вопрос.
-                </Typography>
+                </Stack>
+                {guideStep.file && guideStep.file.name
+                    ? (<Stack direction={ROW} spacing={1} alignItems={CENTER}>
+                        <AutorenewIcon/>
+                        <Typography fontSize="12px" color="inherit" fontWeight={300}>
+                            Вы можете заменить уже прикреплённый файл.
+                        </Typography>
+                    </Stack>)
+                    : (<Stack direction={ROW} spacing={1} alignItems={CENTER}>
+                        <AttachFileIcon/>
+                        <Typography fontSize="12px" color="inherit" fontWeight={300}>
+                            Вы можете прикрепить файл.
+                        </Typography>
+                    </Stack>)}
+                <Stack direction={ROW} spacing={1} alignItems={CENTER}>
+                    <AddCircleOutlineOutlinedIcon/>
+                    <Typography fontSize="12px" color="inherit" fontWeight={300}>
+                        Вы можете добавить вариант ответа, если тип текущего шага, - вопрос.
+                    </Typography>
+                </Stack>
             </Stack>
             <AddNewStringValueModal
                 existingValues={optionsTexts}

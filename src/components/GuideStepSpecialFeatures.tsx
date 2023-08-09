@@ -3,7 +3,7 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
-import {GUIDE_ITEM_TYPE} from "../utils/const";
+import {GUIDE_ITEM_TYPE, SECONDARY_TEXT_COLOR} from "../utils/const";
 import {useAppDispatch, useAppSelector} from "../hooks/redux";
 import {
     getEditionGuideStepsByType,
@@ -55,7 +55,7 @@ const GuideStepSpecialFeatures: FC<IGuideStepSpecialFeaturesProps> = ({
                         </Button>
                     </Grid>
                     <Grid item xs={8}>
-                        <Typography fontSize="12px" color="inherit" fontWeight={300}>
+                        <Typography fontSize="12px" color={SECONDARY_TEXT_COLOR} fontWeight={300}>
                             Вы можете удалить гайд , только в том случае, если вы являетесь его автором.
                         </Typography>
                     </Grid>

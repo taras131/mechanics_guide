@@ -12,13 +12,15 @@ import {deepPurple} from "@mui/material/colors";
 import Grid from "@mui/material/Unstable_Grid2";
 import ManageHistoryIcon from '@mui/icons-material/ManageHistory';
 import Stack from "@mui/material/Stack";
+import {useParams} from "react-router-dom";
 
 const emptyMessage = "Список начнёт заполняться по мере вашего передвижения по гайду"
 
 const BreadCrumbs = () => {
+    const guideId = useParams().guideId || "0";
     const breadCrumbs = useAppSelector(state => getBreadCrumbs(state))
     const breadCrumbsList = breadCrumbs.map((crumb, index) => {
-        return (<BreadCrumbsItem key={crumb.optionId} {...crumb} index={index}/>)
+        return (<BreadCrumbsItem key={crumb.optionId} {...crumb} index={index} guideId={guideId}/>)
     })
 
     return (

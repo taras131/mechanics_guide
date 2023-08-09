@@ -4,7 +4,7 @@ import {addBreadCrumb, cleanBreadCrumbs} from "../services/reducers/breadCrumbs"
 import {routes} from "../utils/routes";
 import {IGuideItemOption} from "../models/iGuide";
 import {useNavigate, useParams} from "react-router-dom";
-import {useAppDispatch} from "../hooks/redux";
+import {useAppDispatch, useAppSelector} from "../hooks/redux";
 import GuideStepAnswersItem from "./GuideStepAnswersItem";
 import Grid from "@mui/material/Unstable_Grid2";
 import Stack from "@mui/material/Stack";
@@ -12,6 +12,11 @@ import {CENTER, ROW} from "../utils/const";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 import Typography from "@mui/material/Typography";
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import DeleteIcon from '@mui/icons-material/Delete';
+import MergeTypeIcon from '@mui/icons-material/MergeType';
+import RedoIcon from '@mui/icons-material/Redo';
+import Box from "@mui/material/Box";
+import {getBreadCrumbs} from "../services/selectors/breadCrumbsSelectors";
 
 
 interface IGuideStepAnswersListProps {
@@ -30,6 +35,10 @@ const GuideStepAnswersList: FC<IGuideStepAnswersListProps> = ({
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
     const guideId = useParams().guideId || "0";
+    const isRedirectToOtherGuide = options.find(option => option.redirectAnotherGuide)
+    const isRedirectToOtherGuideBranch = options.find(option => option.id > option.nextId)
+    const breadCrumbs = useAppSelector(state => getBreadCrumbs(state))
+
     const handleOptionRemove = (guideStepId: number, optionId: number) => {
         dispatch(editionGuideStepRemoveOption({guideStepId, optionId}))
     }
@@ -65,7 +74,8 @@ const GuideStepAnswersList: FC<IGuideStepAnswersListProps> = ({
             handleOptionTextChange: handleOptionTextChange,
             handleNextQuestionClick: handleNextQuestionClick,
             handleOptionRemove: handleOptionRemove,
-            handleRedirectGuideClick: handleRedirectGuideClick
+            handleRedirectGuideClick: handleRedirectGuideClick,
+            breadCrumbs: breadCrumbs
         })
     })
     return (
@@ -73,12 +83,40 @@ const GuideStepAnswersList: FC<IGuideStepAnswersListProps> = ({
             <Grid container spacing={2}>
                 {answersList}
             </Grid>
-            {isEdit && (<Stack direction={ROW} spacing={1} alignItems={CENTER} sx={{marginTop: 3}}>
-                <ArrowForwardIcon/>
-                <Typography fontSize="12px" color="inherit" fontWeight={300}>
-                    Кликнув по стрелке вы перейдёте к заполнению следующего этапа.
-                </Typography>
-            </Stack>)}
+            <Box >
+                {isEdit && (<>
+                        <Stack direction={ROW} spacing={1} alignItems={CENTER} mt={2}>
+                            <DeleteIcon/>
+                            <Typography fontSize="12px" color="inherit" fontWeight={300}>
+                                Кликнув по корзине вы удалите вариант ответа.
+                            </Typography>
+                        </Stack>
+                        <Stack direction={ROW} spacing={1} alignItems={CENTER} mt={2}>
+                            <ArrowForwardIcon/>
+                            <Typography fontSize="12px" color="inherit" fontWeight={300}>
+                                Кликнув по стрелке вы перейдёте к заполнению следующего этапа.
+                            </Typography>
+                        </Stack>
+                    </>
+                )}
+                {isRedirectToOtherGuide && (
+                    <Stack direction={ROW} spacing={1} alignItems={CENTER} mt={2}>
+                        <MergeTypeIcon/>
+                        <Typography fontSize="12px" color="inherit" fontWeight={300}>
+                            Ответ отмеченный этим символом перенаправит вас на другой гайд.
+                        </Typography>
+                    </Stack>
+                )}
+                {isRedirectToOtherGuideBranch && (
+                    <Stack direction={ROW} spacing={1} alignItems={CENTER} mt={2}>
+                        <RedoIcon/>
+                        <Typography fontSize="12px" color="inherit" fontWeight={300}>
+                            Зтот вариант ответа перенаправит вас на другую ветвь гайда. Обратите внимание,
+                            - последовательный выбор одних и тех же ответов приведёт гайд к зацикливанию
+                        </Typography>
+                    </Stack>
+                )}
+            </Box>
         </>
 
     );

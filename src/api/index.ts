@@ -5,8 +5,6 @@ import {
     deleteDoc,
     updateDoc,
     doc,
-    query,
-    onSnapshot
 } from "firebase/firestore";
 import {IAuthData} from "../models/iAuth";
 import {getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut} from "firebase/auth";
@@ -36,6 +34,7 @@ class Api {
     }
     updateGuide = async (guide: IGuide) => {
         let res = await updateDoc(doc(db, "guides", guide.id), {
+            authorId: guide.authorId,
             title: guide.title,
             categoryId: guide.categoryId,
             items: JSON.stringify(guide.items)

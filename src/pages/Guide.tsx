@@ -2,7 +2,13 @@ import React, {useEffect, useRef} from 'react';
 import {useParams} from 'react-router-dom';
 import {Stack} from "@mui/material";
 import {useAppDispatch, useAppSelector} from "../hooks/redux";
-import {getGuideById, getGuideStepById, getIsEdit, getIsNewGuide} from "../services/selectors/guidesSelectors";
+import {
+    getGuideById,
+    getGuideStepById,
+    getIsEdit,
+    getIsNewGuide,
+    gitIsMyEditionGuide
+} from "../services/selectors/guidesSelectors";
 import {getBreadCrumbs} from "../services/selectors/breadCrumbsSelectors";
 import BreadCrumbs from "../components/BreadCrumbs";
 import {cleanBreadCrumbs, setBreadCrumbs} from "../services/reducers/breadCrumbs"
@@ -21,6 +27,7 @@ const Guide = () => {
         }
         const isEdit = useAppSelector(state => getIsEdit(state))
         const guide = useAppSelector(state => getGuideById(state, guideId, isEdit, isNewGuide))
+        const isMyGuide = useAppSelector(state => gitIsMyEditionGuide(state))
         const guideStep = useAppSelector(state => getGuideStepById(state, guideId, +guideStepId, isEdit, isNewGuide))
         const breadCrumbs = useAppSelector(state => getBreadCrumbs(state))
         useEffect(() => {
@@ -65,9 +72,9 @@ const Guide = () => {
                 <GuideHeader guide={guide} isEdit={isEdit} isNewGuide={isNewGuide}/>
                 <GuideStep guideStep={guideStep} isEdit={isEdit}/>
                 <BreadCrumbs/>
-                {isEdit && (<GuideStepSpecialFeatures guideStepType={guideStep.type}
-                                                      currentGuideStepId={guideStep.id}
-                                                      guideId={guide.id}/>)}
+                {isEdit && isMyGuide && (<GuideStepSpecialFeatures guideStepType={guideStep.type}
+                                                                   currentGuideStepId={guideStep.id}
+                                                                   guideId={guide.id}/>)}
             </Stack>
         );
     }

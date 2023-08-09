@@ -11,6 +11,7 @@ import {useAppDispatch, useAppSelector} from "../hooks/redux";
 import {editionGuideUpdateFile} from "../services/reducers/guides";
 import {getGuideById, getIsNewGuide} from "../services/selectors/guidesSelectors";
 import {IGuideItem} from "../models/iGuide";
+import Typography from "@mui/material/Typography";
 
 interface IGuideStepUploadFileProps {
     guideStep: IGuideItem
@@ -34,27 +35,29 @@ const GuideStepUploadFile: FC<IGuideStepUploadFileProps> = ({guideStep, isEdit, 
         }
     }
     return (
-        <Grid container spacing={2} justifyContent="space-between">
-            <Grid>
-                {guideStep.file && guideStep.file.name && (
-                    <Stack spacing={1} direction="row" alignItems="center">
-                        <Chip
-                            label={guideStep.file.name.slice(13)}
-                            component="a"
-                            href={guideStep.file.path}
-                            icon={<DownloadIcon />}
-                            color="primary"
-                            clickable
-                        />
-                        {isEdit && (
-                            <IconButton aria-label="remove" onClick={handleRemove}>
-                                <CloseIcon/>
-                            </IconButton>
-                        )}
-                    </Stack>
-                )}
-            </Grid>
-        </Grid>
+        <>
+            {guideStep.file && guideStep.file.name && (
+                <Stack spacing={1} direction="row" alignItems="center" mt={2}>
+                    <Typography fontWeight={500} fontSize={"14px"}>
+                        Прикреплён файл:
+                    </Typography>
+                    <Chip
+                        label={guideStep.file.name.slice(13)}
+                        component="a"
+                        href={guideStep.file.path}
+                        icon={<DownloadIcon/>}
+                        color="primary"
+                        clickable
+                    />
+                    {isEdit && (
+                        <IconButton aria-label="remove" onClick={handleRemove}>
+                            <CloseIcon/>
+                        </IconButton>
+                    )}
+                </Stack>
+            )}
+
+        </>
     );
 };
 
