@@ -127,7 +127,7 @@ const GuideHeaderActions: FC<IProps> = ({
                             <Button onClick={handleSaveClick}
                                     variant={CONTAINED}
                                     startIcon={<SaveIcon/>}
-                                    disabled={!!titleError || !!guide.authorId && user.id !== guide.authorId}>
+                                    disabled={!!titleError || user.id === ""}>
                                 Сохранить
                             </Button>
                         </>)
