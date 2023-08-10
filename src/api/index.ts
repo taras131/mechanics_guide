@@ -11,6 +11,8 @@ import {getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, sig
 import {ref, deleteObject, uploadBytesResumable, getDownloadURL} from "firebase/storage";
 import {IGuide} from "../models/iGuide";
 import {IFetchUploadFile, IFile} from "../services/actions/guidesActionsCreators";
+import {IComment, INewComment} from "../models/iComment";
+import {IUpdateLikes} from "../services/actions/commentsActionsCreators";
 
 class Api {
     auth = getAuth();
@@ -99,6 +101,18 @@ class Api {
     }
     out = async () => {
         const res = await signOut(this.auth)
+        return res
+    }
+    addComment = async (comment: INewComment) => {
+        let res = await addDoc(collection(db, "comments"),
+            {...comment, likedUsersId: JSON.stringify(comment.likedUsersId)}
+        );
+        return res
+    }
+    updateCommentLike = async (updateLikes: IUpdateLikes) => {
+        let res = await updateDoc(doc(db, "comments", updateLikes.commentId), {
+            likedUsersId: JSON.stringify(updateLikes.likedUsersId)
+        });
         return res
     }
 }

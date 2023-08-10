@@ -33,3 +33,6 @@ export const validateText = (newValue: string, setError: (newValue:string) => vo
         }
     }
 }
+export const getTodayDate = () => {
+    return new Date().toISOString().slice(0, 10)
+}
