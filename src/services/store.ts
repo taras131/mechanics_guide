@@ -3,11 +3,13 @@ import {configureStore} from '@reduxjs/toolkit';
 import guidesReducer from './reducers/guides';
 import breadCrumbsReducer from './reducers/breadCrumbs';
 import authReducer from './reducers/auth';
+import commentsReducer from "./reducers/comments";
 
 const rootReducer = combineReducers({
     guides: guidesReducer,
     breadCrumbs: breadCrumbsReducer,
-    auth: authReducer
+    auth: authReducer,
+    comments: commentsReducer
 });
 export const setupStore = () => {
     return configureStore({

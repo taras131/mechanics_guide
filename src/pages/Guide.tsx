@@ -16,6 +16,7 @@ import GuideHeader from "../components/GuideHeader";
 import GuideStep from "../components/GuideStep";
 import {setEditionGuide, setIsEdit} from "../services/reducers/guides"
 import GuideStepSpecialFeatures from "../components/GuideStepSpecialFeatures";
+import GuideComments from "../components/GuideComments";
 
 const Guide = () => {
         const dispatch = useAppDispatch()
@@ -75,6 +76,9 @@ const Guide = () => {
                 {isEdit && isMyGuide && (<GuideStepSpecialFeatures guideStepType={guideStep.type}
                                                                    currentGuideStepId={guideStep.id}
                                                                    guideId={guide.id}/>)}
+                {!isEdit && (
+                    <GuideComments guideId={guideId}/>
+                )}
             </Stack>
         );
     }
