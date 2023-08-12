@@ -58,7 +58,7 @@ const AddNewStringValueModal: FC<IAddAddNewModalProps> = ({
                 {existingValues.length
                     ? (<AddNewStringValueModalList existingValues={existingValues}
                                                    listSubHeaderText={listSubHeaderText}/>)
-                    : (<Typography fontSize={14}>
+                    : (<Typography fontSize={14} sx={{padding: 2}}>
                         {EMPTY_EXISTING_VALUES_TEXT}
                     </Typography>)}
                 <FormControl sx={{minHeight: FORM_CONTROL_HEIGHT_PX}}>

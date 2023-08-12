@@ -29,11 +29,11 @@ const GuideCommentsItem: FC<IProps> = ({
     const authorIdSplit = authorId.toUpperCase().split("")
     const isILiked = likedUsersId.find(item => item === userId)
     const handleLikeClick = () => {
-        let newLikedUsersId = []
+        let newLikedUsersId = [...likedUsersId]
         if (isILiked) {
             newLikedUsersId = [...likedUsersId.filter(item => item !== userId)]
         } else {
-            newLikedUsersId.push(userId)
+            newLikedUsersId = [...newLikedUsersId, userId]
         }
         dispatch(fetchUpdateCommentLikes({commentId: id, likedUsersId: newLikedUsersId}))
     }
