@@ -3,7 +3,6 @@ import {Accordion, AccordionDetails, AccordionSummary, FormControl, Paper} from 
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Grid from "@mui/material/Unstable_Grid2";
 import Stack from "@mui/material/Stack";
-import ManageHistoryIcon from "@mui/icons-material/ManageHistory";
 import Typography from "@mui/material/Typography";
 import Avatar from "@mui/material/Avatar";
 import {deepPurple} from "@mui/material/colors";
@@ -18,7 +17,6 @@ import {
 } from "../utils/const";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 import {collection, onSnapshot, query, where} from "firebase/firestore";
 import {db} from "../firebase";
 import {useAppDispatch, useAppSelector} from "../hooks/redux";
