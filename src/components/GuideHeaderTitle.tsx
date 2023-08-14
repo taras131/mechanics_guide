@@ -1,18 +1,17 @@
-import React, {FC, useId, useState} from 'react';
+import React, {FC, useId} from 'react';
 import {FormControl, Stack} from "@mui/material";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import {changeEditionGuideTitle} from "../services/reducers/guides";
 import {useAppDispatch, useAppSelector} from "../hooks/redux";
-import {CENTER, FORM_CONTROL_HEIGHT_PX, H3, LEFT, OUTLINED, STRING_WITH_SPACE} from "../utils/const";
+import {CENTER, FORM_CONTROL_HEIGHT_PX, GUIDE_MODE, H3, LEFT, OUTLINED} from "../utils/const";
 import {validateText} from "../utils/services";
 import {getGuidesTitlesWithGuideIdFilter} from "../services/selectors/guidesSelectors";
 import {useParams} from "react-router-dom";
 
 interface IProps {
     guideTitle: string
-    isEdit: boolean
-    isNewGuide: boolean
+    guideMode: GUIDE_MODE
     matches_900: boolean
     titleError: string
     setTitleError: (errorText: string) => void
@@ -22,8 +21,7 @@ const textFieldLabel = "Заголовок гайда";
 
 const GuideHeaderTitle: FC<IProps> = ({
                                           guideTitle,
-                                          isEdit,
-                                          isNewGuide,
+                                          guideMode,
                                           matches_900,
                                           titleError,
                                           setTitleError
@@ -38,8 +36,15 @@ const GuideHeaderTitle: FC<IProps> = ({
     }
     return (
         <Stack>
-            {isEdit
-                ? (<FormControl sx={{minHeight: FORM_CONTROL_HEIGHT_PX}}>
+            {guideMode === GUIDE_MODE.viewing
+                ? (<Typography variant={H3}
+                               fontSize={matches_900 ? "37px" : "25px"}
+                               fontWeight={matches_900 ? 700 : 600}
+                               textAlign={matches_900 ? LEFT : CENTER}
+                               sx={{marginTop: "-5px", lineHeight: matches_900 ? "50px" : "40px"}}>
+                    {guideTitle}
+                </Typography>)
+                : (<FormControl sx={{minHeight: FORM_CONTROL_HEIGHT_PX}}>
                     <TextField value={guideTitle}
                                onChange={handleGuideNameChange}
                                id={textFieldId}
@@ -48,14 +53,7 @@ const GuideHeaderTitle: FC<IProps> = ({
                                fullWidth
                                helperText={titleError}/>
                 </FormControl>)
-                : (<Typography variant={H3}
-                               fontSize={matches_900 ? "37px" : "25px"}
-                               fontWeight={matches_900 ? 700 : 600}
-                               textAlign={matches_900 ? LEFT : CENTER}
-
-                               sx={{marginTop: "-5px", lineHeight: matches_900 ? "50px" : "40px"}}>
-                    {guideTitle}
-                </Typography>)}
+            }
         </Stack>
     );
 };

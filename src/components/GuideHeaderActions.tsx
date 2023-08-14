@@ -6,42 +6,32 @@ import {
     CONTAINED,
     EDITION_GUIDE_ID,
     END,
+    GUIDE_MODE,
     RIGHT,
-    SECONDARY_TEXT_COLOR,
-    SPACE_BETWEEN,
-    START
+    SECONDARY_TEXT_COLOR
 } from "../utils/const";
 import {ButtonGroup, SelectChangeEvent} from "@mui/material";
 import Button from "@mui/material/Button";
 import CancelIcon from "@mui/icons-material/Cancel";
 import SaveIcon from "@mui/icons-material/Save";
 import EditIcon from "@mui/icons-material/Edit";
-import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
 import Typography from "@mui/material/Typography";
 import {useAppDispatch, useAppSelector} from "../hooks/redux";
 import {getUser} from "../services/selectors/authSelector";
 import {routes} from "../utils/routes";
 import HomeIcon from '@mui/icons-material/Home';
-import {
-    emptyGuide,
-    setEditionGuide,
-    setEditionGuideCategory,
-    setIsEdit,
-    setIsNewGuideEdition
-} from "../services/reducers/guides";
+import {emptyGuide, setEditionGuide, setEditionGuideCategory, setGuideMode,} from "../services/reducers/guides";
 import {fetchNewGuide, fetchUpdateGuide} from "../services/actions/guidesActionsCreators";
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import {IGuide} from "../models/iGuide";
 import SelectGuideCategory from "./SelectGuideCategory";
-import {getGuideCategoryNameById, gitIsMyEditionGuide} from "../services/selectors/guidesSelectors";
-import useMediaQuery from "@mui/material/useMediaQuery";
+import {getGuideCategoryNameById} from "../services/selectors/guidesSelectors";
 import {cleanBreadCrumbs} from "../services/reducers/breadCrumbs";
 import ModalWindowWithQuestion from "./ModalWindowWithQuestion";
 
 interface IProps {
     guide: IGuide
-    isEdit: boolean
-    isNewGuide: boolean
+    guideMode: GUIDE_MODE
     matches_900: boolean
     titleError: string
 }
@@ -51,16 +41,19 @@ const savingHelperText = "Не забудьте сохранить измене�
 
 const GuideHeaderActions: FC<IProps> = ({
                                             guide,
-                                            isEdit,
-                                            isNewGuide,
+                                            guideMode,
                                             matches_900,
                                             titleError
                                         }) => {
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
+    const location: any = useLocation()
     const user = useAppSelector(state => getUser(state))
     const categoryName = useAppSelector(state => getGuideCategoryNameById(state, guide.categoryId))
     const [isQuestionWindowOpen, setIsQuestionWindowOpen] = useState(false)
+    const handleAuthClick = () => {
+        navigate(routes.login, {state: {from: location.pathname}})
+    }
     const toggleIsQuestionWindowOpen = () => {
         setIsQuestionWindowOpen(prev => !prev)
     }
@@ -68,35 +61,35 @@ const GuideHeaderActions: FC<IProps> = ({
         navigate(routes.main)
     }
     const handleResetAgreeClick = () => {
-        navigate(routes.guide + "/" + EDITION_GUIDE_ID + "/0")
+        navigate(routes.guide + "/" + GUIDE_MODE.new_guide + "/0")
         dispatch(cleanBreadCrumbs())
         dispatch(setEditionGuide(emptyGuide))
         toggleIsQuestionWindowOpen()
-        localStorage.removeItem("new_guide")
+        localStorage.removeItem(GUIDE_MODE.new_guide)
     }
     const handleCancelClick = () => {
-        if (isNewGuide) {
+        if (guideMode === GUIDE_MODE.new_guide) {
             toggleIsQuestionWindowOpen()
         } else {
-            dispatch(setIsEdit(false))
+            dispatch(setGuideMode(GUIDE_MODE.viewing))
             dispatch(setEditionGuide(emptyGuide))
+            localStorage.removeItem(`${GUIDE_MODE.editing}_${guide.id}`)
         }
 
     }
     const handleEditClick = () => {
         dispatch(setEditionGuide(guide))
-        dispatch(setIsEdit(true))
+        dispatch(setGuideMode(GUIDE_MODE.editing))
     }
     const handleSaveClick = () => {
-        if (isNewGuide) {
+        if (guideMode === GUIDE_MODE.new_guide) {
             dispatch(fetchNewGuide(guide))
-            dispatch(setIsNewGuideEdition(false))
-            localStorage.removeItem("new_guide")
+            localStorage.removeItem(GUIDE_MODE.new_guide)
             navigate(routes.main)
         } else {
             dispatch(fetchUpdateGuide({...guide, authorId: user.id}))
         }
-        dispatch(setIsEdit(false))
+        dispatch(setGuideMode(GUIDE_MODE.viewing))
     }
     const handleGuideCategoryChange = (e: SelectChangeEvent) => {
         dispatch(setEditionGuideCategory(e.target.value))
@@ -108,30 +101,19 @@ const GuideHeaderActions: FC<IProps> = ({
               direction={COLUMN}
         >
             <Grid>
-                {isEdit || isNewGuide
-                    ? (<SelectGuideCategory selectedGuideCategoryId={guide.categoryId}
-                                            handleGuideCategoryChange={handleGuideCategoryChange}/>)
-                    : (<Typography fontSize="16px"
+                {guideMode === GUIDE_MODE.viewing
+                    ? (<Typography fontSize="16px"
                                    fontWeight={600}
                                    color={SECONDARY_TEXT_COLOR}>
                         {categoryName}
-                    </Typography>)}
+                    </Typography>)
+                    : (<SelectGuideCategory selectedGuideCategoryId={guide.categoryId}
+                                            handleGuideCategoryChange={handleGuideCategoryChange}/>)}
             </Grid>
-            <Grid mt={isEdit && !matches_900 ? 4 : 2}>
+            <Grid mt={guideMode !== GUIDE_MODE.viewing && !matches_900 ? 4 : 2}>
                 <ButtonGroup>
-                    {isEdit
+                    {guideMode === GUIDE_MODE.viewing
                         ? (<>
-                            <Button onClick={handleCancelClick} startIcon={<CancelIcon/>}>
-                                {isNewGuide ? "Сбросить" : "Отмена"}
-                            </Button>
-                            <Button onClick={handleSaveClick}
-                                    variant={CONTAINED}
-                                    startIcon={<SaveIcon/>}
-                                    disabled={!!titleError || user.id === ""}>
-                                Сохранить
-                            </Button>
-                        </>)
-                        : (<>
                             <Button onClick={handleEditClick}
                                     variant={CONTAINED}
                                     startIcon={<EditIcon/>}
@@ -141,11 +123,26 @@ const GuideHeaderActions: FC<IProps> = ({
                             <Button onClick={handleBackClick} startIcon={<HomeIcon/>}>
                                 Главная
                             </Button>
+                        </>)
+                        : (<>
+                            <Button onClick={handleCancelClick} startIcon={<CancelIcon/>}>
+                                {guideMode === GUIDE_MODE.new_guide ? "Сбросить" : "Отмена"}
+                            </Button>
+                            <Button onClick={handleSaveClick}
+                                    variant={CONTAINED}
+                                    startIcon={<SaveIcon/>}
+                                    disabled={!!titleError || user.id === ""}>
+                                Сохранить
+                            </Button>
                         </>)}
                 </ButtonGroup>
                 <Typography fontSize="12px" fontWeight={400} align={RIGHT} mt={2} color={SECONDARY_TEXT_COLOR}>
-                    {isEdit && !isNewGuide && savingHelperText}
-                    {user.id === "" && !isEdit && ("Авторизуйтесь для редактирования")}
+                    {user.id && guideMode !== GUIDE_MODE.viewing && savingHelperText}
+                    {user.id === ""   && (
+                        <Typography fontSize={"12px"} color={"primary"} sx={{cursor: "pointer"}}
+                                    onClick={handleAuthClick}>
+                            Авторизуйтесь для внесения изменений
+                        </Typography>)}
                 </Typography>
             </Grid>
 

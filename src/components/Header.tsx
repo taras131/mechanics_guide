@@ -8,12 +8,12 @@ import {Link} from "react-router-dom";
 import {routes} from "../utils/routes";
 import {useAppSelector} from "../hooks/redux";
 import {getIsAuth, getUser} from "../services/selectors/authSelector";
-import {getIsEdit, getIsNewGuide} from "../services/selectors/guidesSelectors";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import IconButton from "@mui/material/IconButton";
 import Person4Icon from '@mui/icons-material/Person4';
 import LoginIcon from '@mui/icons-material/Login';
-import {DIV, H6, INHERIT, NONE, STATIC, WHITE} from "../utils/const";
+import {DIV, GUIDE_MODE, H6, INHERIT, NONE, STATIC, WHITE} from "../utils/const";
+import {getGuideMode} from "../services/selectors/guidesSelectors";
 
 const editingText = "Редактирование";
 const newGuideText = "Новый гайд";
@@ -26,8 +26,7 @@ const Header = () => {
     const matches_700 = useMediaQuery('(min-width:700px)');
     const matches_460 = useMediaQuery('(min-width:460px)');
     const user = useAppSelector(state => getUser(state))
-    const isNewGuide = useAppSelector(state => getIsNewGuide(state))
-    const isEdit = useAppSelector(state => getIsEdit(state))
+    const guideMode = useAppSelector(state => getGuideMode(state))
     return (
         <Box sx={{flexGrow: 1}}>
             <AppBar position={STATIC}>
@@ -38,7 +37,7 @@ const Header = () => {
                         </Link>
                     </Typography>
                     <Typography fontSize="16px" fontWeight={400} sx={{flexGrow: 1}}>
-                        {!isNewGuide && isEdit && editingText}
+                        {guideMode === GUIDE_MODE.editing && editingText}
 
                     </Typography>
                     {isAuth && user && user.email && (

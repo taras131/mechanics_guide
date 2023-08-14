@@ -18,9 +18,12 @@ import {fetchLogin, fetchRegister} from "../services/actions/authActionsCreators
 import {getAuthErrorMessage, getIsAuth, getIsAuthLoading} from "../services/selectors/authSelector";
 import MessageWindow from "../components/MessageWindow";
 import {validateEmail} from "../utils/services";
+import {setMessage} from "../services/reducers/message";
+import {MESSAGE_SEVERITY} from "../utils/const";
 
 
 const Auth = () => {
+    const location: any = useLocation()
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
     const isAuth = useAppSelector(state => getIsAuth(state))
@@ -51,7 +54,17 @@ const Auth = () => {
         }
     }, [errorMessage])
     useEffect(() => {
-        if (isAuth) navigate(routes.profile)
+        if (isAuth) {
+            if (location.state && location.state.from) {
+                navigate(location.state.from)
+            } else {
+                navigate(routes.profile)
+            }
+            dispatch(setMessage({
+                severity: MESSAGE_SEVERITY.success,
+                text: "Вы успешно вошли в систему."
+            }))
+        }
     }, [isAuth])
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.name === "email") {

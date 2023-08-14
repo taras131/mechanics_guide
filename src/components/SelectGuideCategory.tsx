@@ -1,12 +1,12 @@
 import React, {FC, useId, useState} from 'react';
 import {FormControl, InputLabel, MenuItem, Select, SelectChangeEvent} from "@mui/material";
 import {useAppDispatch, useAppSelector} from "../hooks/redux";
-import {getGuideCategories, getIsEdit, getIsNewGuide} from "../services/selectors/guidesSelectors";
+import {getGuideCategories, getGuideMode} from "../services/selectors/guidesSelectors";
 import AddNewStringValueModal from "./AddNewStringValueModal";
 import {
     ADD_CATEGORY_LABEL,
     ADD_CATEGORY_SUBHEADER_TEXT,
-    ADD_CATEGORY_TITLE,
+    ADD_CATEGORY_TITLE, GUIDE_MODE,
     HIDDEN,
     STRING_EMPTY
 } from "../utils/const";
@@ -32,8 +32,7 @@ const SelectGuideCategory: FC<ISelectGuideCategoryProps> = ({
     const selectName = useId()
     const dispatch = useAppDispatch()
     const [isOpenNewCategoryWindow, setIsOpenNewCategoryWindow] = useState(false)
-    const isNewGuide = useAppSelector(state => getIsNewGuide(state))
-    const isEdit = useAppSelector(state => getIsEdit(state))
+    const guideMode = useAppSelector(state => getGuideMode(state))
     const categories = useAppSelector(state => getGuideCategories(state))
     const categoriesNames = categories.map(category => category.categoryName)
     const toggleIsOpenNewCategoryWindow = () => {
@@ -48,7 +47,7 @@ const SelectGuideCategory: FC<ISelectGuideCategoryProps> = ({
     let categoryList = guidesCategory.map(category => (
         <MenuItem key={`${category.id}_${category.categoryName}`}
                   value={category.id}>{category.categoryName}</MenuItem>))
-    if (isEdit || isNewGuide) {
+    if (guideMode !== GUIDE_MODE.viewing) {
         categoryList = [...categoryList, (
             <SelectGuideCategoryAddNewButton key="add_category_button" handleClick={handleAddCategoryWindowClick}/>)]
     }

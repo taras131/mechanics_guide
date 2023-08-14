@@ -10,7 +10,6 @@ import {deepPurple} from "@mui/material/colors";
 import Avatar from "@mui/material/Avatar";
 import {useNavigate} from "react-router-dom";
 import {routes} from "../utils/routes";
-import {setIsNewGuideEdition} from "../services/reducers/guides";
 import useMediaQuery from '@mui/material/useMediaQuery';
 import {setBreadCrumbs} from "../services/reducers/breadCrumbs";
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
@@ -18,10 +17,9 @@ import {IBreadCrumb} from "../models/iBreadCrumbs";
 import {
     CENTER,
     DIV,
+    GUIDE_MODE,
     H5,
     HIDDEN,
-    OUTLINED,
-    PRIMARY,
     ROW,
     SECONDARY_TEXT_COLOR,
     SMALL,
@@ -30,6 +28,7 @@ import {
 } from "../utils/const";
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import Stack from "@mui/material/Stack";
+import {setGuideMode} from "../services/reducers/guides";
 
 interface IGuidePreviewProps {
     guide: IGuide
@@ -62,13 +61,13 @@ const GuidePreview: FC<IGuidePreviewProps> = ({guide}) => {
     }
     const handleContinueClick = () => {
         if (parseBreadCrumbs) {
-            dispatch(setIsNewGuideEdition(false))
+            dispatch(setGuideMode(GUIDE_MODE.viewing))
             dispatch(setBreadCrumbs(parseBreadCrumbs))
             navigate(`${routes.guide}/${guide.id}/${continueGuideStep}`)
         }
     }
     const handleGuideClick = () => {
-        dispatch(setIsNewGuideEdition(false))
+        dispatch(setGuideMode(GUIDE_MODE.viewing))
         navigate(`${routes.guide}/${guide.id}/0`)
     }
     return (

@@ -3,15 +3,15 @@ import Button from "@mui/material/Button";
 import CloseIcon from '@mui/icons-material/Close';
 import {Chip} from "@mui/material";
 import DownloadIcon from '@mui/icons-material/Download';
-import Grid from "@mui/material/Unstable_Grid2";
 import IconButton from "@mui/material/IconButton";
 import Stack from "@mui/material/Stack";
-import {fetchRemoveFile, fetchUpdateGuide, fetchUploadFile} from "../services/actions/guidesActionsCreators";
+import {fetchRemoveFile, fetchUpdateGuide} from "../services/actions/guidesActionsCreators";
 import {useAppDispatch, useAppSelector} from "../hooks/redux";
 import {editionGuideUpdateFile} from "../services/reducers/guides";
-import {getGuideById, getIsNewGuide} from "../services/selectors/guidesSelectors";
+import {getGuideById, getGuideMode} from "../services/selectors/guidesSelectors";
 import {IGuideItem} from "../models/iGuide";
 import Typography from "@mui/material/Typography";
+import {GUIDE_MODE} from "../utils/const";
 
 interface IGuideStepUploadFileProps {
     guideStep: IGuideItem
@@ -21,15 +21,13 @@ interface IGuideStepUploadFileProps {
 
 const GuideStepUploadFile: FC<IGuideStepUploadFileProps> = ({guideStep, isEdit, guideId}) => {
     const dispatch = useAppDispatch()
-    const isNewGuide = useAppSelector(state => getIsNewGuide(state))
-    const editionGuide = useAppSelector(state => getGuideById(state, guideId, isEdit, isNewGuide))
-
-
+    const guideMode = useAppSelector(state => getGuideMode(state))
+    const editionGuide = useAppSelector(state => getGuideById(state,guideId, guideMode))
     const handleRemove = (e: any) => {
         if (guideStep.file && guideStep.file.name) {
             dispatch(fetchRemoveFile(guideStep.file.name))
             dispatch(editionGuideUpdateFile({fileName: "", filePath: "", guideStepId: guideStep.id}))
-            if (!isNewGuide) {
+            if (guideMode !== GUIDE_MODE.new_guide) {
                 dispatch(fetchUpdateGuide(editionGuide))
             }
         }

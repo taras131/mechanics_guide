@@ -30,19 +30,16 @@ const GuidesHeader: FC<IGuidesHeaderProps> = ({
               justifyContent="space-between"
               alignItems="center"
               spacing={3}
-              sx ={{padding: "20px 0"}}>
+              sx={{padding: "20px 0"}}>
             <Grid>
                 <GuidesHeaderAddNewGuide/>
             </Grid>
             <Grid>
                 <Grid container direction={matches_500 ? "row" : "column"} spacing={2} alignItems="center">
-                    {isAuth && (
-                        <Grid>
-                            <GuidesHeaderSelectMyGuides isSelectedMyGuides={isSelectedMyGuides}
-                                                        handleMyGuideSelected={handleMyGuideSelected}/>
-                        </Grid>
-                    )}
-
+                    {isAuth && (<Grid>
+                        <GuidesHeaderSelectMyGuides isSelectedMyGuides={isSelectedMyGuides}
+                                                    handleMyGuideSelected={handleMyGuideSelected}/>
+                    </Grid>)}
                     <Grid>
                         <SelectGuideCategory selectedGuideCategoryId={selectedGuideCategoryId}
                                              handleGuideCategoryChange={handleGuideCategoryChange}/>

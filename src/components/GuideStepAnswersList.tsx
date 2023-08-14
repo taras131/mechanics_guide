@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import {changeEditionGuideOptionText, editionGuideStepRemoveOption, setIsEdit} from "../services/reducers/guides";
+import {changeEditionGuideOptionText, editionGuideStepRemoveOption, setGuideMode} from "../services/reducers/guides";
 import {addBreadCrumb, cleanBreadCrumbs} from "../services/reducers/breadCrumbs";
 import {routes} from "../utils/routes";
 import {IGuideItemOption} from "../models/iGuide";
@@ -8,8 +8,7 @@ import {useAppDispatch, useAppSelector} from "../hooks/redux";
 import GuideStepAnswersItem from "./GuideStepAnswersItem";
 import Grid from "@mui/material/Unstable_Grid2";
 import Stack from "@mui/material/Stack";
-import {CENTER, ROW} from "../utils/const";
-import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
+import {CENTER, GUIDE_MODE, ROW} from "../utils/const";
 import Typography from "@mui/material/Typography";
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -61,7 +60,7 @@ const GuideStepAnswersList: FC<IGuideStepAnswersListProps> = ({
     }
     const handleRedirectGuideClick = (redirectAnotherGuide: string) => {
         navigate(`${routes.guide}/${redirectAnotherGuide}/0`)
-        dispatch(setIsEdit(false))
+        dispatch(setGuideMode(GUIDE_MODE.viewing))
         dispatch(cleanBreadCrumbs())
     }
     const answersList = options.map((option, index) => {
