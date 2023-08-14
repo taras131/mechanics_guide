@@ -31,13 +31,7 @@ const GuideStepSpecialFeatures: FC<IGuideStepSpecialFeaturesProps> = ({
                                                                       }) => {
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
-
-    const currentGuide = useAppSelector(state => getGuideById(state, guideId, true, false))
-
-
     const isMyGuide = useAppSelector(state => gitIsMyEditionGuide(state))
-
-
     const handleRemoveGuideClick = () => {
         navigate(routes.main)
         dispatch(fetchRemoveGuide(guideId))

@@ -11,18 +11,20 @@ import {deepPurple} from "@mui/material/colors";
 interface IProps {
     title: string
     count: number
+    icon: React.ReactNode
     children: React.ReactNode
     handleExpandedChange: any
     expanded: string | false
     panelId: string
 }
 
-const AccordionWithTitleAndCounter: FC<IProps> = ({title,
+const AccordionWithTitleCounterIcon: FC<IProps> = ({title,
                                                       count,
                                                       handleExpandedChange,
                                                       expanded,
                                                       panelId,
-                                                      children}) => {
+                                                      children,
+                                                       icon}) => {
     return (
         <Accordion expanded={expanded === panelId} onChange={handleExpandedChange(panelId)}>
             <AccordionSummary
@@ -34,7 +36,7 @@ const AccordionWithTitleAndCounter: FC<IProps> = ({title,
                 <Grid container alignItems="center" justifyContent="space-between"
                       sx={{width: "100%", paddingRight: "10px"}}>
                     <Stack direction="row" spacing={1} alignItems="center">
-                        <ChatBubbleOutlineIcon color="primary"/>
+                        {icon}
                         <Typography fontWeight={500} fontSize={16}>
                             {title}
                         </Typography>
@@ -54,4 +56,4 @@ const AccordionWithTitleAndCounter: FC<IProps> = ({title,
     );
 };
 
-export default AccordionWithTitleAndCounter;
+export default AccordionWithTitleCounterIcon;

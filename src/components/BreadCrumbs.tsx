@@ -1,19 +1,12 @@
 import React, {FC} from 'react';
 import {useAppSelector} from "../hooks/redux";
 import {getBreadCrumbs} from "../services/selectors/breadCrumbsSelectors";
-import {
-    Accordion, AccordionDetails, AccordionSummary, List, Paper
-} from "@mui/material";
+import {List} from "@mui/material";
 import BreadCrumbsItem from "./BreadCrumbsItem";
-import Typography from "@mui/material/Typography";
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import Avatar from "@mui/material/Avatar";
-import {deepPurple} from "@mui/material/colors";
-import Grid from "@mui/material/Unstable_Grid2";
 import ManageHistoryIcon from '@mui/icons-material/ManageHistory';
-import Stack from "@mui/material/Stack";
 import {useParams} from "react-router-dom";
-import AccordionWithTitleAndCounter from "./AccordionWithTitleAndCounter";
+import AccordionWithTitleCounterIcon from "./AccordionWithTitleCounterIcon";
+import {PRIMARY} from "../utils/const";
 
 interface IProps {
     expanded: string | false
@@ -29,11 +22,12 @@ const BreadCrumbs: FC<IProps> = ({expanded, handleExpandedChange}) => {
         return (<BreadCrumbsItem key={crumb.optionId} {...crumb} index={index} guideId={guideId}/>)
     })
     return (
-        <AccordionWithTitleAndCounter title={"История ответов"}
-                                      panelId={"panel1"}
-                                      expanded={expanded}
-                                      count={breadCrumbs.length}
-                                      handleExpandedChange={handleExpandedChange}>
+        <AccordionWithTitleCounterIcon title={"История ответов"}
+                                       panelId={"panel1"}
+                                       expanded={expanded}
+                                       count={breadCrumbs.length}
+                                       handleExpandedChange={handleExpandedChange}
+                                       icon={<ManageHistoryIcon color={PRIMARY}/>}>
             <List
                 sx={{bgcolor: 'background.paper'}}
                 subheader={<li/>}
@@ -42,7 +36,7 @@ const BreadCrumbs: FC<IProps> = ({expanded, handleExpandedChange}) => {
                     ? breadCrumbsList
                     : emptyMessage}
             </List>
-        </AccordionWithTitleAndCounter>
+        </AccordionWithTitleCounterIcon>
     );
 };
 

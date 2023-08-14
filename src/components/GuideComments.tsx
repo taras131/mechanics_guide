@@ -1,16 +1,14 @@
 import React, {FC, useEffect, useState} from 'react';
 import {Accordion, AccordionDetails, AccordionSummary, FormControl, Paper} from "@mui/material";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Grid from "@mui/material/Unstable_Grid2";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import Avatar from "@mui/material/Avatar";
 import {deepPurple} from "@mui/material/colors";
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import {
     CENTER,
     END,
-    FORM_CONTROL_HEIGHT_PX,
+    FORM_CONTROL_HEIGHT_PX, PRIMARY,
     SECONDARY_TEXT_COLOR, START,
     STRING_EMPTY,
     STRING_WITH_SPACE
@@ -31,7 +29,7 @@ import {getTodayDate, validateText} from "../utils/services";
 import SendIcon from '@mui/icons-material/Send';
 import {useLocation, useNavigate} from "react-router-dom";
 import {routes} from "../utils/routes";
-import AccordionWithTitleAndCounter from "./AccordionWithTitleAndCounter";
+import AccordionWithTitleCounterIcon from "./AccordionWithTitleCounterIcon";
 
 interface IProps {
     guideId: string
@@ -90,17 +88,18 @@ const GuideComments: FC<IProps> = ({guideId, expanded, handleExpandedChange}) =>
     }
 
     return (
-        <AccordionWithTitleAndCounter title={"Комментарии"} count={comments.length} expanded={expanded}
-                                      panelId={"panel2"}
-                                      handleExpandedChange={handleExpandedChange}>
+        <AccordionWithTitleCounterIcon title={"Комментарии"} count={comments.length} expanded={expanded}
+                                       panelId={"panel2"}
+                                       handleExpandedChange={handleExpandedChange}
+                                       icon={<ChatBubbleOutlineIcon color={PRIMARY}/>}>
             <Stack spacing={3}>
                 {user.id === STRING_EMPTY && (
                     <Typography color={SECONDARY_TEXT_COLOR} fontSize={"16px"} fontWeight={500} mt={4} mb={4}>
                                 <span onClick={handleLoginClick}
-                                      style={{cursor: "pointer", color: "blue"}}>Войдите </span>
+                                      style={{cursor: "pointer", color: "purple"}}>Войдите </span>
                         или
                         <span onClick={handleRegisterClick}
-                              style={{cursor: "pointer", color: "blue"}}> зарегистрируйтесь </span>
+                              style={{cursor: "pointer", color: "purple"}}> зарегистрируйтесь </span>
                         , чтобы писать комментарии.
                     </Typography>
                 )}
@@ -144,7 +143,7 @@ const GuideComments: FC<IProps> = ({guideId, expanded, handleExpandedChange}) =>
                         </Typography>
                     )}
             </Stack>
-        </AccordionWithTitleAndCounter>
+        </AccordionWithTitleCounterIcon>
     );
 };
 

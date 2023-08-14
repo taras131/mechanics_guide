@@ -1,22 +1,21 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {fetchAllGuides, fetchNewGuide, fetchRemoveGuide, fetchUploadFile} from "../actions/guidesActionsCreators";
 import {IGuide, IGuideCategory, IGuideItemOption} from "../../models/iGuide";
-import {GUIDE_ITEM_TYPE} from "../../utils/const";
+import {GUIDE_ITEM_TYPE, GUIDE_MODE} from "../../utils/const";
 import {IBreadCrumb} from "../../models/iBreadCrumbs";
 
 interface IGuideState {
     isLoading: boolean,
     isUploadFileLoading: boolean,
-    isEdit: boolean,
-    isNewGuideEdition: boolean,
     errorMessage: string,
     categories: IGuideCategory []
     guides: IGuide[],
     editionGuide: IGuide
+    guideMode: GUIDE_MODE
 }
 
 export const emptyGuide = {
-    id: "EDITION_GUIDE_ID",
+    id: GUIDE_MODE.new_guide,
     title: "",
     categoryId: "",
     authorId: "",
@@ -33,12 +32,11 @@ export const emptyGuide = {
 export const initialState: IGuideState = {
     isLoading: true,
     isUploadFileLoading: false,
-    isEdit: false,
-    isNewGuideEdition: false,
     errorMessage: "",
     categories: [],
     guides: [],
-    editionGuide: emptyGuide
+    editionGuide: emptyGuide,
+    guideMode: GUIDE_MODE.viewing
 }
 
 export const GuidesSlice = createSlice({
@@ -53,9 +51,6 @@ export const GuidesSlice = createSlice({
             },
             setGuideCategories: (state, action: PayloadAction<IGuideCategory[]>) => {
                 state.categories = action.payload
-            },
-            setIsEdit: (state, action: PayloadAction<boolean>) => {
-                state.isEdit = action.payload
             },
             setEditionGuide: (state, action: PayloadAction<IGuide>) => {
                 state.editionGuide = action.payload
@@ -174,9 +169,6 @@ export const GuidesSlice = createSlice({
                     ]
                 }
             },
-            setIsNewGuideEdition: (state, action: PayloadAction<boolean>) => {
-                state.isNewGuideEdition = action.payload
-            },
             editionGuideRedirectAnotherGuide: (state, action: PayloadAction<{
                 lastBreadCrumb: IBreadCrumb,
                 redirectAnotherGuide: string
@@ -214,6 +206,9 @@ export const GuidesSlice = createSlice({
                     })]
                 }
                 state.isUploadFileLoading = false;
+            },
+            setGuideMode: (state, action: PayloadAction<GUIDE_MODE>) => {
+                state.guideMode = action.payload
             }
         },
         extraReducers: {
@@ -268,10 +263,10 @@ export const GuidesSlice = createSlice({
 )
 
 export const {
-    setGuides, setIsGuidesLoading, setGuideCategories, setIsEdit, setEditionGuide,
+    setGuides, setIsGuidesLoading, setGuideCategories, setEditionGuide,
     setEditionGuideCategory, changeEditionGuideTitle, changeEditionGuideItemsText,
     changeEditionGuideItemsType, changeEditionGuideOptionText, editionGuideStepAddOption,
-    editionGuideStepRemoveOption, editionGuideResultRedirect, removeGuideStep, setIsNewGuideEdition,
-    editionGuideRedirectAnotherGuide,setIsUploadFileLoading, editionGuideUpdateFile
+    editionGuideStepRemoveOption, editionGuideResultRedirect, removeGuideStep,
+    editionGuideRedirectAnotherGuide, setIsUploadFileLoading, editionGuideUpdateFile, setGuideMode
 } = GuidesSlice.actions
 export default GuidesSlice.reducer;

@@ -4,7 +4,7 @@ import {
     ADD_OPTION_SUBHEADER_TEXT,
     ADD_OPTION_TITLE,
     CENTER,
-    GUIDE_ITEM_TYPE,
+    GUIDE_ITEM_TYPE, GUIDE_MODE,
     ROW
 } from "../utils/const";
 import Button from "@mui/material/Button";
@@ -17,9 +17,9 @@ import {IGuideItem, IGuideItemOption} from "../models/iGuide";
 import SelectRedirectAnotherGuide from "./SelectRedirectAnotherGuide";
 import {
     getEditionGuideStepsByType,
-    getGuideById,
+    getGuideById, getGuideMode,
     getGuidesWithFilter,
-    getIsNewGuide, getIsUploadFileLoading
+    getIsUploadFileLoading
 } from "../services/selectors/guidesSelectors";
 import {useParams} from "react-router-dom";
 import SelectRedirectGuideStep from "./SelectRedirectGuideStep";
@@ -44,14 +44,14 @@ interface IProps {
 const GuideStepMainActions: FC<IProps> = ({options, guideStep, guideStepType}) => {
     const guideId = useParams().guideId || "0";
     const dispatch = useAppDispatch()
-    const isNewGuide = useAppSelector(state => getIsNewGuide(state))
+    const guideMode = useAppSelector(state => getGuideMode(state))
     const lastBreadCrumbs = useAppSelector(state => getLastBreadCrumbs(state))
-    const editionGuide = useAppSelector(state => getGuideById(state, guideId, true, isNewGuide))
+    const editionGuide = useAppSelector(state => getGuideById(state, guideId, guideMode))
     const isUploadFileLoading = useAppSelector(state => getIsUploadFileLoading(state))
     const [isOpenNewOptionWindow, setIsOpenNewOptionWindow] = useState(false)
     const [isOpenSelectRedirectWindow, setIsOpenSelectRedirectWindow] = useState(false)
     const [isOpenSelectRedirectAnotherGuideWindow, setIsOpenSelectRedirectAnotherGuideWindow] = useState(false)
-    const currentGuide = useAppSelector(state => getGuideById(state, guideId, true, false))
+    const currentGuide = useAppSelector(state => getGuideById(state, guideId, guideMode))
     const anotherGuides = useAppSelector(state => getGuidesWithFilter(state, currentGuide.categoryId, false))
         .filter(guide => guide.id !== guideId)
     const guideSteps = useAppSelector(state => getEditionGuideStepsByType(state, guideStepType))
@@ -76,7 +76,7 @@ const GuideStepMainActions: FC<IProps> = ({options, guideStep, guideStepType}) =
             dispatch(fetchRemoveFile(guideStep.file.name))
         }
         dispatch(fetchUploadFile({file: e.target.files[0], guideStepId: guideStep.id, updateFilePath: updateFilePath}))
-        if (!isNewGuide) {
+        if (guideMode !== GUIDE_MODE.new_guide) {
             dispatch(fetchUpdateGuide(editionGuide))
         }
     }

@@ -17,6 +17,7 @@ import {useAppDispatch, useAppSelector} from "../hooks/redux";
 import {geiIsGuidesLoading} from "../services/selectors/guidesSelectors";
 import Preloader from "./Preloader";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import Message from "./Message";
 
 const App = () => {
     const dispatch = useAppDispatch()
@@ -72,6 +73,7 @@ const App = () => {
                     <Route path={routes.not_found} element={<NotFound/>}/>
                 </Routes>
             </Box>
+            <Message/>
         </Container>
     );
 }
