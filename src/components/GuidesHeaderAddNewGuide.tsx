@@ -3,7 +3,7 @@ import Button from "@mui/material/Button";
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import {useNavigate} from "react-router-dom";
 import {routes} from "../utils/routes";
-import {EDITION_GUIDE_ID} from "../utils/const";
+import {EDITION_GUIDE_ID, NEW_GUIDE} from "../utils/const";
 import {useAppDispatch} from "../hooks/redux";
 import {emptyGuide, setEditionGuide, setIsNewGuideEdition} from "../services/reducers/guides";
 
@@ -13,7 +13,7 @@ const GuidesHeaderAddNewGuide = () => {
     const handleAddNewGuideClick = () => {
         dispatch(setEditionGuide(emptyGuide))
         dispatch(setIsNewGuideEdition(true))
-        navigate(routes.guide+"/"+EDITION_GUIDE_ID+"/0")
+        navigate(routes.guide+"/"+NEW_GUIDE+"/0")
     }
     return (
         <Button onClick={handleAddNewGuideClick}

@@ -30,7 +30,7 @@ import {
     setIsNewGuideEdition
 } from "../services/reducers/guides";
 import {fetchNewGuide, fetchUpdateGuide} from "../services/actions/guidesActionsCreators";
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import {IGuide} from "../models/iGuide";
 import SelectGuideCategory from "./SelectGuideCategory";
 import {getGuideCategoryNameById, gitIsMyEditionGuide} from "../services/selectors/guidesSelectors";
@@ -58,9 +58,13 @@ const GuideHeaderActions: FC<IProps> = ({
                                         }) => {
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
+    const location: any = useLocation()
     const user = useAppSelector(state => getUser(state))
     const categoryName = useAppSelector(state => getGuideCategoryNameById(state, guide.categoryId))
     const [isQuestionWindowOpen, setIsQuestionWindowOpen] = useState(false)
+    const handleAuthClick = () => {
+        navigate(routes.login, {state: {from: location.pathname}})
+    }
     const toggleIsQuestionWindowOpen = () => {
         setIsQuestionWindowOpen(prev => !prev)
     }
@@ -145,7 +149,11 @@ const GuideHeaderActions: FC<IProps> = ({
                 </ButtonGroup>
                 <Typography fontSize="12px" fontWeight={400} align={RIGHT} mt={2} color={SECONDARY_TEXT_COLOR}>
                     {isEdit && !isNewGuide && savingHelperText}
-                    {user.id === "" && !isEdit && ("Авторизуйтесь для редактирования")}
+                    {user.id === "" && !isEdit && (
+                        <Typography fontSize={"12px"} color={"primary"} sx={{cursor: "pointer"}}
+                                    onClick={handleAuthClick}>
+                            Авторизуйтесь для редактирования
+                        </Typography>)}
                 </Typography>
             </Grid>
 

@@ -29,12 +29,19 @@ import {fetchAddComment} from "../services/actions/commentsActionsCreators";
 import firebase from "firebase/compat";
 import {getTodayDate, validateText} from "../utils/services";
 import SendIcon from '@mui/icons-material/Send';
+import {useLocation, useNavigate} from "react-router-dom";
+import {routes} from "../utils/routes";
+import AccordionWithTitleAndCounter from "./AccordionWithTitleAndCounter";
 
 interface IProps {
     guideId: string
+    expanded: string | false
+    handleExpandedChange: any
 }
 
-const GuideComments: FC<IProps> = ({guideId}) => {
+const GuideComments: FC<IProps> = ({guideId, expanded, handleExpandedChange}) => {
+    const navigate = useNavigate()
+    const location: any = useLocation()
     const dispatch = useAppDispatch()
     const [newCommentText, setNewCommentText] = useState(STRING_EMPTY)
     const [errorCommentText, setErrorCommentText] = useState(STRING_WITH_SPACE)
@@ -60,8 +67,14 @@ const GuideComments: FC<IProps> = ({guideId}) => {
             return () => unsubscribe();
         });
     }, [])
+    const handleLoginClick = () => {
+        navigate(routes.login, {state: {from: location.pathname}})
+    }
+    const handleRegisterClick = () => {
+        navigate(routes.register, {state: {from: location.pathname}})
+    }
     const handleNewCommentTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        validateText(e.target.value, setErrorCommentText, [], 5)
+        validateText(e.target.value, setErrorCommentText, [], 25)
         setNewCommentText(e.target.value)
     }
     const handleAddCommentClick = () => {
@@ -73,82 +86,65 @@ const GuideComments: FC<IProps> = ({guideId}) => {
             dateCreation: getTodayDate()
         }))
         setNewCommentText(STRING_EMPTY)
+        setErrorCommentText(STRING_WITH_SPACE)
     }
-    return (
-        <Paper>
-            <Accordion>
-                <AccordionSummary
-                    expandIcon={<ExpandMoreIcon/>}
-                    aria-controls="panel1a-content"
-                    id="panel1a-header"
-                    sx={{width: "100%"}}
-                >
-                    <Grid container alignItems="center" justifyContent="space-between"
-                          sx={{width: "100%", paddingRight: "10px"}}>
-                        <Stack direction="row" spacing={1} alignItems="center">
-                            <ChatBubbleOutlineIcon color="primary"/>
-                            <Typography fontWeight={500} fontSize={16}>
-                                Комментарии
-                            </Typography>
-                        </Stack>
-                        {comments.length > 0 && (
-                            <Avatar sx={{
-                                width: 24, height: 24, bgcolor: deepPurple[500], fontSize: "12px"
-                            }}>
-                                {comments.length}
-                            </Avatar>)}
-                    </Grid>
-                </AccordionSummary>
-                <AccordionDetails>
-                    <Stack spacing={3}>
-                        {user.id === STRING_EMPTY && (
-                            <Typography color={SECONDARY_TEXT_COLOR} fontSize={"16px"} fontWeight={500}>
-                                Войдите или зарегистрируйтесь, чтобы писать комментарии.
-                            </Typography>
-                        )}
-                        {user.id !== STRING_EMPTY && (
-                            <FormControl sx={{minHeight: FORM_CONTROL_HEIGHT_PX}}>
-                                <Grid container alignItems={START} spacing={2}>
-                                    <Grid xs={12} sm={8} md={9}>
-                                        <TextField value={newCommentText}
-                                                   onChange={handleNewCommentTextChange}
-                                                   fullWidth
-                                                   helperText={errorCommentText}/>
-                                    </Grid>
-                                    <Grid xs={12} sm={4} md={3}>
-                                        <Button fullWidth
-                                                disabled={user.id === STRING_EMPTY || !!errorCommentText}
-                                                variant={"outlined"}
-                                                onClick={handleAddCommentClick}
-                                                sx={{height: "56px", textAlign: "center"}}>
-                                            <Grid container alignItems={CENTER} justifyContent={CENTER}>
-                                                <SendIcon/>
-                                                <Typography ml={2}>
-                                                    Отправить
-                                                </Typography>
-                                            </Grid>
-                                        </Button>
-                                    </Grid>
 
-                                </Grid>
-                            </FormControl>
-                        )}
-                        {isLoading && (
-                            <Typography>
-                                ...Загрузка
-                            </Typography>
-                        )}
-                        {commentsList.length > 0
-                            ? commentsList
-                            : (
-                                <Typography mt={5}>
-                                    Комментариев пока нет
-                                </Typography>
-                            )}
-                    </Stack>
-                </AccordionDetails>
-            </Accordion>
-        </Paper>
+    return (
+        <AccordionWithTitleAndCounter title={"Комментарии"} count={comments.length} expanded={expanded}
+                                      panelId={"panel2"}
+                                      handleExpandedChange={handleExpandedChange}>
+            <Stack spacing={3}>
+                {user.id === STRING_EMPTY && (
+                    <Typography color={SECONDARY_TEXT_COLOR} fontSize={"16px"} fontWeight={500} mt={4} mb={4}>
+                                <span onClick={handleLoginClick}
+                                      style={{cursor: "pointer", color: "blue"}}>Войдите </span>
+                        или
+                        <span onClick={handleRegisterClick}
+                              style={{cursor: "pointer", color: "blue"}}> зарегистрируйтесь </span>
+                        , чтобы писать комментарии.
+                    </Typography>
+                )}
+                {user.id !== STRING_EMPTY && (
+                    <FormControl sx={{minHeight: FORM_CONTROL_HEIGHT_PX}}>
+                        <Grid container alignItems={START} spacing={2}>
+                            <Grid xs={12} sm={8} md={9}>
+                                <TextField value={newCommentText}
+                                           onChange={handleNewCommentTextChange}
+                                           fullWidth
+                                           helperText={errorCommentText}/>
+                            </Grid>
+                            <Grid xs={12} sm={4} md={3}>
+                                <Button fullWidth
+                                        disabled={user.id === STRING_EMPTY || !!errorCommentText}
+                                        variant={"outlined"}
+                                        onClick={handleAddCommentClick}
+                                        sx={{height: "56px", textAlign: "center"}}>
+                                    <Grid container alignItems={CENTER} justifyContent={CENTER}>
+                                        <SendIcon/>
+                                        <Typography ml={2}>
+                                            Отправить
+                                        </Typography>
+                                    </Grid>
+                                </Button>
+                            </Grid>
+
+                        </Grid>
+                    </FormControl>
+                )}
+                {isLoading && (
+                    <Typography>
+                        ...Загрузка
+                    </Typography>
+                )}
+                {commentsList.length > 0
+                    ? commentsList
+                    : (
+                        <Typography mt={5}>
+                            Комментариев пока нет
+                        </Typography>
+                    )}
+            </Stack>
+        </AccordionWithTitleAndCounter>
     );
 };
 

@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {useParams} from 'react-router-dom';
 import {Stack} from "@mui/material";
 import {useAppDispatch, useAppSelector} from "../hooks/redux";
@@ -31,6 +31,10 @@ const Guide = () => {
         const isMyGuide = useAppSelector(state => gitIsMyEditionGuide(state))
         const guideStep = useAppSelector(state => getGuideStepById(state, guideId, +guideStepId, isEdit, isNewGuide))
         const breadCrumbs = useAppSelector(state => getBreadCrumbs(state))
+        const [expanded, setExpanded] = useState<string | false>(false)
+        const handleExpandedChange = (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
+            setExpanded(isExpanded ? panel : false);
+        };
         useEffect(() => {
             if (+guideStepId !== 0 && breadCrumbs.length > 0) {
                 localStorage.setItem(guideId, JSON.stringify(breadCrumbs))
@@ -72,13 +76,13 @@ const Guide = () => {
             <Stack spacing={4}>
                 <GuideHeader guide={guide} isEdit={isEdit} isNewGuide={isNewGuide}/>
                 <GuideStep guideStep={guideStep} isEdit={isEdit}/>
-                <BreadCrumbs/>
+                <div>
+                    <BreadCrumbs expanded={expanded} handleExpandedChange={handleExpandedChange}/>
+                    <GuideComments expanded={expanded} handleExpandedChange={handleExpandedChange} guideId={guideId}/>
+                </div>
                 {isEdit && isMyGuide && (<GuideStepSpecialFeatures guideStepType={guideStep.type}
                                                                    currentGuideStepId={guideStep.id}
                                                                    guideId={guide.id}/>)}
-                {!isEdit && (
-                    <GuideComments guideId={guideId}/>
-                )}
             </Stack>
         );
     }

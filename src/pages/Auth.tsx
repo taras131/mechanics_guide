@@ -21,6 +21,7 @@ import {validateEmail} from "../utils/services";
 
 
 const Auth = () => {
+    const location: any = useLocation()
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
     const isAuth = useAppSelector(state => getIsAuth(state))
@@ -51,7 +52,13 @@ const Auth = () => {
         }
     }, [errorMessage])
     useEffect(() => {
-        if (isAuth) navigate(routes.profile)
+        if (isAuth) {
+            if (location.state && location.state.from) {
+                navigate(location.state.from)
+            } else {
+                navigate(routes.profile)
+            }
+        }
     }, [isAuth])
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.name === "email") {

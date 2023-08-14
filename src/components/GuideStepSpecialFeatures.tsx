@@ -50,7 +50,7 @@ const GuideStepSpecialFeatures: FC<IGuideStepSpecialFeaturesProps> = ({
                 </Typography>
                 <Grid container alignItems="center" justifyContent="start">
                     <Grid item xs={4}>
-                        <Button onClick={handleRemoveGuideClick} disabled={isMyGuide}>
+                        <Button onClick={handleRemoveGuideClick} disabled={!isMyGuide || true}>
                             Удалить гайд
                         </Button>
                     </Grid>

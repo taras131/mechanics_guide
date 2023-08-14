@@ -11,6 +11,7 @@ export const ALL_CATEGORIES: IGuideCategory = {
 };
 
 export const EDITION_GUIDE_ID = "edition_guide_id"
+export const NEW_GUIDE= "new_guide"
 export const OUTLINED  = "outlined"
 export const CENTER  = "center"
 export const SPACE_BETWEEN  = "space-between"
