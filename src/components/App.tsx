@@ -18,6 +18,7 @@ import {geiIsGuidesLoading} from "../services/selectors/guidesSelectors";
 import Preloader from "./Preloader";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Message from "./Message";
+import Guides from "../pages/Guides";
 
 const App = () => {
     const dispatch = useAppDispatch()
@@ -66,6 +67,7 @@ const App = () => {
             <Box mt={3}>
                 <Routes>
                     <Route path={routes.main} element={<Main/>}/>
+                    <Route path={routes.guides} element={<Guides/>}/>
                     <Route path={routes.login} element={<Auth/>}/>
                     <Route path={routes.register} element={<Auth/>}/>
                     <Route path={routes.guide + "/:guideId/:stepId"} element={<Guide/>}/>

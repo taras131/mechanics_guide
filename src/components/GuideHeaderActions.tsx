@@ -85,7 +85,7 @@ const GuideHeaderActions: FC<IProps> = ({
         if (guideMode === GUIDE_MODE.new_guide) {
             dispatch(fetchNewGuide(guide))
             localStorage.removeItem("saved_new_guide")
-            navigate(routes.main)
+            navigate(routes.guides)
             dispatch(setMessage({severity: MESSAGE_SEVERITY.success, text: "Ваш гайд сохранён"}))
         } else {
             dispatch(fetchUpdateGuide({...guide, authorId: user.id}))
