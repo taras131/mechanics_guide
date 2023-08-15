@@ -18,43 +18,46 @@ import {routes} from "../utils/routes";
 
 const Main = () => {
     const navigate = useNavigate()
-    const matches_500 = useMediaQuery('(min-width:500px)');
+    const matches_580 = useMediaQuery('(min-width:580px)');
     const matches_400 = useMediaQuery('(min-width:400px)');
     const handleGuidesClick = () => {
         navigate(routes.guides)
     }
-    const handleRegisterClick = () => {
-        navigate(routes.register)
+    const handleLoginClick = () => {
+        navigate(routes.login)
     }
     return (
         <Grid container spacing={2}
               style={{
                   height: "calc(100vh - 85px)",
-                  background: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)), url(${Image})`,
+                  background: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8)), url(${Image})`,
                   backgroundRepeat: "no-repeat",
                   backgroundSize: "cover",
                   marginRight: 1,
                   marginLeft: 1,
-                  marginTop: "-25px"
+                  marginTop: "-25px",
+                  padding: "20px"
               }}>
             <Grid xs={12} sm={12} md={8}>
                 <Stack alignItems={CENTER} justifyContent={CENTER} sx={{height: "100%"}} pl={3}>
-                    <Typography variant={"h1"} color={"white"} fontWeight={600}
-                                fontSize={matches_500 ? "44px" : "30px"}
-                                letterSpacing={matches_500 ? "5px" : "4px"}>
+                    <Typography variant={"h1"} color={"white"} fontWeight={700}
+                                fontSize={matches_580 ? "64px" : "50px"}
+                                letterSpacing={matches_580 ? "5px" : "4px"} textAlign={CENTER}
+                                fontFamily={"Rajdhani"}>
                         Mechanics guide
                     </Typography>
-                    <Typography mt={matches_500 ? 5 : 3} variant={"h3"} color={"white"} fontWeight={500}
-                                fontSize={matches_500 ? "16px" : "14px"}
-                                letterSpacing={"2px"} lineHeight={"30px"}>
-                        Превращаем ремонт и обслуживание сложной техники в точную науку. Без смс и регистрации.
+                    <Typography mt={matches_580 ? 3 : 2} variant={"h3"} color={"white"} fontWeight={400}
+                                fontSize={matches_580 ? "30px" : "24px"}
+                                letterSpacing={"2px"} lineHeight={"35px"} textAlign={CENTER} fontFamily={"Rubik Dirt"}>
+                        Превращаем ремонт и обслуживание сложной техники в точную науку.
                     </Typography>
-                    <Stack mt={matches_500 ? 10 : 1}
-                           direction={matches_500 ? ROW : COLUMN}
-                           spacing={1} alignItems={CENTER} justifyContent={SPACE_AROUND} sx={{width: "100%"}}>
+                    <Stack mt={matches_580 ? 6 : 3}
+                           direction={matches_580 ? ROW : COLUMN}
+                           spacing={matches_580 ? 3 : 1} alignItems={CENTER} justifyContent={CENTER}
+                           sx={{width: "100%"}}>
                         <Box sx={{width: "150px", minHeight: "100px"}}>
                             <Stack spacing={2} alignItems={CENTER} justifyContent={START} sx={{height: "100%"}}>
-                                <AddToQueueIcon sx={{color: "white"}}/>
+                                <AddToQueueIcon sx={{color: "white"}} fontSize={"large"}/>
                                 <Typography color={"white"} textAlign={CENTER}>
                                     Создавайте свои ветвящиеся гайды
                                 </Typography>
@@ -62,7 +65,7 @@ const Main = () => {
                         </Box>
                         <Box sx={{width: "150px", minHeight: "100px"}}>
                             <Stack spacing={2} alignItems={CENTER} justifyContent={START} sx={{height: "100%"}}>
-                                <EditIcon sx={{color: "white"}}/>
+                                <EditIcon sx={{color: "white"}} fontSize={"large"}/>
                                 <Typography color={"white"} textAlign={CENTER}>
                                     Улучшай свои гайды
                                 </Typography>
@@ -70,30 +73,28 @@ const Main = () => {
                         </Box>
                         <Box sx={{width: "150px", minHeight: "100px"}}>
                             <Stack spacing={2} alignItems={CENTER} justifyContent={START} sx={{height: "100%"}}>
-                                <ChatBubbleIcon sx={{color: "white"}}/>
+                                <ChatBubbleIcon sx={{color: "white"}} fontSize={"large"}/>
                                 <Typography color={"white"} textAlign={CENTER}>
                                     Делись опытом в коментариях
                                 </Typography>
                             </Stack>
                         </Box>
                     </Stack>
-                    <Stack mt={matches_500 ? 10 : 2} direction={matches_400 ? ROW : COLUMN}
+                    <Stack mt={matches_580 ? 6 : 3} direction={matches_400 ? ROW : COLUMN}
                            spacing={matches_400 ? 1 : 4}
                            alignItems={CENTER}
                            justifyContent={SPACE_AROUND}
                            sx={{width: "100%"}}>
-                        <Button onClick={handleGuidesClick} startIcon={<ArticleIcon/>} variant={"contained"}>К
-                            гайдам</Button>
-                        <Button onClick={handleRegisterClick} startIcon={<LoginIcon/>}
-                                variant={"contained"}>Регистрация</Button>
+                        <Button onClick={handleGuidesClick} variant={"contained"}
+                                size="large">
+                            <Typography fontSize={"24px"} fontWeight={400} fontFamily={"Rubik Dirt"}>
+                                Перейти к гайдам
+                            </Typography>
+                        </Button>
                     </Stack>
                 </Stack>
             </Grid>
-            <Grid xs={0} sm={2} md={4}>
-                <Stack alignItems={CENTER} justifyContent={CENTER} sx={{height: "100%"}}>
 
-                </Stack>
-            </Grid>
         </Grid>
     );
 };
