@@ -1,18 +1,15 @@
 import React from 'react';
-import {ALL_CATEGORIES, CENTER, COLUMN, ROW, SPACE_AROUND, START} from "../utils/const";
+import {CENTER, COLUMN, ROW, SPACE_AROUND, START} from "../utils/const";
 import Stack from '@mui/material/Stack';
 import {useNavigate} from "react-router-dom";
 import Grid from "@mui/material/Unstable_Grid2";
 import Typography from "@mui/material/Typography";
 import Image from "../img/desctop_2.jpg";
-import {Paper} from "@mui/material";
 import AddToQueueIcon from '@mui/icons-material/AddToQueue';
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import EditIcon from '@mui/icons-material/Edit';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
-import LoginIcon from '@mui/icons-material/Login';
-import ArticleIcon from '@mui/icons-material/Article';
 import useMediaQuery from "@mui/material/useMediaQuery";
 import {routes} from "../utils/routes";
 
@@ -22,9 +19,6 @@ const Main = () => {
     const matches_400 = useMediaQuery('(min-width:400px)');
     const handleGuidesClick = () => {
         navigate(routes.guides)
-    }
-    const handleLoginClick = () => {
-        navigate(routes.login)
     }
     return (
         <Grid container spacing={2}
