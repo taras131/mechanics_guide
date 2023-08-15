@@ -13,8 +13,7 @@ interface IGuideStepAnswersProps {
 }
 
 const emptyAnswersListEditText = "Вариантов ответа пока нет. Нажмите на + ответ , что бы добавить вариант ответа."
-const emptyAnswersListText  = "Варианты ответа пока не добавлены, если вы являетесь автором, " +
-    "перейдите в режим редактирования для заполнения."
+const emptyAnswersListText  = "Варианты ответа пока не добавлены."
 
 const GuideStepAnswers: FC<IGuideStepAnswersProps> = ({
                                                           guideStepId,

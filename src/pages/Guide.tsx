@@ -76,7 +76,8 @@ const Guide = () => {
             if (firstUpdate.current) {
                 firstUpdate.current = false;
             } else {
-                if (guideMode === GUIDE_MODE.new_guide) {
+                if (guideMode === GUIDE_MODE.new_guide &&
+                    JSON.stringify(emptyGuide) !== JSON.stringify(guide)) {
                     localStorage.setItem("saved_new_guide", JSON.stringify(guide))
                 }
                 if (guideMode === GUIDE_MODE.editing) {
