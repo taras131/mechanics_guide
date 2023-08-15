@@ -33,16 +33,16 @@ const Main = () => {
                   padding: "20px"
               }}>
             <Grid xs={12} sm={12} md={8}>
-                <Stack alignItems={CENTER} justifyContent={CENTER} sx={{height: "100%"}} pl={3}>
+                <Stack alignItems={CENTER} justifyContent={CENTER} sx={{height: "100%"}} pl={matches_580 ? 3 : 0}>
                     <Typography variant={"h1"} color={"white"} fontWeight={700}
-                                fontSize={matches_580 ? "64px" : "50px"}
-                                letterSpacing={matches_580 ? "5px" : "4px"} textAlign={CENTER}
+                                fontSize={matches_580 ? "64px" : "40px"}
+                                letterSpacing={matches_580 ? "5px" : "3px"} textAlign={CENTER}
                                 fontFamily={"Rajdhani"}>
                         Mechanics guide
                     </Typography>
                     <Typography mt={matches_580 ? 3 : 2} variant={"h3"} color={"white"} fontWeight={400}
-                                fontSize={matches_580 ? "30px" : "24px"}
-                                letterSpacing={"2px"} lineHeight={"35px"} textAlign={CENTER} fontFamily={"Rubik Dirt"}>
+                                fontSize={matches_580 ? "30px" : "20px"}
+                                letterSpacing={"2px"} lineHeight={matches_580 ? "35px" : "25px"} textAlign={CENTER} fontFamily={"Rubik Dirt"}>
                         Превращаем ремонт и обслуживание сложной техники в точную науку.
                     </Typography>
                     <Stack mt={matches_580 ? 6 : 3}
@@ -50,7 +50,7 @@ const Main = () => {
                            spacing={matches_580 ? 3 : 1} alignItems={CENTER} justifyContent={CENTER}
                            sx={{width: "100%"}}>
                         <Box sx={{width: "150px", minHeight: "100px"}}>
-                            <Stack spacing={2} alignItems={CENTER} justifyContent={START} sx={{height: "100%"}}>
+                            <Stack spacing={matches_580 ? 2 : 1} alignItems={CENTER} justifyContent={START} sx={{height: "100%"}}>
                                 <AddToQueueIcon sx={{color: "white"}} fontSize={"large"}/>
                                 <Typography color={"white"} textAlign={CENTER}>
                                     Создавайте свои ветвящиеся гайды
@@ -58,7 +58,7 @@ const Main = () => {
                             </Stack>
                         </Box>
                         <Box sx={{width: "150px", minHeight: "100px"}}>
-                            <Stack spacing={2} alignItems={CENTER} justifyContent={START} sx={{height: "100%"}}>
+                            <Stack spacing={matches_580 ? 2 : 1} alignItems={CENTER} justifyContent={START} sx={{height: "100%"}}>
                                 <EditIcon sx={{color: "white"}} fontSize={"large"}/>
                                 <Typography color={"white"} textAlign={CENTER}>
                                     Улучшай свои гайды
@@ -66,7 +66,7 @@ const Main = () => {
                             </Stack>
                         </Box>
                         <Box sx={{width: "150px", minHeight: "100px"}}>
-                            <Stack spacing={2} alignItems={CENTER} justifyContent={START} sx={{height: "100%"}}>
+                            <Stack spacing={matches_580 ? 2 : 1} alignItems={CENTER} justifyContent={START} sx={{height: "100%"}}>
                                 <ChatBubbleIcon sx={{color: "white"}} fontSize={"large"}/>
                                 <Typography color={"white"} textAlign={CENTER}>
                                     Делись опытом в коментариях
@@ -81,7 +81,7 @@ const Main = () => {
                            sx={{width: "100%"}}>
                         <Button onClick={handleGuidesClick} variant={"contained"}
                                 size="large">
-                            <Typography fontSize={"24px"} fontWeight={400} fontFamily={"Rubik Dirt"}>
+                            <Typography fontSize={matches_580 ? "24px" : "16px"} fontWeight={400} fontFamily={"Rubik Dirt"}>
                                 Перейти к гайдам
                             </Typography>
                         </Button>

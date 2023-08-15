@@ -4,6 +4,7 @@ import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOu
 import {useNavigate} from "react-router-dom";
 import {routes} from "../utils/routes";
 import {GUIDE_MODE} from "../utils/const";
+import Typography from "@mui/material/Typography";
 
 const GuidesHeaderAddNewGuide = () => {
     const navigate = useNavigate()
@@ -13,9 +14,12 @@ const GuidesHeaderAddNewGuide = () => {
     return (
         <Button onClick={handleAddNewGuideClick}
                 variant="contained"
+                size={"large"}
                 fullWidth
                 startIcon={<AddCircleOutlineOutlinedIcon/>}>
-            Добавить свой гайд
+            <Typography fontWeight={400} fontFamily={"Rubik Dirt"}>
+                Добавить свой гайд
+            </Typography>
         </Button>
     );
 };
