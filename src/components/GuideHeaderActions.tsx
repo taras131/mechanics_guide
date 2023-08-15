@@ -4,9 +4,9 @@ import {
     CENTER,
     COLUMN,
     CONTAINED,
-    EDITION_GUIDE_ID,
     END,
     GUIDE_MODE,
+    MESSAGE_SEVERITY,
     RIGHT,
     SECONDARY_TEXT_COLOR
 } from "../utils/const";
@@ -28,6 +28,7 @@ import SelectGuideCategory from "./SelectGuideCategory";
 import {getGuideCategoryNameById} from "../services/selectors/guidesSelectors";
 import {cleanBreadCrumbs} from "../services/reducers/breadCrumbs";
 import ModalWindowWithQuestion from "./ModalWindowWithQuestion";
+import {setMessage} from "../services/reducers/message";
 
 interface IProps {
     guide: IGuide
@@ -60,22 +61,21 @@ const GuideHeaderActions: FC<IProps> = ({
     const handleBackClick = () => {
         navigate(routes.main)
     }
-    const handleResetAgreeClick = () => {
-        navigate(routes.guide + "/" + GUIDE_MODE.new_guide + "/0")
-        dispatch(cleanBreadCrumbs())
-        dispatch(setEditionGuide(emptyGuide))
-        toggleIsQuestionWindowOpen()
-        localStorage.removeItem(GUIDE_MODE.new_guide)
-    }
-    const handleCancelClick = () => {
+    const handleResetAgreeClick = (guideMode: GUIDE_MODE) => () => {
         if (guideMode === GUIDE_MODE.new_guide) {
-            toggleIsQuestionWindowOpen()
+            navigate(routes.guide + "/" + GUIDE_MODE.new_guide + "/0")
+            dispatch(cleanBreadCrumbs())
+            dispatch(setEditionGuide(emptyGuide))
+            localStorage.removeItem("saved_new_guide")
         } else {
             dispatch(setGuideMode(GUIDE_MODE.viewing))
             dispatch(setEditionGuide(emptyGuide))
             localStorage.removeItem(`${GUIDE_MODE.editing}_${guide.id}`)
         }
-
+        toggleIsQuestionWindowOpen()
+    }
+    const handleCancelClick = () => {
+        toggleIsQuestionWindowOpen()
     }
     const handleEditClick = () => {
         dispatch(setEditionGuide(guide))
@@ -84,10 +84,13 @@ const GuideHeaderActions: FC<IProps> = ({
     const handleSaveClick = () => {
         if (guideMode === GUIDE_MODE.new_guide) {
             dispatch(fetchNewGuide(guide))
-            localStorage.removeItem(GUIDE_MODE.new_guide)
+            localStorage.removeItem("saved_new_guide")
             navigate(routes.main)
+            dispatch(setMessage({severity: MESSAGE_SEVERITY.success, text: "Ваш гайд сохранён"}))
         } else {
             dispatch(fetchUpdateGuide({...guide, authorId: user.id}))
+            localStorage.removeItem(`${GUIDE_MODE.editing}_${guide.id}`)
+            dispatch(setMessage({severity: MESSAGE_SEVERITY.success, text: "Изменения сохранены"}))
         }
         dispatch(setGuideMode(GUIDE_MODE.viewing))
     }
@@ -138,7 +141,7 @@ const GuideHeaderActions: FC<IProps> = ({
                 </ButtonGroup>
                 <Typography fontSize="12px" fontWeight={400} align={RIGHT} mt={2} color={SECONDARY_TEXT_COLOR}>
                     {user.id && guideMode !== GUIDE_MODE.viewing && savingHelperText}
-                    {user.id === ""   && (
+                    {user.id === "" && (
                         <Typography fontSize={"12px"} color={"primary"} sx={{cursor: "pointer"}}
                                     onClick={handleAuthClick}>
                             Авторизуйтесь для внесения изменений
@@ -149,7 +152,7 @@ const GuideHeaderActions: FC<IProps> = ({
             <ModalWindowWithQuestion isOpenModal={isQuestionWindowOpen}
                                      handleToggleOpen={toggleIsQuestionWindowOpen}
                                      questionText={"Вы уверены, что хотите сбросить изменения?"}
-                                     handleYesClick={handleResetAgreeClick}/>
+                                     handleYesClick={handleResetAgreeClick(guideMode)}/>
         </Grid>
     );
 };
