@@ -1,95 +1,88 @@
 import React from 'react';
-import {CENTER, COLUMN, ROW, SPACE_AROUND, START} from "../utils/const";
+import {CENTER, COLUMN, GUIDE_MODE, LEFT, ROW, SECONDARY_TEXT_COLOR, SPACE_AROUND, START} from "../utils/const";
 import Stack from '@mui/material/Stack';
 import {useNavigate} from "react-router-dom";
 import Grid from "@mui/material/Unstable_Grid2";
 import Typography from "@mui/material/Typography";
-import Image from "../img/desctop_2.jpg";
-import AddToQueueIcon from '@mui/icons-material/AddToQueue';
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import EditIcon from '@mui/icons-material/Edit';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 import useMediaQuery from "@mui/material/useMediaQuery";
 import {routes} from "../utils/routes";
+import TripOriginIcon from '@mui/icons-material/TripOrigin';
+import warning from "react-redux/es/utils/warning";
+
 
 const Main = () => {
     const navigate = useNavigate()
     const matches_580 = useMediaQuery('(min-width:580px)');
     const matches_400 = useMediaQuery('(min-width:400px)');
+    const handleNewGuideClick = () => {
+        navigate(routes.guide + "/" + GUIDE_MODE.new_guide + "/0")
+    }
     const handleGuidesClick = () => {
         navigate(routes.guides)
     }
     return (
-        <Grid container spacing={2}
-              style={{
-                  height: "calc(100vh - 85px)",
-                  background: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8)), url(${Image})`,
-                  backgroundRepeat: "no-repeat",
-                  backgroundSize: "cover",
-                  marginRight: 1,
-                  marginLeft: 1,
-                  marginTop: "-25px",
-                  padding: "20px"
-              }}>
-            <Grid xs={12} sm={12} md={8}>
-                <Stack alignItems={CENTER} justifyContent={CENTER} sx={{height: "100%"}} pl={matches_580 ? 3 : 0}>
-                    <Typography variant={"h1"} color={"white"} fontWeight={700}
-                                fontSize={matches_580 ? "64px" : "40px"}
-                                letterSpacing={matches_580 ? "5px" : "3px"} textAlign={CENTER}
-                                fontFamily={"Rajdhani"}>
-                        Mechanics guide
+        <Stack spacing={3} alignItems={CENTER} justifyContent={CENTER}
+               style={{
+                   height: "calc(100vh - 115px)",
+                   marginTop: "-25px",
+                   padding: "10px"
+               }}>
+            <Stack alignItems={CENTER} justifyContent={CENTER} sx={{height: "100%"}} pl={matches_580 ? 3 : 0}>
+                <Box sx={{width: "100%"}}>
+                    <Typography color="#8B0000" textAlign={LEFT} fontWeight={400} fontSize={"20px"}
+                                letterSpacing={"5px"}
+                                fontFamily={"Rubik Dirt"}>
+                        Учись, думай, делай.
                     </Typography>
-                    <Typography mt={matches_580 ? 3 : 2} variant={"h3"} color={"white"} fontWeight={400}
-                                fontSize={matches_580 ? "30px" : "20px"}
-                                letterSpacing={"2px"} lineHeight={matches_580 ? "35px" : "25px"} textAlign={CENTER} fontFamily={"Rubik Dirt"}>
-                        Превращаем ремонт и обслуживание сложной техники в точную науку.
-                    </Typography>
-                    <Stack mt={matches_580 ? 6 : 3}
-                           direction={matches_580 ? ROW : COLUMN}
-                           spacing={matches_580 ? 3 : 1} alignItems={CENTER} justifyContent={CENTER}
-                           sx={{width: "100%"}}>
-                        <Box sx={{width: "150px", minHeight: "100px"}}>
-                            <Stack spacing={matches_580 ? 2 : 1} alignItems={CENTER} justifyContent={START} sx={{height: "100%"}}>
-                                <AddToQueueIcon sx={{color: "white"}} fontSize={"large"}/>
-                                <Typography color={"white"} textAlign={CENTER}>
-                                    Создавайте свои ветвящиеся гайды
-                                </Typography>
-                            </Stack>
-                        </Box>
-                        <Box sx={{width: "150px", minHeight: "100px"}}>
-                            <Stack spacing={matches_580 ? 2 : 1} alignItems={CENTER} justifyContent={START} sx={{height: "100%"}}>
-                                <EditIcon sx={{color: "white"}} fontSize={"large"}/>
-                                <Typography color={"white"} textAlign={CENTER}>
-                                    Улучшай свои гайды
-                                </Typography>
-                            </Stack>
-                        </Box>
-                        <Box sx={{width: "150px", minHeight: "100px"}}>
-                            <Stack spacing={matches_580 ? 2 : 1} alignItems={CENTER} justifyContent={START} sx={{height: "100%"}}>
-                                <ChatBubbleIcon sx={{color: "white"}} fontSize={"large"}/>
-                                <Typography color={"white"} textAlign={CENTER}>
-                                    Делись опытом в коментариях
-                                </Typography>
-                            </Stack>
-                        </Box>
-                    </Stack>
-                    <Stack mt={matches_580 ? 6 : 3} direction={matches_400 ? ROW : COLUMN}
-                           spacing={matches_400 ? 1 : 4}
-                           alignItems={CENTER}
-                           justifyContent={SPACE_AROUND}
-                           sx={{width: "100%"}}>
-                        <Button onClick={handleGuidesClick} variant={"contained"}
-                                size="large">
-                            <Typography fontSize={matches_580 ? "24px" : "16px"} fontWeight={400} fontFamily={"Rubik Dirt"}>
-                                Перейти к гайдам
-                            </Typography>
-                        </Button>
-                    </Stack>
-                </Stack>
-            </Grid>
+                </Box>
 
-        </Grid>
+                <Typography variant={"h1"} color={"primary"} fontWeight={400} mt={10}
+                            fontSize={matches_580 ? "64px" : "35px"}
+                            letterSpacing={matches_580 ? "5px" : "3px"} textAlign={CENTER}
+                            fontFamily={"Rubik Dirt"}>
+                    Troubleshooting
+                </Typography>
+                <Typography mt={matches_580 ? 3 : 2}
+                            variant={"h3"}
+                            color={"primary"} fontWeight={400}
+                            fontSize={matches_580 ? "30px" : "20px"}
+                            letterSpacing={"2px"} lineHeight={matches_580 ? "35px" : "25px"}
+                            textAlign={CENTER} fontFamily={"Rubik Dirt"}>
+                    Поиск неисправностей
+                    в рабочих системах машин.
+                </Typography>
+                <Typography fontSize={"16px"} mt={5} textAlign={LEFT} color={SECONDARY_TEXT_COLOR}>
+                    Добро пожаловать на наш сайт! У нас вы можете создавать и редактировать ветвящиеся гайды для
+                    диагностики технических неисправностей. Создавайте подробные инструкции, добавляйте текст и
+                    прикрепляйте файлы с документацией. Общайтесь с другими пользователями, чтобы расширить свои знания.
+                </Typography>
+                <Stack sx={{marginTop: 10}} alignItems={CENTER} justifyContent={CENTER} spacing={5}
+                       direction={matches_580 ? ROW : COLUMN}>
+                    <Button
+                        onClick={handleNewGuideClick}
+                        variant={"outlined"}
+                        size="large">
+                        <Typography fontSize={matches_580 ? "24px" : "16px"} fontWeight={400}
+                                    fontFamily={"Rubik Dirt"}>
+                            Создать гайд
+                        </Typography>
+                    </Button>
+                    <Button
+                        onClick={handleGuidesClick}
+                        variant={"contained"}
+                        size="large">
+                        <Typography fontSize={matches_580 ? "24px" : "16px"} fontWeight={400}
+                                    fontFamily={"Rubik Dirt"}>
+                            Перейти к гайдам
+                        </Typography>
+                    </Button>
+                </Stack>
+            </Stack>
+        </Stack>
     );
 };
 

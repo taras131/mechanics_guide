@@ -8,6 +8,7 @@ import {
 import {Provider} from "react-redux";
 import {setupStore} from "./services/store";
 import "./firebase";
+import Box from "@mui/material/Box";
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
@@ -16,7 +17,9 @@ root.render(
     <React.StrictMode>
         <BrowserRouter>
             <Provider store={setupStore()}>
-                <App/>
+                <Box sx={{backgroundColor: "whitesmoke", minHeight: "100vh"}}>
+                    <App/>
+                </Box>
             </Provider>
         </BrowserRouter>
     </React.StrictMode>

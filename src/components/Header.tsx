@@ -38,11 +38,8 @@ const Header = () => {
                     <Typography variant={H6} component={DIV} sx={{flexGrow: 1}} fontFamily={"Rajdhani"}
                                 fontWeight={700}>
                         <Link to={routes.main} style={{color: WHITE, textDecoration: NONE}}>
-                            {matches_460 ? headerTitle : reducedHeaderTitle}
+                            Troubleshooting
                         </Link>
-                    </Typography>
-                    <Typography fontSize="16px" fontWeight={400} sx={{flexGrow: 1}}>
-                        {guideMode === GUIDE_MODE.editing && editingText}
                     </Typography>
                     {isAuth && user && user.email && (
                         <Link to={routes.profile} style={{color: WHITE}}>
