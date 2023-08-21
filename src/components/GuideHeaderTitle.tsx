@@ -1,4 +1,4 @@
-import React, {FC, useId} from 'react';
+import React, {FC, useEffect, useId} from 'react';
 import {FormControl, Stack} from "@mui/material";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
@@ -31,9 +31,11 @@ const GuideHeaderTitle: FC<IProps> = ({
     const guideId = useParams().guideId || "0";
     const existingGuidesTitles = useAppSelector(state => getGuidesTitlesWithGuideIdFilter(state, guideId))
     const handleGuideNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        validateText(e.target.value, setTitleError, existingGuidesTitles, 5)
         dispatch(changeEditionGuideTitle(e.target.value))
     }
+    useEffect(() => {
+        validateText(guideTitle, setTitleError, existingGuidesTitles, 5)
+    }, [guideTitle])
     return (
         <Stack>
             {guideMode === GUIDE_MODE.viewing

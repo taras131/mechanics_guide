@@ -62,7 +62,7 @@ const App = () => {
     }, [])
     if (isLoading) return (<Preloader/>)
     return (
-        <Container sx={{backgroundColor: "WhiteSmoke", padding: "5px", minHeight: "97vh"}}>
+        <Container sx={{padding: "5px"}}>
             <Header/>
             <Box mt={3}>
                 <Routes>

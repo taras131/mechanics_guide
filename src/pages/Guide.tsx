@@ -59,7 +59,6 @@ const Guide = () => {
                 localStorage.setItem(guideId, JSON.stringify(breadCrumbs))
             }
         }, [breadCrumbs])
-
         useEffect(() => {
             if (+guideStepId === 0) {
                 dispatch(cleanBreadCrumbs())
@@ -71,7 +70,6 @@ const Guide = () => {
                 }
             }
         }, [dispatch])
-
         useEffect(() => {
             if (firstUpdate.current) {
                 firstUpdate.current = false;
