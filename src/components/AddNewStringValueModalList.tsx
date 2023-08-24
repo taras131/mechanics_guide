@@ -1,24 +1,24 @@
-import React, {FC} from 'react';
+import React, {FC} from "react";
 import {List} from "@mui/material";
-import ListSubheader from '@mui/material/ListSubheader';
+import ListSubheader from "@mui/material/ListSubheader";
 import AddNewStringValueModalListItem from "./AddNewStringValueModalListItem";
 
-interface IAddNewValueModalListProps {
+interface IProps {
     existingValues: string []
     listSubHeaderText: string
 }
 
 const listStyles = {
-    width: '100%',
-    maxWidth: 390,
     bgcolor: 'background.paper',
-    position: 'relative',
-    overflow: 'auto',
     maxHeight: 300,
+    maxWidth: 390,
+    overflow: 'auto',
+    position: 'relative',
+    width: '100%',
     '& ul': {padding: 0},
 }
 
-const AddNewStringValueModalList: FC<IAddNewValueModalListProps> = ({
+const AddNewStringValueModalList: FC<IProps> = ({
                                                                         existingValues,
                                                                         listSubHeaderText
                                                                     }) => {
@@ -28,10 +28,7 @@ const AddNewStringValueModalList: FC<IAddNewValueModalListProps> = ({
                                                 index={index}/>)
     })
     return (
-        <List
-            sx={listStyles}
-            subheader={<li/>}
-        >
+        <List subheader={<li/>} sx={listStyles}>
             <ListSubheader>{listSubHeaderText}</ListSubheader>
             {categoriesList}
         </List>

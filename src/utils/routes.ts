@@ -8,3 +8,8 @@ export enum routes {
     not_found = "*",
     profile="/profile"
 }
+
+export enum apiRoutes {
+    guides ="guides",
+    guidesCategories ="guide_categories",
+}

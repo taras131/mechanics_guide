@@ -30,7 +30,7 @@ export const getGuideStepById = (state: RootState, guideId: string, stepId: numb
     return null
 }
 
-export const geiIsGuidesLoading = (state: RootState): boolean => {
+export const getIsGuidesLoading = (state: RootState): boolean => {
     return state.guides.isLoading
 }
 

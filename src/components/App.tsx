@@ -1,31 +1,23 @@
-import React, {useEffect} from 'react';
-import Header from "./Header";
-import {Routes, Route} from "react-router-dom";
-import Main from "../pages/Main";
-import Auth from "../pages/Auth";
-import NotFound from "../pages/NotFound";
-import {Container} from "@mui/material";
-import Guide from "../pages/Guide";
-import {routes} from "../utils/routes";
-import Box from "@mui/material/Box";
-import Profile from "../pages/Profile";
+import React, {useEffect} from "react";
 import {collection, onSnapshot, query} from "firebase/firestore";
 import {db} from "../firebase";
-import {setGuideCategories, setGuides, setIsGuidesLoading} from "../services/reducers/guides";
-import {IGuide, IGuideCategory} from "../models/iGuide";
-import {useAppDispatch, useAppSelector} from "../hooks/redux";
-import {geiIsGuidesLoading} from "../services/selectors/guidesSelectors";
-import Preloader from "./Preloader";
-import useMediaQuery from "@mui/material/useMediaQuery";
+import {Container} from "@mui/material";
+import AppRoutes from "./AppRoutes";
+import Box from "@mui/material/Box";
+import Header from "./Header";
 import Message from "./Message";
-import Guides from "../pages/Guides";
+import Preloader from "./Preloader";
+import {getIsGuidesLoading} from "../services/selectors/guidesSelectors";
+import {setGuideCategories, setGuides, setIsGuidesLoading} from "../services/reducers/guides";
+import {useAppDispatch, useAppSelector} from "../hooks/redux";
+import {IGuide, IGuideCategory} from "../models/iGuide";
+import {apiRoutes} from "../utils/routes";
 
 const App = () => {
     const dispatch = useAppDispatch()
-    const matches_1000 = useMediaQuery('(min-width:900px)');
-    const isLoading = useAppSelector(state => geiIsGuidesLoading(state))
+    const isLoading = useAppSelector(state => getIsGuidesLoading(state))
     useEffect(() => {
-        const q = query(collection(db, "guides"));
+        const q = query(collection(db, apiRoutes.guides));
         const unsubscribe = onSnapshot(q, (querySnapshot) => {
             try {
                 dispatch(setIsGuidesLoading(true))
@@ -43,7 +35,7 @@ const App = () => {
         });
     }, [])
     useEffect(() => {
-        const q = query(collection(db, "guide_categories"));
+        const q = query(collection(db, apiRoutes.guidesCategories));
         const unsubscribe = onSnapshot(q, (querySnapshot) => {
             try {
                 dispatch(setIsGuidesLoading(true))
@@ -65,15 +57,7 @@ const App = () => {
         <Container sx={{padding: "5px"}}>
             <Header/>
             <Box mt={3}>
-                <Routes>
-                    <Route path={routes.main} element={<Main/>}/>
-                    <Route path={routes.guides} element={<Guides/>}/>
-                    <Route path={routes.login} element={<Auth/>}/>
-                    <Route path={routes.register} element={<Auth/>}/>
-                    <Route path={routes.guide + "/:guideId/:stepId"} element={<Guide/>}/>
-                    <Route path={routes.profile} element={<Profile/>}/>
-                    <Route path={routes.not_found} element={<NotFound/>}/>
-                </Routes>
+                <AppRoutes/>
             </Box>
             <Message/>
         </Container>

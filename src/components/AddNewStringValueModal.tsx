@@ -12,8 +12,9 @@ import {
     CENTER, EMPTY_EXISTING_VALUES_TEXT, FORM_CONTROL_HEIGHT_PX, H3,
     OUTLINED, STRING_EMPTY, STRING_WITH_SPACE
 } from "../utils/const";
+import {fontSizePx} from "../utils/stylesConst";
 
-interface IAddAddNewModalProps {
+interface IProps {
     existingValues: string []
     fieldLabelText: string
     isOpenWindow: boolean
@@ -24,7 +25,7 @@ interface IAddAddNewModalProps {
     toggleIsOpenWindow: () => void
 }
 
-const AddNewStringValueModal: FC<IAddAddNewModalProps> = ({
+const AddNewStringValueModal: FC<IProps> = ({
                                                               existingValues,
                                                               fieldLabelText,
                                                               isOpenWindow,
@@ -52,13 +53,13 @@ const AddNewStringValueModal: FC<IAddAddNewModalProps> = ({
     return (
         <ModalWindow handleToggleOpen={toggleIsOpenWindow} isOpenModal={isOpenWindow}>
             <Stack spacing={2}>
-                <Typography align={CENTER} fontSize={16} fontWeight={600} variant={H3}>
+                <Typography align={CENTER} fontSize={fontSizePx.large} fontWeight={600} variant={H3}>
                     {title}
                 </Typography>
                 {existingValues.length
                     ? (<AddNewStringValueModalList existingValues={existingValues}
                                                    listSubHeaderText={listSubHeaderText}/>)
-                    : (<Typography fontSize={14} sx={{padding: 2}}>
+                    : (<Typography fontSize={fontSizePx.standard} sx={{padding: 2}}>
                         {EMPTY_EXISTING_VALUES_TEXT}
                     </Typography>)}
                 <FormControl sx={{minHeight: FORM_CONTROL_HEIGHT_PX}}>
@@ -66,8 +67,8 @@ const AddNewStringValueModal: FC<IAddAddNewModalProps> = ({
                                id={textFieldId}
                                label={fieldLabelText}
                                onChange={handleCategoryNameChange}
-                               variant={OUTLINED}
-                               value={textFieldValue}/>
+                               value={textFieldValue}
+                               variant={OUTLINED}/>
                 </FormControl>
                 <Button disabled={!!textFieldError} onClick={handleAddClick}>
                     {ADD_BUTTON_TEXT}
