@@ -1,8 +1,7 @@
-import React, {FC} from 'react';
-import Button from "@mui/material/Button";
-import CloseIcon from '@mui/icons-material/Close';
+import React, {FC} from "react";
+import CloseIcon from "@mui/icons-material/Close";
 import {Chip} from "@mui/material";
-import DownloadIcon from '@mui/icons-material/Download';
+import DownloadIcon from "@mui/icons-material/Download";
 import IconButton from "@mui/material/IconButton";
 import Stack from "@mui/material/Stack";
 import {fetchRemoveFile, fetchUpdateGuide} from "../services/actions/guidesActionsCreators";
@@ -20,18 +19,18 @@ interface IGuideStepUploadFileProps {
 }
 
 const GuideStepUploadFile: FC<IGuideStepUploadFileProps> = ({guideStep, isEdit, guideId}) => {
-    const dispatch = useAppDispatch()
-    const guideMode = useAppSelector(state => getGuideMode(state))
-    const editionGuide = useAppSelector(state => getGuideById(state,guideId, guideMode))
-    const handleRemove = (e: any) => {
+    const dispatch = useAppDispatch();
+    const guideMode = useAppSelector(state => getGuideMode(state));
+    const editionGuide = useAppSelector(state => getGuideById(state,guideId, guideMode));
+    const handleRemove = () => {
         if (guideStep.file && guideStep.file.name) {
-            dispatch(fetchRemoveFile(guideStep.file.name))
-            dispatch(editionGuideUpdateFile({fileName: "", filePath: "", guideStepId: guideStep.id}))
+            dispatch(fetchRemoveFile(guideStep.file.name));
+            dispatch(editionGuideUpdateFile({fileName: "", filePath: "", guideStepId: guideStep.id}));
             if (guideMode !== GUIDE_MODE.new_guide) {
-                dispatch(fetchUpdateGuide(editionGuide))
+                dispatch(fetchUpdateGuide(editionGuide));
             }
         }
-    }
+    };
     return (
         <>
             {guideStep.file && guideStep.file.name && (

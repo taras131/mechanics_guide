@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useId} from 'react';
+import React, {FC, useEffect, useId} from "react";
 import {FormControl, Stack} from "@mui/material";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
@@ -24,18 +24,18 @@ const GuideHeaderTitle: FC<IProps> = ({
                                           guideMode,
                                           matches_900,
                                           titleError,
-                                          setTitleError
+                                          setTitleError,
                                       }) => {
-    const dispatch = useAppDispatch()
-    const textFieldId = useId()
+    const dispatch = useAppDispatch();
+    const textFieldId = useId();
     const guideId = useParams().guideId || "0";
-    const existingGuidesTitles = useAppSelector(state => getGuidesTitlesWithGuideIdFilter(state, guideId))
+    const existingGuidesTitles = useAppSelector(state => getGuidesTitlesWithGuideIdFilter(state, guideId));
     const handleGuideNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        dispatch(changeEditionGuideTitle(e.target.value))
-    }
+        dispatch(changeEditionGuideTitle(e.target.value));
+    };
     useEffect(() => {
-        validateText(guideTitle, setTitleError, existingGuidesTitles, 5)
-    }, [guideTitle])
+        validateText(guideTitle, setTitleError, existingGuidesTitles, 5);
+    }, [guideTitle]);
     return (
         <Stack>
             {guideMode === GUIDE_MODE.viewing

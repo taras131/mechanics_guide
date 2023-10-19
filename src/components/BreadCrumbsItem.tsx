@@ -1,8 +1,8 @@
-import React, {FC} from 'react';
-import {Divider, ListItem, ListItemButton, ListItemText, Stack, TableCell, TableRow} from "@mui/material";
+import React, {FC} from "react";
+import {ListItemButton} from "@mui/material";
 import {IBreadCrumb} from "../models/iBreadCrumbs";
 import Grid from "@mui/material/Unstable_Grid2";
-import {CENTER, END, RIGHT, SECONDARY_TEXT_COLOR, SPACE_BETWEEN, START} from "../utils/const";
+import {RIGHT, SECONDARY_TEXT_COLOR, START} from "../utils/const";
 import Typography from "@mui/material/Typography";
 import {useNavigate} from "react-router-dom";
 import {routes} from "../utils/routes";
@@ -15,12 +15,12 @@ interface IBreadCrumbsItemProps extends IBreadCrumb {
 }
 
 const BreadCrumbsItem: FC<IBreadCrumbsItemProps> = ({questionText, answerText, index, questionId, guideId}) => {
-    const navigate = useNavigate()
-    const dispatch = useAppDispatch()
+    const navigate = useNavigate();
+    const dispatch = useAppDispatch();
     const handleListItemClick = () => {
-        navigate(routes.guide + "/" + guideId + "/" + questionId)
-        dispatch(cutBreadCrumbs(index))
-    }
+        navigate(routes.guide + "/" + guideId + "/" + questionId);
+        dispatch(cutBreadCrumbs(index));
+    };
     return (
         <ListItemButton key={index}
                         sx={{width: "100%"}}

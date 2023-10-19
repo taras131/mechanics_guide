@@ -15,68 +15,66 @@ const initialState: IAuthState = {
     isAuth: false,
     user: {
         id: "",
-        email: ""
-    }
-}
+        email: "",
+    },
+};
 
 export const AuthSlice = createSlice({
-    name: 'auth',
+    name: "auth",
     initialState,
     reducers: {
         setIsAuth: (state, action: PayloadAction<boolean>) => {
-            state.isAuth = action.payload
+            state.isAuth = action.payload;
         },
         cleanErrorMessage: (state) => {
-            state.errorMessage = ""
-        }
+            state.errorMessage = "";
+        },
     },
     extraReducers: {
         [fetchLogin.fulfilled.type]: (state, action: PayloadAction<IUser>) => {
-            state.user = action.payload
-            state.isAuth = true
+            state.user = action.payload;
+            state.isAuth = true;
             state.isLoading = false;
         },
         [fetchLogin.pending.type]: (state) => {
-            state.isLoading = true
-            state.errorMessage = '';
+            state.isLoading = true;
+            state.errorMessage = "";
         },
         [fetchLogin.rejected.type]: (state, action: PayloadAction<string>) => {
             state.isLoading = false;
-            console.log(action.payload)
             state.errorMessage = action.payload;
         },
         [fetchRegister.fulfilled.type]: (state, action: PayloadAction<IUser>) => {
-            state.isAuth = true
-            state.user = action.payload
+            state.isAuth = true;
+            state.user = action.payload;
             state.isLoading = false;
         },
         [fetchRegister.pending.type]: (state) => {
-            state.isLoading = true
-            state.errorMessage = '';
+            state.isLoading = true;
+            state.errorMessage = "";
         },
         [fetchRegister.rejected.type]: (state, action: PayloadAction<string>) => {
             state.isLoading = false;
-            console.log(action.payload)
             state.errorMessage = action.payload;
 
         },
         [fetchOut.fulfilled.type]: (state) => {
-            state.isAuth = false
-            state.user = { id: "",email: ""}
+            state.isAuth = false;
+            state.user = { id: "",email: ""};
             state.isLoading = false;
         },
         [fetchOut.pending.type]: (state) => {
-            state.isLoading = true
-            state.errorMessage = '';
+            state.isLoading = true;
+            state.errorMessage = "";
         },
         [fetchOut.rejected.type]: (state, action: PayloadAction<string>) => {
             state.isLoading = false;
             state.errorMessage = action.payload;
         },
-    }
-})
+    },
+});
 
 export const {
-    setIsAuth
-} = AuthSlice.actions
+    setIsAuth,
+} = AuthSlice.actions;
 export default AuthSlice.reducer;

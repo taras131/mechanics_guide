@@ -1,22 +1,15 @@
-import React, {FC, useState} from 'react';
+import React, {FC} from "react";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import {GUIDE_ITEM_TYPE, SECONDARY_TEXT_COLOR} from "../utils/const";
 import {useAppDispatch, useAppSelector} from "../hooks/redux";
-import {
-    getEditionGuideStepsByType,
-    getGuideById,
-    getGuidesWithFilter,
-    gitIsMyEditionGuide
-} from "../services/selectors/guidesSelectors";
-import SelectRedirectGuideStep from "./SelectRedirectGuideStep";
+import {gitIsMyEditionGuide} from "../services/selectors/guidesSelectors";
 import {Paper} from "@mui/material";
 import {fetchRemoveGuide} from "../services/actions/guidesActionsCreators";
 import {useNavigate} from "react-router-dom";
 import {routes} from "../utils/routes";
-import SelectRedirectAnotherGuide from "./SelectRedirectAnotherGuide";
 
 interface IGuideStepSpecialFeaturesProps {
     guideStepType: GUIDE_ITEM_TYPE
@@ -24,18 +17,14 @@ interface IGuideStepSpecialFeaturesProps {
     guideId: string
 }
 
-const GuideStepSpecialFeatures: FC<IGuideStepSpecialFeaturesProps> = ({
-                                                                          guideStepType,
-                                                                          currentGuideStepId,
-                                                                          guideId
-                                                                      }) => {
-    const dispatch = useAppDispatch()
-    const navigate = useNavigate()
-    const isMyGuide = useAppSelector(state => gitIsMyEditionGuide(state))
+const GuideStepSpecialFeatures: FC<IGuideStepSpecialFeaturesProps> = ({guideId}) => {
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
+    const isMyGuide = useAppSelector(state => gitIsMyEditionGuide(state));
     const handleRemoveGuideClick = () => {
-        navigate(routes.main)
-        dispatch(fetchRemoveGuide(guideId))
-    }
+        navigate(routes.main);
+        dispatch(fetchRemoveGuide(guideId));
+    };
     return (
         <Paper sx={{padding: 2}}>
             <Stack spacing={2}>

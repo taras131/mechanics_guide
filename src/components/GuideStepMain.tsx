@@ -1,4 +1,4 @@
-import React, {FC, useId} from 'react';
+import React, {FC, useId} from "react";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import GuideStepAnswers from "./GuideStepAnswers";
@@ -14,14 +14,14 @@ interface IProps {
     isEdit: boolean
 }
 
-const textResultLabel = "Текст результата"
-const textQuestionLabel = "Текст вопроса №"
+const textResultLabel = "Текст результата";
+const textQuestionLabel = "Текст вопроса №";
 const GuideStepMain: FC<IProps> = ({breadCrumbsCount, guideStep, isEdit}) => {
-    const dispatch = useAppDispatch()
-    const questionInputId = useId()
+    const dispatch = useAppDispatch();
+    const questionInputId = useId();
     const handleGuideStepTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        dispatch(changeEditionGuideItemsText({guideStepId: guideStep.id, newValue: e.target.value}))
-    }
+        dispatch(changeEditionGuideItemsText({guideStepId: guideStep.id, newValue: e.target.value}));
+    };
     return (
         <>
             {isEdit

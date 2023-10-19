@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect} from "react";
 import Header from "./Header";
 import {Routes, Route} from "react-router-dom";
 import Main from "../pages/Main";
@@ -16,51 +16,49 @@ import {IGuide, IGuideCategory} from "../models/iGuide";
 import {useAppDispatch, useAppSelector} from "../hooks/redux";
 import {geiIsGuidesLoading} from "../services/selectors/guidesSelectors";
 import Preloader from "./Preloader";
-import useMediaQuery from "@mui/material/useMediaQuery";
 import Message from "./Message";
 import Guides from "../pages/Guides";
 
 const App = () => {
-    const dispatch = useAppDispatch()
-    const matches_1000 = useMediaQuery('(min-width:900px)');
-    const isLoading = useAppSelector(state => geiIsGuidesLoading(state))
+    const dispatch = useAppDispatch();
+    const isLoading = useAppSelector(state => geiIsGuidesLoading(state));
     useEffect(() => {
         const q = query(collection(db, "guides"));
         const unsubscribe = onSnapshot(q, (querySnapshot) => {
             try {
-                dispatch(setIsGuidesLoading(true))
-                let guidesArr: IGuide [] = []
+                dispatch(setIsGuidesLoading(true));
+                const guidesArr: IGuide [] = [];
                 querySnapshot.forEach((doc: any) => {
                     guidesArr.push({...doc.data(), id: doc.id, items: JSON.parse(doc.data().items)});
                 });
-                dispatch(setGuides(guidesArr))
-                dispatch(setIsGuidesLoading(false))
+                dispatch(setGuides(guidesArr));
+                dispatch(setIsGuidesLoading(false));
             } catch (e) {
-                dispatch(setIsGuidesLoading(false))
+                dispatch(setIsGuidesLoading(false));
                 alert(e);
             }
             return () => unsubscribe();
         });
-    }, [])
+    }, []);
     useEffect(() => {
         const q = query(collection(db, "guide_categories"));
         const unsubscribe = onSnapshot(q, (querySnapshot) => {
             try {
-                dispatch(setIsGuidesLoading(true))
-                let categoriesArr: IGuideCategory [] = []
+                dispatch(setIsGuidesLoading(true));
+                const categoriesArr: IGuideCategory [] = [];
                 querySnapshot.forEach((doc: any) => {
                     categoriesArr.push({...doc.data(), id: doc.id});
                 });
-                dispatch(setGuideCategories(categoriesArr))
-                dispatch(setIsGuidesLoading(false))
+                dispatch(setGuideCategories(categoriesArr));
+                dispatch(setIsGuidesLoading(false));
             } catch (e) {
-                dispatch(setIsGuidesLoading(false))
+                dispatch(setIsGuidesLoading(false));
                 alert(e);
             }
             return () => unsubscribe();
         });
-    }, [])
-    if (isLoading) return (<Preloader/>)
+    }, []);
+    if (isLoading) return (<Preloader/>);
     return (
         <Container sx={{padding: "5px"}}>
             <Header/>
@@ -78,6 +76,6 @@ const App = () => {
             <Message/>
         </Container>
     );
-}
+};
 
 export default App;

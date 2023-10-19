@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useId, useState} from 'react';
+import React, {FC, useEffect, useId, useState} from "react";
 import Button from "@mui/material/Button";
 import {FormControl} from "@mui/material";
 import TextField from "@mui/material/TextField";
@@ -10,7 +10,7 @@ import {validateText} from "../utils/services";
 import {
     ADD_BUTTON_TEXT,
     CENTER, EMPTY_EXISTING_VALUES_TEXT, FORM_CONTROL_HEIGHT_PX, H3,
-    OUTLINED, STRING_EMPTY, STRING_WITH_SPACE
+    OUTLINED, STRING_EMPTY, STRING_WITH_SPACE,
 } from "../utils/const";
 
 interface IAddAddNewModalProps {
@@ -34,21 +34,21 @@ const AddNewStringValueModal: FC<IAddAddNewModalProps> = ({
                                                               title,
                                                               toggleIsOpenWindow,
                                                           }) => {
-    const textFieldId = useId()
-    const [textFieldError, setTextFieldError] = useState(STRING_WITH_SPACE)
-    const [textFieldValue, setTextFieldValue] = useState(STRING_EMPTY)
+    const textFieldId = useId();
+    const [textFieldError, setTextFieldError] = useState(STRING_WITH_SPACE);
+    const [textFieldValue, setTextFieldValue] = useState(STRING_EMPTY);
     useEffect(() => {
-        setTextFieldError(STRING_WITH_SPACE)
-        setTextFieldValue(STRING_EMPTY)
-    }, [setTextFieldError, setTextFieldValue, isOpenWindow])
+        setTextFieldError(STRING_WITH_SPACE);
+        setTextFieldValue(STRING_EMPTY);
+    }, [setTextFieldError, setTextFieldValue, isOpenWindow]);
     const handleAddClick = () => {
-        onAddNewValueClick(textFieldValue)
-        toggleIsOpenWindow()
-    }
+        onAddNewValueClick(textFieldValue);
+        toggleIsOpenWindow();
+    };
     const handleCategoryNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        validateText(e.target.value, setTextFieldError, existingValues, newValueMinLength)
-        setTextFieldValue(e.target.value)
-    }
+        validateText(e.target.value, setTextFieldError, existingValues, newValueMinLength);
+        setTextFieldValue(e.target.value);
+    };
     return (
         <ModalWindow handleToggleOpen={toggleIsOpenWindow} isOpenModal={isOpenWindow}>
             <Stack spacing={2}>

@@ -1,9 +1,7 @@
-import React, {FC} from 'react';
+import React, {FC} from "react";
 import ModalWindow from "./ModalWindow";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
 import {IGuideItem} from "../models/iGuide";
 import SelectRedirectGuideStepItem from "./SelectRedirectGuideStepItem";
 import ListSubheader from "@mui/material/ListSubheader";
@@ -18,12 +16,12 @@ interface ISelectGuideStepResultProps {
 const SelectRedirectGuideStep: FC<ISelectGuideStepResultProps> = ({
                                                                       isOpenSelectRedirectWindow,
                                                                       toggleIsOpenSelectRedirectWindow,
-                                                                      guideSteps
+                                                                      guideSteps,
                                                                   }) => {
     const resultsList = guideSteps.map((guideStep, index) => (<SelectRedirectGuideStepItem key={guideStep.id}
                                                                                          index={index}
                                                                                            guideStep={guideStep}
-                                                                                           toggleIsOpenSelectRedirectWindow={toggleIsOpenSelectRedirectWindow}/>))
+                                                                                           toggleIsOpenSelectRedirectWindow={toggleIsOpenSelectRedirectWindow}/>));
     return (
         <ModalWindow isOpenModal={isOpenSelectRedirectWindow} handleToggleOpen={toggleIsOpenSelectRedirectWindow}>
             <Stack spacing={2}>
@@ -32,13 +30,13 @@ const SelectRedirectGuideStep: FC<ISelectGuideStepResultProps> = ({
                 </Typography>
                 <List
                     sx={{
-                        width: '100%',
+                        width: "100%",
                         maxWidth: 360,
-                        bgcolor: 'background.paper',
-                        position: 'relative',
-                        overflow: 'auto',
+                        bgcolor: "background.paper",
+                        position: "relative",
+                        overflow: "auto",
                         maxHeight: 300,
-                        '& ul': {padding: 0},
+                        "& ul": {padding: 0},
                     }}
                     subheader={<li/>}
                 >

@@ -1,6 +1,6 @@
-import React, {FC, useState} from 'react';
+import React, {FC, useState} from "react";
 import {IGuide} from "../models/iGuide";
-import Grid from '@mui/material/Unstable_Grid2';
+import Grid from "@mui/material/Unstable_Grid2";
 import {CENTER, GUIDE_MODE, SPACE_BETWEEN, START, STRING_EMPTY, STRING_WITH_SPACE} from "../utils/const";
 import GuideHeaderTitle from "./GuideHeaderTitle";
 import GuideHeaderActions from "./GuideHeaderActions";
@@ -12,8 +12,8 @@ interface IGuideHeaderProps {
 }
 
 const GuideHeader: FC<IGuideHeaderProps> = ({guide, guideMode}) => {
-    const matches_900 = useMediaQuery('(min-width:900px)');
-    const [titleError, setTitleError] = useState(guideMode === GUIDE_MODE.new_guide ? STRING_WITH_SPACE : STRING_EMPTY)
+    const matches_900 = useMediaQuery("(min-width:900px)");
+    const [titleError, setTitleError] = useState(guideMode === GUIDE_MODE.new_guide ? STRING_WITH_SPACE : STRING_EMPTY);
     return (
         <Grid container
               mt={1}

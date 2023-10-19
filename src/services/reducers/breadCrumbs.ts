@@ -6,39 +6,39 @@ interface IBreadCrumbsState {
 }
 
 const initialState: IBreadCrumbsState = {
-    list: []
-}
+    list: [],
+};
 
 export const BreadCrumbsSlice = createSlice({
-    name: 'bread_crumbs',
+    name: "bread_crumbs",
     initialState,
     reducers: {
         addBreadCrumb: (state, action: PayloadAction<IBreadCrumb>) => {
-            state.list = [...state.list, action.payload]
+            state.list = [...state.list, action.payload];
         },
         removeLastBreadCrumb: (state) => {
-            const tempState = [...state.list]
-            tempState.pop()
-            state.list = tempState
+            const tempState = [...state.list];
+            tempState.pop();
+            state.list = tempState;
         },
         cleanBreadCrumbs: (state) => {
-            state.list = []
+            state.list = [];
         },
         setBreadCrumbs: (state, action: PayloadAction<IBreadCrumb[]>) => {
-            state.list = action.payload
+            state.list = action.payload;
         },
         cutBreadCrumbs: (state, action: PayloadAction<number>) => {
-            state.list = [...state.list.filter((item, index) => index < action.payload)]
-        }
+            state.list = [...state.list.filter((item, index) => index < action.payload)];
+        },
     },
-    extraReducers: {}
-})
+    extraReducers: {},
+});
 
 export const {
     addBreadCrumb,
     removeLastBreadCrumb,
     cleanBreadCrumbs,
     setBreadCrumbs,
-    cutBreadCrumbs
-} = BreadCrumbsSlice.actions
+    cutBreadCrumbs,
+} = BreadCrumbsSlice.actions;
 export default BreadCrumbsSlice.reducer;

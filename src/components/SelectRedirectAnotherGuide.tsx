@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, {FC} from "react";
 import {IGuide} from "../models/iGuide";
 import ModalWindow from "./ModalWindow";
 import Stack from "@mui/material/Stack";
@@ -16,12 +16,12 @@ interface ISelectRedirectAnotherGuideProps {
 const SelectRedirectAnotherGuide: FC<ISelectRedirectAnotherGuideProps> = ({
                                                                               isOpen,
                                                                               anotherGuides,
-                                                                              toggleIsOpen
+                                                                              toggleIsOpen,
                                                                           }) => {
     const anotherGuideList = anotherGuides.map((guide, index) => (<SelectRedirectAnotherGuideItem key={guide.id}
                                                                                                   guide={guide}
                                                                                                   index={index}
-                                                                                                  toggleIsOpen={toggleIsOpen}/>))
+                                                                                                  toggleIsOpen={toggleIsOpen}/>));
 
     return (
         <ModalWindow isOpenModal={isOpen} handleToggleOpen={toggleIsOpen}>
@@ -31,13 +31,13 @@ const SelectRedirectAnotherGuide: FC<ISelectRedirectAnotherGuideProps> = ({
                 </Typography>
                 <List
                     sx={{
-                        width: '100%',
+                        width: "100%",
                         maxWidth: 360,
-                        bgcolor: 'background.paper',
-                        position: 'relative',
-                        overflow: 'auto',
+                        bgcolor: "background.paper",
+                        position: "relative",
+                        overflow: "auto",
                         maxHeight: 300,
-                        '& ul': {padding: 0},
+                        "& ul": {padding: 0},
                     }}
                     subheader={<li/>}
                 >

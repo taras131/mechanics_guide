@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, {FC} from "react";
 import {Menu, MenuItem} from "@mui/material";
 import {Link} from "react-router-dom";
 import {routes} from "../utils/routes";
@@ -17,7 +17,7 @@ const Navigation: FC<INavigation> = ({anchorEl, handleClose, open}) => {
             open={open}
             onClose={handleClose}
             MenuListProps={{
-                'aria-labelledby': 'basic-button',
+                "aria-labelledby": "basic-button",
             }}
         >
             <MenuItem onClick={handleClose}>

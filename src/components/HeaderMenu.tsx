@@ -1,8 +1,7 @@
-import React, {FC} from 'react';
+import React, {FC} from "react";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import {Menu, MenuItem} from "@mui/material";
-import Toolbar from "@mui/material/Toolbar";
 import {Link} from "react-router-dom";
 import {routes} from "../utils/routes";
 
@@ -28,9 +27,9 @@ const HeaderMenu: FC<IProps> = ({isAuth}) => {
                 aria-label="menu"
                 sx={{mr: 2}}
                 id="basic-button"
-                aria-controls={open ? 'basic-menu' : undefined}
+                aria-controls={open ? "basic-menu" : undefined}
                 aria-haspopup="true"
-                aria-expanded={open ? 'true' : undefined}
+                aria-expanded={open ? "true" : undefined}
                 onClick={handleClick}
             >
                 <MenuIcon/>
@@ -41,7 +40,7 @@ const HeaderMenu: FC<IProps> = ({isAuth}) => {
                 open={open}
                 onClose={handleClose}
                 MenuListProps={{
-                    'aria-labelledby': 'basic-button',
+                    "aria-labelledby": "basic-button",
                 }}
             >
                 <MenuItem onClick={handleClose}>

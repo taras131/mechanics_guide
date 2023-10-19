@@ -15,3 +15,16 @@ typescript, redux-toolkit, Material UI
 https://deluxe-torte-cdf6c9.netlify.app/
  
 Бекенд реализован с помощью firebase.
+
+- запуск eslint
+
+```bash
+npx eslint .
+```
+
+- запуск eslint--fix
+
+```bash
+npx eslint --fix .
+```
+

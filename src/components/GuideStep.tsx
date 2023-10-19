@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, {FC} from "react";
 import {IGuideItem} from "../models/iGuide";
 import {Paper} from "@mui/material";
 import Stack from "@mui/material/Stack";
@@ -15,7 +15,7 @@ interface IGuideStepProps {
 }
 
 const GuideStep: FC<IGuideStepProps> = ({guideStep, isEdit}) => {
-    const breadCrumbsCount = useAppSelector(state => getBreadCrumbsCount(state))
+    const breadCrumbsCount = useAppSelector(state => getBreadCrumbsCount(state));
     const guideId = useParams().guideId || "0";
     return (
         <Paper sx={{padding: "16px"}}>

@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, {FC} from "react";
 import ModalWindow from "./ModalWindow";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";

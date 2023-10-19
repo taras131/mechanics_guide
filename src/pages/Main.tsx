@@ -1,35 +1,28 @@
-import React from 'react';
-import {CENTER, COLUMN, GUIDE_MODE, LEFT, ROW, SECONDARY_TEXT_COLOR, SPACE_AROUND, START} from "../utils/const";
-import Stack from '@mui/material/Stack';
+import React from "react";
+import {CENTER, COLUMN, GUIDE_MODE, LEFT, ROW, SECONDARY_TEXT_COLOR} from "../utils/const";
+import Stack from "@mui/material/Stack";
 import {useNavigate} from "react-router-dom";
-import Grid from "@mui/material/Unstable_Grid2";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import EditIcon from '@mui/icons-material/Edit';
-import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 import useMediaQuery from "@mui/material/useMediaQuery";
 import {routes} from "../utils/routes";
-import TripOriginIcon from '@mui/icons-material/TripOrigin';
-import warning from "react-redux/es/utils/warning";
-
 
 const Main = () => {
-    const navigate = useNavigate()
-    const matches_580 = useMediaQuery('(min-width:580px)');
-    const matches_400 = useMediaQuery('(min-width:400px)');
+    const navigate = useNavigate();
+    const matches_580 = useMediaQuery("(min-width:580px)");
     const handleNewGuideClick = () => {
-        navigate(routes.guide + "/" + GUIDE_MODE.new_guide + "/0")
-    }
+        navigate(routes.guide + "/" + GUIDE_MODE.new_guide + "/0");
+    };
     const handleGuidesClick = () => {
-        navigate(routes.guides)
-    }
+        navigate(routes.guides);
+    };
     return (
         <Stack spacing={3} alignItems={CENTER} justifyContent={CENTER}
                style={{
                    height: "calc(100vh - 115px)",
                    marginTop: "-25px",
-                   padding: "10px"
+                   padding: "10px",
                }}>
             <Stack alignItems={CENTER} justifyContent={CENTER} sx={{height: "100%"}} pl={matches_580 ? 3 : 0}>
                 <Box sx={{width: "100%"}}>

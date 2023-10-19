@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useId} from 'react';
+import React, {FC, useEffect, useId} from "react";
 import {ButtonGroup, Divider, FormControl, FormLabel, Radio} from "@mui/material";
 import Grid from "@mui/material/Grid";
 import {CENTER, COLUMN, GUIDE_ITEM_TYPE, LEFT, ROW, SECONDARY_TEXT_COLOR, SPACE_BETWEEN, START} from "../utils/const";
@@ -17,8 +17,8 @@ import {useNavigate} from "react-router-dom";
 import {getLastBreadCrumbs} from "../services/selectors/breadCrumbsSelectors";
 import {IGuideItem} from "../models/iGuide";
 import Box from "@mui/material/Box";
-import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
-import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
+import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
+import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
 interface IProps {
@@ -32,34 +32,34 @@ const GuideStepHeader: FC<IProps> = ({
                                          breadCrumbsCount,
                                          guideId,
                                          guideStep,
-                                         isEdit
+                                         isEdit,
                                      }) => {
-    const dispatch = useAppDispatch()
-    const matches_650 = useMediaQuery('(min-width:650px)');
-    const matches_500 = useMediaQuery('(min-width:500px)');
-    const radioButtonId = useId()
-    const navigate = useNavigate()
-    const lastBreadCrumbs = useAppSelector(state => getLastBreadCrumbs(state))
+    const dispatch = useAppDispatch();
+    const matches_650 = useMediaQuery("(min-width:650px)");
+    const matches_500 = useMediaQuery("(min-width:500px)");
+    const radioButtonId = useId();
+    const navigate = useNavigate();
+    const lastBreadCrumbs = useAppSelector(state => getLastBreadCrumbs(state));
     useEffect(() => {
-        window.onpopstate = e => {
-            dispatch(removeLastBreadCrumb())
-        }
-        return
-    }, [])
+        window.onpopstate = () => {
+            dispatch(removeLastBreadCrumb());
+        };
+        return;
+    }, []);
     const handleGuideStepTypeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const newType = e.target.value
+        const newType = e.target.value;
         if (newType === GUIDE_ITEM_TYPE.result || newType === GUIDE_ITEM_TYPE.question) {
-            dispatch(changeEditionGuideItemsType({guideStepId: guideStep.id, newValue: newType}))
+            dispatch(changeEditionGuideItemsType({guideStepId: guideStep.id, newValue: newType}));
         }
-    }
+    };
     const handleGoToStartClick = () => {
-        navigate(routes.guide + "/" + guideId + "/0")
-        dispatch(cleanBreadCrumbs())
-    }
+        navigate(routes.guide + "/" + guideId + "/0");
+        dispatch(cleanBreadCrumbs());
+    };
     const handleBackClick = () => {
-        navigate(routes.guide + "/" + guideId + "/" + lastBreadCrumbs?.questionId)
-        dispatch(removeLastBreadCrumb())
-    }
+        navigate(routes.guide + "/" + guideId + "/" + lastBreadCrumbs?.questionId);
+        dispatch(removeLastBreadCrumb());
+    };
     return (
         <Box>
             <Grid container alignItems={isEdit ? START : CENTER}
@@ -127,7 +127,6 @@ const GuideStepHeader: FC<IProps> = ({
             </Grid>
             {!isEdit && (<Divider sx={{marginTop: 2}}/>)}
         </Box>
-
     );
 };
 

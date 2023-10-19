@@ -4,37 +4,37 @@ import {handlerError} from "./guidesActionsCreators";
 import {IAuthData} from "../../models/iAuth";
 
 export const fetchLogin = createAsyncThunk(
-    'fetch_login',
+    "fetch_login",
     async (authData: IAuthData, ThunkAPI) => {
         try {
-            const res = await api.login(authData)
-            return res
+            const res = await api.login(authData);
+            return res;
         } catch (e) {
-            return ThunkAPI.rejectWithValue(handlerError(e))
+            return ThunkAPI.rejectWithValue(handlerError(e));
         }
     }
-)
+);
 
 export const fetchRegister = createAsyncThunk(
-    'fetch_register',
+    "fetch_register",
     async (authData: IAuthData, ThunkAPI) => {
         try {
-            const res = await api.register(authData)
-            return res
+            const res = await api.register(authData);
+            return res;
         } catch (e) {
-            return ThunkAPI.rejectWithValue(handlerError(e))
+            return ThunkAPI.rejectWithValue(handlerError(e));
         }
     }
-)
+);
 
 export const fetchOut = createAsyncThunk(
-    'fetch_out',
+    "fetch_out",
     async (_, ThunkAPI) => {
         try {
-            const res = await api.out()
-            return res
+            const res = await api.out();
+            return res;
         } catch (e) {
-            return ThunkAPI.rejectWithValue(handlerError(e))
+            return ThunkAPI.rejectWithValue(handlerError(e));
         }
     }
-)
+);

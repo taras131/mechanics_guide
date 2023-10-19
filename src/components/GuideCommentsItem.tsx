@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, {FC} from "react";
 import {IComment} from "../models/iComment";
 import Stack from "@mui/material/Stack";
 import Grid from "@mui/material/Unstable_Grid2";
@@ -7,8 +7,8 @@ import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import {CENTER, SECONDARY_TEXT_COLOR, SPACE_BETWEEN, START} from "../utils/const";
 import IconButton from "@mui/material/IconButton";
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 import {useAppDispatch} from "../hooks/redux";
 import {fetchUpdateCommentLikes} from "../services/actions/commentsActionsCreators";
 
@@ -19,24 +19,23 @@ interface IProps extends IComment {
 const GuideCommentsItem: FC<IProps> = ({
                                            id,
                                            authorId,
-                                           guideId,
                                            text,
                                            dateCreation,
                                            likedUsersId,
-                                           userId
+                                           userId,
                                        }) => {
-    const dispatch = useAppDispatch()
-    const authorIdSplit = authorId.toUpperCase().split("")
-    const isILiked = likedUsersId.find(item => item === userId)
+    const dispatch = useAppDispatch();
+    const authorIdSplit = authorId.toUpperCase().split("");
+    const isILiked = likedUsersId.find(item => item === userId);
     const handleLikeClick = () => {
-        let newLikedUsersId = [...likedUsersId]
+        let newLikedUsersId = [...likedUsersId];
         if (isILiked) {
-            newLikedUsersId = [...likedUsersId.filter(item => item !== userId)]
+            newLikedUsersId = [...likedUsersId.filter(item => item !== userId)];
         } else {
-            newLikedUsersId = [...newLikedUsersId, userId]
+            newLikedUsersId = [...newLikedUsersId, userId];
         }
-        dispatch(fetchUpdateCommentLikes({commentId: id, likedUsersId: newLikedUsersId}))
-    }
+        dispatch(fetchUpdateCommentLikes({commentId: id, likedUsersId: newLikedUsersId}));
+    };
     return (
         <Stack spacing={2}>
             <Grid container spacing={1} alignItems={CENTER} justifyContent={SPACE_BETWEEN}>

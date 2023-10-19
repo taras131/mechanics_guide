@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, {FC} from "react";
 import GuidesHeaderAddNewGuide from "./GuidesHeaderAddNewGuide";
 import GuidesHeaderSelectMyGuides from "./GuidesHeaderSelectMyGuides";
 import SelectGuideCategory from "./SelectGuideCategory";
@@ -19,11 +19,11 @@ const GuidesHeader: FC<IGuidesHeaderProps> = ({
                                                   selectedGuideCategoryId,
                                                   isSelectedMyGuides,
                                                   handleGuideCategoryChange,
-                                                  handleMyGuideSelected
+                                                  handleMyGuideSelected,
                                               }) => {
-    const isAuth = useAppSelector(state => getIsAuth(state))
-    const matches_730 = useMediaQuery('(min-width:730px)');
-    const matches_500 = useMediaQuery('(min-width:500px)');
+    const isAuth = useAppSelector(state => getIsAuth(state));
+    const matches_730 = useMediaQuery("(min-width:730px)");
+    const matches_500 = useMediaQuery("(min-width:500px)");
     return (
         <Grid container
               direction={matches_730 ? "row" : "column"}

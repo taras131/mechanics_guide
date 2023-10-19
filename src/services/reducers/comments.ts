@@ -11,25 +11,25 @@ interface ICommentsState {
 const initialState: ICommentsState = {
     list: [],
     isLoading: false,
-    errorMessage: STRING_EMPTY
-}
+    errorMessage: STRING_EMPTY,
+};
 
 export const CommentsSlice = createSlice({
-    name: 'comments',
+    name: "comments",
     initialState,
     reducers: {
         setComments: (state, action: PayloadAction<IComment[]>) => {
-            state.list = action.payload
+            state.list = action.payload;
         },
         setCommentsLoading: (state, action: PayloadAction<boolean>) => {
-            state.isLoading = action.payload
-        }
+            state.isLoading = action.payload;
+        },
     },
-    extraReducers: {}
-})
+    extraReducers: {},
+});
 
 export const {
-    setComments, setCommentsLoading
-} = CommentsSlice.actions
+    setComments, setCommentsLoading,
+} = CommentsSlice.actions;
 
-export default CommentsSlice.reducer
+export default CommentsSlice.reducer;

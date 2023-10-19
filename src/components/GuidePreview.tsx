@@ -1,6 +1,6 @@
-import React, {FC} from 'react';
+import React, {FC} from "react";
 import {IGuide} from "../models/iGuide";
-import Grid from '@mui/material/Unstable_Grid2';
+import Grid from "@mui/material/Unstable_Grid2";
 import Typography from "@mui/material/Typography";
 import {Card, CardActions, CardContent, Divider} from "@mui/material";
 import Button from "@mui/material/Button";
@@ -10,9 +10,9 @@ import {deepPurple} from "@mui/material/colors";
 import Avatar from "@mui/material/Avatar";
 import {useNavigate} from "react-router-dom";
 import {routes} from "../utils/routes";
-import useMediaQuery from '@mui/material/useMediaQuery';
+import useMediaQuery from "@mui/material/useMediaQuery";
 import {setBreadCrumbs} from "../services/reducers/breadCrumbs";
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import {IBreadCrumb} from "../models/iBreadCrumbs";
 import {
     CENTER,
@@ -24,9 +24,9 @@ import {
     SECONDARY_TEXT_COLOR,
     SMALL,
     SPACE_BETWEEN,
-    START
+    START,
 } from "../utils/const";
-import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import Stack from "@mui/material/Stack";
 import {setGuideMode} from "../services/reducers/guides";
 
@@ -42,34 +42,34 @@ const countStepsText = "Количество шагов";
 const authorTextTitle = "Автор:";
 
 const GuidePreview: FC<IGuidePreviewProps> = ({guide}) => {
-    const dispatch = useAppDispatch()
-    const categoryName = useAppSelector(state => getGuideCategoryNameById(state, guide.categoryId))
-    const countGuideSteps = useAppSelector(state => getCountGuideSteps(state, guide.id))
-    const matches = useMediaQuery('(min-width:1200px)');
-    const navigate = useNavigate()
-    const breadCrumbs = localStorage.getItem(guide.id)
-    let parseBreadCrumbs: IBreadCrumb []
-    let continueGuideStep: number = 0
+    const dispatch = useAppDispatch();
+    const categoryName = useAppSelector(state => getGuideCategoryNameById(state, guide.categoryId));
+    const countGuideSteps = useAppSelector(state => getCountGuideSteps(state, guide.id));
+    const matches = useMediaQuery("(min-width:1200px)");
+    const navigate = useNavigate();
+    const breadCrumbs = localStorage.getItem(guide.id);
+    let parseBreadCrumbs: IBreadCrumb [];
+    let continueGuideStep = 0;
     if (breadCrumbs) {
-        parseBreadCrumbs = JSON.parse(breadCrumbs)
-        const nextId = parseBreadCrumbs[parseBreadCrumbs.length - 1].nextId
+        parseBreadCrumbs = JSON.parse(breadCrumbs);
+        const nextId = parseBreadCrumbs[parseBreadCrumbs.length - 1].nextId;
         if (nextId) {
-            continueGuideStep = nextId
+            continueGuideStep = nextId;
         } else {
-            continueGuideStep = parseBreadCrumbs[parseBreadCrumbs.length - 1].questionId
+            continueGuideStep = parseBreadCrumbs[parseBreadCrumbs.length - 1].questionId;
         }
     }
     const handleContinueClick = () => {
         if (parseBreadCrumbs) {
-            dispatch(setGuideMode(GUIDE_MODE.viewing))
-            dispatch(setBreadCrumbs(parseBreadCrumbs))
-            navigate(`${routes.guide}/${guide.id}/${continueGuideStep}`)
+            dispatch(setGuideMode(GUIDE_MODE.viewing));
+            dispatch(setBreadCrumbs(parseBreadCrumbs));
+            navigate(`${routes.guide}/${guide.id}/${continueGuideStep}`);
         }
-    }
+    };
     const handleGuideClick = () => {
-        dispatch(setGuideMode(GUIDE_MODE.viewing))
-        navigate(`${routes.guide}/${guide.id}/0`)
-    }
+        dispatch(setGuideMode(GUIDE_MODE.viewing));
+        navigate(`${routes.guide}/${guide.id}/0`);
+    };
     return (
         <Grid xs={12} sm={6} md={4}>
             <Card sx={{minWidth: 200}}>
@@ -93,7 +93,7 @@ const GuidePreview: FC<IGuidePreviewProps> = ({guide}) => {
                                 bgcolor: deepPurple[500],
                                 height: "24px",
                                 width: "24px",
-                                fontSize: "12px"
+                                fontSize: "12px",
                             }}>
                                 {countGuideSteps}
                             </Avatar>
@@ -105,7 +105,7 @@ const GuidePreview: FC<IGuidePreviewProps> = ({guide}) => {
                                 sx={{
                                     marginTop: "10px",
                                     minHeight: "130px",
-                                    overflow: {HIDDEN}
+                                    overflow: {HIDDEN},
                                 }}>
                         {guide.title && guide.title.length > 70 ? guide.title.substring(0, 67) + "..." : guide.title}
                     </Typography>

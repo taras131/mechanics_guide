@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, {FC} from "react";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import GuideStepAnswersList from "./GuideStepAnswersList";
@@ -12,11 +12,10 @@ interface IGuideStepAnswersProps {
     questionText: string
 }
 
-const emptyAnswersListEditText = "Вариантов ответа пока нет. Нажмите на + ответ , что бы добавить вариант ответа."
-const emptyAnswersListText  = "Варианты ответа пока не добавлены."
+const emptyAnswersListEditText = "Вариантов ответа пока нет. Нажмите на + ответ , что бы добавить вариант ответа.";
+const emptyAnswersListText  = "Варианты ответа пока не добавлены.";
 
 const GuideStepAnswers: FC<IGuideStepAnswersProps> = ({
-                                                          guideStepId,
                                                           isEdit,
                                                           options,
                                                           questionId,

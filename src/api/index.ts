@@ -10,44 +10,43 @@ import {IAuthData} from "../models/iAuth";
 import {getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut} from "firebase/auth";
 import {ref, deleteObject, uploadBytesResumable, getDownloadURL} from "firebase/storage";
 import {IGuide} from "../models/iGuide";
-import {IFetchUploadFile, IFile} from "../services/actions/guidesActionsCreators";
-import {IComment, INewComment} from "../models/iComment";
+import {IFetchUploadFile} from "../services/actions/guidesActionsCreators";
+import {INewComment} from "../models/iComment";
 import {IUpdateLikes} from "../services/actions/commentsActionsCreators";
 
 class Api {
     auth = getAuth();
     getAllGuides = async () => {
-
-
-    }
+        return null;
+    };
     addNewGuide = async (guide: IGuide) => {
-        let res = await addDoc(collection(db, "guides"),
+        const res = await addDoc(collection(db, "guides"),
             {
                 title: guide.title,
                 categoryId: guide.categoryId,
                 authorId: guide.authorId,
-                items: JSON.stringify(guide.items)
+                items: JSON.stringify(guide.items),
             }
         );
-        return res
-    }
+        return res;
+    };
     removeGuide = async (guideId: string) => {
         await deleteDoc(doc(db, "guides", guideId));
-    }
+    };
     updateGuide = async (guide: IGuide) => {
-        let res = await updateDoc(doc(db, "guides", guide.id), {
+        const res = await updateDoc(doc(db, "guides", guide.id), {
             authorId: guide.authorId,
             title: guide.title,
             categoryId: guide.categoryId,
-            items: JSON.stringify(guide.items)
+            items: JSON.stringify(guide.items),
         });
-        return res
-    }
+        return res;
+    };
     addNewCategory = async (categoryName: string) => {
         await addDoc(collection(db, "guide_categories"), {
-            categoryName: categoryName
+            categoryName: categoryName,
         });
-    }
+    };
     uploadFile = async (fileData: IFetchUploadFile) => {
         const name = new Date().getTime() + fileData.file.name;
         const storageRef = ref(storage, name);
@@ -78,7 +77,7 @@ class Api {
             },
             async () => {
                 getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-                    fileData.updateFilePath(name, downloadURL)
+                    fileData.updateFilePath(name, downloadURL);
                 });
             }
         );
@@ -92,29 +91,29 @@ class Api {
         });
     };
     login = async (authData: IAuthData) => {
-        const res = await signInWithEmailAndPassword(this.auth, authData.email, authData.password)
-        return {email: res.user.email, id: res.user.uid}
-    }
+        const res = await signInWithEmailAndPassword(this.auth, authData.email, authData.password);
+        return {email: res.user.email, id: res.user.uid};
+    };
     register = async (authData: IAuthData) => {
-        const res = await createUserWithEmailAndPassword(this.auth, authData.email, authData.password)
-        return {email: res.user.email, id: res.user.uid}
-    }
+        const res = await createUserWithEmailAndPassword(this.auth, authData.email, authData.password);
+        return {email: res.user.email, id: res.user.uid};
+    };
     out = async () => {
-        const res = await signOut(this.auth)
-        return res
-    }
+        const res = await signOut(this.auth);
+        return res;
+    };
     addComment = async (comment: INewComment) => {
-        let res = await addDoc(collection(db, "comments"),
+        const res = await addDoc(collection(db, "comments"),
             {...comment, likedUsersId: JSON.stringify(comment.likedUsersId)}
         );
-        return res
-    }
+        return res;
+    };
     updateCommentLike = async (updateLikes: IUpdateLikes) => {
-        let res = await updateDoc(doc(db, "comments", updateLikes.commentId), {
-            likedUsersId: JSON.stringify(updateLikes.likedUsersId)
+        const res = await updateDoc(doc(db, "comments", updateLikes.commentId), {
+            likedUsersId: JSON.stringify(updateLikes.likedUsersId),
         });
-        return res
-    }
+        return res;
+    };
 }
 
 const api = new Api();

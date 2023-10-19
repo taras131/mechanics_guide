@@ -1,6 +1,6 @@
 export const getNextId = () => {
-    return new Date().getTime()
-}
+    return new Date().getTime();
+};
 export const validateEmail = (email: string) => {
     return String(email)
         .toLowerCase()
@@ -9,30 +9,30 @@ export const validateEmail = (email: string) => {
         );
 };
 export const checkExists = (newValue: string, existingValuesArr: string[]): boolean => {
-    let isExist = false
+    let isExist = false;
     existingValuesArr.forEach(value => {
         if (value.toUpperCase() === newValue.toUpperCase()) {
-            isExist = true
-            return
+            isExist = true;
+            return;
         }
-    })
-    return isExist
-}
+    });
+    return isExist;
+};
 export const validateText = (newValue: string, setError: (newValue:string) => void, existingValuesArr: string[], newValueMinLength: number) => {
-    setError("")
-    const newValueNumberLetters = newValue.match(/[a-zA-Zа-яА-Я]/g)
+    setError("");
+    const newValueNumberLetters = newValue.match(/[a-zA-Zа-яА-Я]/g);
     if (!newValueNumberLetters) {
-        setError("Поле должно содержать буквы")
+        setError("Поле должно содержать буквы");
     } else {
         if (newValueNumberLetters.length < newValueMinLength) {
-            setError(`Поле должно содержать не меньше ${newValueMinLength} букв`)
+            setError(`Поле должно содержать не меньше ${newValueMinLength} букв`);
         } else {
             if (checkExists(newValue, existingValuesArr)) {
-                setError("Такое значение уже существует")
+                setError("Такое значение уже существует");
             }
         }
     }
-}
+};
 export const getTodayDate = () => {
-    return new Date().toISOString().slice(0, 10)
-}
+    return new Date().toISOString().slice(0, 10);
+};

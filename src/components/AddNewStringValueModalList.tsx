@@ -1,6 +1,6 @@
-import React, {FC} from 'react';
+import React, {FC} from "react";
 import {List} from "@mui/material";
-import ListSubheader from '@mui/material/ListSubheader';
+import ListSubheader from "@mui/material/ListSubheader";
 import AddNewStringValueModalListItem from "./AddNewStringValueModalListItem";
 
 interface IAddNewValueModalListProps {
@@ -9,24 +9,24 @@ interface IAddNewValueModalListProps {
 }
 
 const listStyles = {
-    width: '100%',
+    width: "100%",
     maxWidth: 390,
-    bgcolor: 'background.paper',
-    position: 'relative',
-    overflow: 'auto',
+    bgcolor: "background.paper",
+    position: "relative",
+    overflow: "auto",
     maxHeight: 300,
-    '& ul': {padding: 0},
-}
+    "& ul": {padding: 0},
+};
 
 const AddNewStringValueModalList: FC<IAddNewValueModalListProps> = ({
                                                                         existingValues,
-                                                                        listSubHeaderText
+                                                                        listSubHeaderText,
                                                                     }) => {
     const categoriesList = existingValues.map((existingValue, index) => {
         return (<AddNewStringValueModalListItem key={existingValue + "_" + index}
                                                 existingValue={existingValue}
-                                                index={index}/>)
-    })
+                                                index={index}/>);
+    });
     return (
         <List
             sx={listStyles}

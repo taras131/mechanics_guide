@@ -1,11 +1,11 @@
-import React, {FC, useState} from 'react';
+import React, {FC, useState} from "react";
 import {
     ADD_OPTION_LABEL,
     ADD_OPTION_SUBHEADER_TEXT,
     ADD_OPTION_TITLE,
     CENTER,
     GUIDE_ITEM_TYPE, GUIDE_MODE,
-    ROW
+    ROW,
 } from "../utils/const";
 import Button from "@mui/material/Button";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
@@ -19,7 +19,7 @@ import {
     getEditionGuideStepsByType,
     getGuideById, getGuideMode,
     getGuidesWithFilter,
-    getIsUploadFileLoading
+    getIsUploadFileLoading,
 } from "../services/selectors/guidesSelectors";
 import {useParams} from "react-router-dom";
 import SelectRedirectGuideStep from "./SelectRedirectGuideStep";
@@ -28,10 +28,10 @@ import Grid from "@mui/material/Unstable_Grid2";
 import {getLastBreadCrumbs} from "../services/selectors/breadCrumbsSelectors";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import AttachFileIcon from '@mui/icons-material/AttachFile';
-import MergeTypeIcon from '@mui/icons-material/MergeType';
-import RedoIcon from '@mui/icons-material/Redo';
-import AutorenewIcon from '@mui/icons-material/Autorenew';
+import AttachFileIcon from "@mui/icons-material/AttachFile";
+import MergeTypeIcon from "@mui/icons-material/MergeType";
+import RedoIcon from "@mui/icons-material/Redo";
+import AutorenewIcon from "@mui/icons-material/Autorenew";
 import LoadingButton from "@mui/lab/LoadingButton";
 
 
@@ -43,52 +43,52 @@ interface IProps {
 
 const GuideStepMainActions: FC<IProps> = ({options, guideStep, guideStepType}) => {
     const guideId = useParams().guideId || "0";
-    const dispatch = useAppDispatch()
-    const guideMode = useAppSelector(state => getGuideMode(state))
-    const lastBreadCrumbs = useAppSelector(state => getLastBreadCrumbs(state))
-    const editionGuide = useAppSelector(state => getGuideById(state, guideId, guideMode))
-    const isUploadFileLoading = useAppSelector(state => getIsUploadFileLoading(state))
-    const [isOpenNewOptionWindow, setIsOpenNewOptionWindow] = useState(false)
-    const [isOpenSelectRedirectWindow, setIsOpenSelectRedirectWindow] = useState(false)
-    const [isOpenSelectRedirectAnotherGuideWindow, setIsOpenSelectRedirectAnotherGuideWindow] = useState(false)
-    const currentGuide = useAppSelector(state => getGuideById(state, guideId, guideMode))
+    const dispatch = useAppDispatch();
+    const guideMode = useAppSelector(state => getGuideMode(state));
+    const lastBreadCrumbs = useAppSelector(state => getLastBreadCrumbs(state));
+    const editionGuide = useAppSelector(state => getGuideById(state, guideId, guideMode));
+    const isUploadFileLoading = useAppSelector(state => getIsUploadFileLoading(state));
+    const [isOpenNewOptionWindow, setIsOpenNewOptionWindow] = useState(false);
+    const [isOpenSelectRedirectWindow, setIsOpenSelectRedirectWindow] = useState(false);
+    const [isOpenSelectRedirectAnotherGuideWindow, setIsOpenSelectRedirectAnotherGuideWindow] = useState(false);
+    const currentGuide = useAppSelector(state => getGuideById(state, guideId, guideMode));
     const anotherGuides = useAppSelector(state => getGuidesWithFilter(state, currentGuide.categoryId, false))
-        .filter(guide => guide.id !== guideId)
+        .filter(guide => guide.id !== guideId);
     const guideSteps = useAppSelector(state => getEditionGuideStepsByType(state, guideStepType))
-        .filter(step => step.id !== guideStep.id).filter(step => step.text !== "")
-    const optionsTexts = options.map(option => option.text)
+        .filter(step => step.id !== guideStep.id).filter(step => step.text !== "");
+    const optionsTexts = options.map(option => option.text);
     const handleAddOptionClick = (newOptionText: string) => {
         dispatch(editionGuideStepAddOption({
             guideStepId: guideStep.id,
             newOption: {
                 id: getNextId() - 200,
                 nextId: getNextId(),
-                text: newOptionText
-            }
-        }))
-    }
+                text: newOptionText,
+            },
+        }));
+    };
     const updateFilePath = (fileName: string, filePath: string) => {
-        dispatch(editionGuideUpdateFile({fileName: fileName, filePath: filePath, guideStepId: guideStep.id}))
-    }
+        dispatch(editionGuideUpdateFile({fileName: fileName, filePath: filePath, guideStepId: guideStep.id}));
+    };
     const handleChangeInputFile = (e: any) => {
-        dispatch(setIsUploadFileLoading(true))
+        dispatch(setIsUploadFileLoading(true));
         if (guideStep.file && guideStep.file.name) {
-            dispatch(fetchRemoveFile(guideStep.file.name))
+            dispatch(fetchRemoveFile(guideStep.file.name));
         }
-        dispatch(fetchUploadFile({file: e.target.files[0], guideStepId: guideStep.id, updateFilePath: updateFilePath}))
+        dispatch(fetchUploadFile({file: e.target.files[0], guideStepId: guideStep.id, updateFilePath: updateFilePath}));
         if (guideMode !== GUIDE_MODE.new_guide) {
-            dispatch(fetchUpdateGuide(editionGuide))
+            dispatch(fetchUpdateGuide(editionGuide));
         }
-    }
+    };
     const toggleIsOpenNewOptionWindow = () => {
-        setIsOpenNewOptionWindow(prev => !prev)
-    }
+        setIsOpenNewOptionWindow(prev => !prev);
+    };
     const toggleIsOpenSelectRedirectAnotherGuideWindow = () => {
-        setIsOpenSelectRedirectAnotherGuideWindow(prev => !prev)
-    }
+        setIsOpenSelectRedirectAnotherGuideWindow(prev => !prev);
+    };
     const toggleIsOpenSelectRedirectWindow = () => {
-        setIsOpenSelectRedirectWindow(prev => !prev)
-    }
+        setIsOpenSelectRedirectWindow(prev => !prev);
+    };
     return (
         <>
             <Grid container spacing={1} mt={3}>

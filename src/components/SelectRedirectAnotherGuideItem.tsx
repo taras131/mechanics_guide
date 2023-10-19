@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, {FC} from "react";
 import {IGuide} from "../models/iGuide";
 import {ListItemButton, ListItemText} from "@mui/material";
 import {useAppDispatch, useAppSelector} from "../hooks/redux";
@@ -15,18 +15,18 @@ interface ISelectRedirectAnotherGuideItemProps {
 }
 
 const SelectRedirectAnotherGuideItem: FC<ISelectRedirectAnotherGuideItemProps> = ({guide, index, toggleIsOpen}) => {
-    const dispatch = useAppDispatch()
+    const dispatch = useAppDispatch();
     const guideId = useParams().guideId || "0";
-    const lastBreadCrumb = useAppSelector(state => getLastBreadCrumbs(state))
-    const navigate = useNavigate()
+    const lastBreadCrumb = useAppSelector(state => getLastBreadCrumbs(state));
+    const navigate = useNavigate();
     const handleAnotherGuideClick = () => {
         if (lastBreadCrumb) {
-            dispatch(editionGuideRedirectAnotherGuide({lastBreadCrumb: lastBreadCrumb, redirectAnotherGuide: guide.id}))
-            navigate(`${routes.guide}/${guideId}/${lastBreadCrumb?.questionId}`)
-            dispatch(removeLastBreadCrumb())
-            toggleIsOpen()
+            dispatch(editionGuideRedirectAnotherGuide({lastBreadCrumb: lastBreadCrumb, redirectAnotherGuide: guide.id}));
+            navigate(`${routes.guide}/${guideId}/${lastBreadCrumb?.questionId}`);
+            dispatch(removeLastBreadCrumb());
+            toggleIsOpen();
         }
-    }
+    };
     return (
         <ListItemButton onClick={handleAnotherGuideClick}>
             <ListItemText primary={`${index + 1}. ${guide.title}`}/>

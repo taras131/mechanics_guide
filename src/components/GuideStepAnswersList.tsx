@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, {FC} from "react";
 import {changeEditionGuideOptionText, editionGuideStepRemoveOption, setGuideMode} from "../services/reducers/guides";
 import {addBreadCrumb, cleanBreadCrumbs} from "../services/reducers/breadCrumbs";
 import {routes} from "../utils/routes";
@@ -10,10 +10,10 @@ import Grid from "@mui/material/Unstable_Grid2";
 import Stack from "@mui/material/Stack";
 import {CENTER, GUIDE_MODE, ROW} from "../utils/const";
 import Typography from "@mui/material/Typography";
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import DeleteIcon from '@mui/icons-material/Delete';
-import MergeTypeIcon from '@mui/icons-material/MergeType';
-import RedoIcon from '@mui/icons-material/Redo';
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import DeleteIcon from "@mui/icons-material/Delete";
+import MergeTypeIcon from "@mui/icons-material/MergeType";
+import RedoIcon from "@mui/icons-material/Redo";
 import Box from "@mui/material/Box";
 import {getBreadCrumbs} from "../services/selectors/breadCrumbsSelectors";
 
@@ -29,40 +29,40 @@ const GuideStepAnswersList: FC<IGuideStepAnswersListProps> = ({
                                                                   options,
                                                                   questionId,
                                                                   questionText,
-                                                                  isEdit
+                                                                  isEdit,
                                                               }) => {
-    const navigate = useNavigate()
-    const dispatch = useAppDispatch()
+    const navigate = useNavigate();
+    const dispatch = useAppDispatch();
     const guideId = useParams().guideId || "0";
-    const isRedirectToOtherGuide = options.find(option => option.redirectAnotherGuide)
-    const isRedirectToOtherGuideBranch = options.find(option => option.id > option.nextId)
-    const breadCrumbs = useAppSelector(state => getBreadCrumbs(state))
+    const isRedirectToOtherGuide = options.find(option => option.redirectAnotherGuide);
+    const isRedirectToOtherGuideBranch = options.find(option => option.id > option.nextId);
+    const breadCrumbs = useAppSelector(state => getBreadCrumbs(state));
 
     const handleOptionRemove = (guideStepId: number, optionId: number) => {
-        dispatch(editionGuideStepRemoveOption({guideStepId, optionId}))
-    }
+        dispatch(editionGuideStepRemoveOption({guideStepId, optionId}));
+    };
     const handleOptionTextChange = (newValue: string, optionId: number,) => {
         dispatch(changeEditionGuideOptionText({
             guideStepId: questionId,
             optionId: optionId,
-            newValue: newValue
-        }))
-    }
+            newValue: newValue,
+        }));
+    };
     const handleNextQuestionClick = (optionId: number, optionText: string, nextId: number) => {
         dispatch(addBreadCrumb({
             questionText: questionText,
             answerText: optionText,
             questionId: questionId,
             optionId: optionId,
-            nextId: nextId
-        }))
-        navigate(routes.guide + "/" + guideId + "/" + nextId)
-    }
+            nextId: nextId,
+        }));
+        navigate(routes.guide + "/" + guideId + "/" + nextId);
+    };
     const handleRedirectGuideClick = (redirectAnotherGuide: string) => {
-        navigate(`${routes.guide}/${redirectAnotherGuide}/0`)
-        dispatch(setGuideMode(GUIDE_MODE.viewing))
-        dispatch(cleanBreadCrumbs())
-    }
+        navigate(`${routes.guide}/${redirectAnotherGuide}/0`);
+        dispatch(setGuideMode(GUIDE_MODE.viewing));
+        dispatch(cleanBreadCrumbs());
+    };
     const answersList = options.map((option, index) => {
         return GuideStepAnswersItem({
             option: option,
@@ -74,9 +74,9 @@ const GuideStepAnswersList: FC<IGuideStepAnswersListProps> = ({
             handleNextQuestionClick: handleNextQuestionClick,
             handleOptionRemove: handleOptionRemove,
             handleRedirectGuideClick: handleRedirectGuideClick,
-            breadCrumbs: breadCrumbs
-        })
-    })
+            breadCrumbs: breadCrumbs,
+        });
+    });
     return (
         <>
             <Grid container spacing={2}>

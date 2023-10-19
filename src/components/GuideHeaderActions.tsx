@@ -1,4 +1,4 @@
-import React, {FC, useState} from 'react';
+import React, {FC, useState} from "react";
 import Grid from "@mui/material/Unstable_Grid2";
 import {
     CENTER,
@@ -8,7 +8,7 @@ import {
     GUIDE_MODE,
     MESSAGE_SEVERITY,
     RIGHT,
-    SECONDARY_TEXT_COLOR
+    SECONDARY_TEXT_COLOR,
 } from "../utils/const";
 import {ButtonGroup, SelectChangeEvent} from "@mui/material";
 import Button from "@mui/material/Button";
@@ -19,8 +19,8 @@ import Typography from "@mui/material/Typography";
 import {useAppDispatch, useAppSelector} from "../hooks/redux";
 import {getUser} from "../services/selectors/authSelector";
 import {routes} from "../utils/routes";
-import HomeIcon from '@mui/icons-material/Home';
-import {emptyGuide, setEditionGuide, setEditionGuideCategory, setGuideMode,} from "../services/reducers/guides";
+import HomeIcon from "@mui/icons-material/Home";
+import {emptyGuide, setEditionGuide, setEditionGuideCategory, setGuideMode} from "../services/reducers/guides";
 import {fetchNewGuide, fetchUpdateGuide} from "../services/actions/guidesActionsCreators";
 import {useLocation, useNavigate} from "react-router-dom";
 import {IGuide} from "../models/iGuide";
@@ -37,66 +37,65 @@ interface IProps {
     titleError: string
 }
 
-const editingHelperText = "Вы можете редактировать только свои гайды или гайды без автора"
-const savingHelperText = "Не забудьте сохранить изменения."
+const savingHelperText = "Не забудьте сохранить изменения.";
 
 const GuideHeaderActions: FC<IProps> = ({
                                             guide,
                                             guideMode,
                                             matches_900,
-                                            titleError
+                                            titleError,
                                         }) => {
-    const dispatch = useAppDispatch()
-    const navigate = useNavigate()
-    const location: any = useLocation()
-    const user = useAppSelector(state => getUser(state))
-    const categoryName = useAppSelector(state => getGuideCategoryNameById(state, guide.categoryId))
-    const [isQuestionWindowOpen, setIsQuestionWindowOpen] = useState(false)
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
+    const location: any = useLocation();
+    const user = useAppSelector(state => getUser(state));
+    const categoryName = useAppSelector(state => getGuideCategoryNameById(state, guide.categoryId));
+    const [isQuestionWindowOpen, setIsQuestionWindowOpen] = useState(false);
     const handleAuthClick = () => {
-        navigate(routes.login, {state: {from: location.pathname}})
-    }
+        navigate(routes.login, {state: {from: location.pathname}});
+    };
     const toggleIsQuestionWindowOpen = () => {
-        setIsQuestionWindowOpen(prev => !prev)
-    }
+        setIsQuestionWindowOpen(prev => !prev);
+    };
     const handleBackClick = () => {
-        navigate(routes.main)
-    }
+        navigate(routes.main);
+    };
     const handleResetAgreeClick = (guideMode: GUIDE_MODE) => () => {
         if (guideMode === GUIDE_MODE.new_guide) {
-            navigate(routes.guide + "/" + GUIDE_MODE.new_guide + "/0")
-            dispatch(cleanBreadCrumbs())
-            dispatch(setEditionGuide(emptyGuide))
-            localStorage.removeItem("saved_new_guide")
+            navigate(routes.guide + "/" + GUIDE_MODE.new_guide + "/0");
+            dispatch(cleanBreadCrumbs());
+            dispatch(setEditionGuide(emptyGuide));
+            localStorage.removeItem("saved_new_guide");
         } else {
-            dispatch(setGuideMode(GUIDE_MODE.viewing))
-            dispatch(setEditionGuide(emptyGuide))
-            localStorage.removeItem(`${GUIDE_MODE.editing}_${guide.id}`)
+            dispatch(setGuideMode(GUIDE_MODE.viewing));
+            dispatch(setEditionGuide(emptyGuide));
+            localStorage.removeItem(`${GUIDE_MODE.editing}_${guide.id}`);
         }
-        toggleIsQuestionWindowOpen()
-    }
+        toggleIsQuestionWindowOpen();
+    };
     const handleCancelClick = () => {
-        toggleIsQuestionWindowOpen()
-    }
+        toggleIsQuestionWindowOpen();
+    };
     const handleEditClick = () => {
-        dispatch(setEditionGuide(guide))
-        dispatch(setGuideMode(GUIDE_MODE.editing))
-    }
+        dispatch(setEditionGuide(guide));
+        dispatch(setGuideMode(GUIDE_MODE.editing));
+    };
     const handleSaveClick = () => {
         if (guideMode === GUIDE_MODE.new_guide) {
-            dispatch(fetchNewGuide(guide))
-            localStorage.removeItem("saved_new_guide")
-            navigate(routes.guides)
-            dispatch(setMessage({severity: MESSAGE_SEVERITY.success, text: "Ваш гайд сохранён"}))
+            dispatch(fetchNewGuide(guide));
+            localStorage.removeItem("saved_new_guide");
+            navigate(routes.guides);
+            dispatch(setMessage({severity: MESSAGE_SEVERITY.success, text: "Ваш гайд сохранён"}));
         } else {
-            dispatch(fetchUpdateGuide({...guide, authorId: user.id}))
-            localStorage.removeItem(`${GUIDE_MODE.editing}_${guide.id}`)
-            dispatch(setMessage({severity: MESSAGE_SEVERITY.success, text: "Изменения сохранены"}))
+            dispatch(fetchUpdateGuide({...guide, authorId: user.id}));
+            localStorage.removeItem(`${GUIDE_MODE.editing}_${guide.id}`);
+            dispatch(setMessage({severity: MESSAGE_SEVERITY.success, text: "Изменения сохранены"}));
         }
-        dispatch(setGuideMode(GUIDE_MODE.viewing))
-    }
+        dispatch(setGuideMode(GUIDE_MODE.viewing));
+    };
     const handleGuideCategoryChange = (e: SelectChangeEvent) => {
-        dispatch(setEditionGuideCategory(e.target.value))
-    }
+        dispatch(setEditionGuideCategory(e.target.value));
+    };
     return (
         <Grid container
               justifyContent={CENTER}

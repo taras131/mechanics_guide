@@ -1,9 +1,9 @@
-import React, {FC} from 'react';
+import React, {FC} from "react";
 import {useAppSelector} from "../hooks/redux";
 import {getBreadCrumbs} from "../services/selectors/breadCrumbsSelectors";
 import {List} from "@mui/material";
 import BreadCrumbsItem from "./BreadCrumbsItem";
-import ManageHistoryIcon from '@mui/icons-material/ManageHistory';
+import ManageHistoryIcon from "@mui/icons-material/ManageHistory";
 import {useParams} from "react-router-dom";
 import AccordionWithTitleCounterIcon from "./AccordionWithTitleCounterIcon";
 import {PRIMARY} from "../utils/const";
@@ -13,14 +13,14 @@ interface IProps {
     handleExpandedChange: any
 }
 
-const emptyMessage = "Список начнёт заполняться по мере вашего передвижения по гайду"
+const emptyMessage = "Список начнёт заполняться по мере вашего передвижения по гайду";
 
 const BreadCrumbs: FC<IProps> = ({expanded, handleExpandedChange}) => {
     const guideId = useParams().guideId || "0";
-    const breadCrumbs = useAppSelector(state => getBreadCrumbs(state))
+    const breadCrumbs = useAppSelector(state => getBreadCrumbs(state));
     const breadCrumbsList = breadCrumbs.map((crumb, index) => {
-        return (<BreadCrumbsItem key={crumb.optionId} {...crumb} index={index} guideId={guideId}/>)
-    })
+        return (<BreadCrumbsItem key={crumb.optionId} {...crumb} index={index} guideId={guideId}/>);
+    });
     return (
         <AccordionWithTitleCounterIcon title={"История ответов"}
                                        panelId={"panel1"}
@@ -29,7 +29,7 @@ const BreadCrumbs: FC<IProps> = ({expanded, handleExpandedChange}) => {
                                        handleExpandedChange={handleExpandedChange}
                                        icon={<ManageHistoryIcon color={PRIMARY}/>}>
             <List
-                sx={{bgcolor: 'background.paper'}}
+                sx={{bgcolor: "background.paper"}}
                 subheader={<li/>}
             >
                 {breadCrumbsList.length > 0

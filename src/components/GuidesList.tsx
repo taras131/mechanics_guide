@@ -1,7 +1,7 @@
-import React, {FC} from 'react';
+import React, {FC} from "react";
 import {IGuide} from "../models/iGuide";
 import GuidePreview from "./GuidePreview";
-import Grid from '@mui/material/Unstable_Grid2';
+import Grid from "@mui/material/Unstable_Grid2";
 import Typography from "@mui/material/Typography";
 import {SECONDARY_TEXT_COLOR} from "../utils/const"; // Grid version 2
 
@@ -10,7 +10,7 @@ interface IGuidesListProps {
 }
 
 const GuidesList: FC<IGuidesListProps> = ({guides}) => {
-    const guidesList = guides.map(guide => (<GuidePreview key={guide.id} guide={guide}/>))
+    const guidesList = guides.map(guide => (<GuidePreview key={guide.id} guide={guide}/>));
     return (
         <Grid container spacing={2}>
             {guidesList.length

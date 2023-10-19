@@ -1,9 +1,8 @@
-import React, {FC} from 'react';
-import {Accordion, AccordionDetails, AccordionSummary, Paper} from "@mui/material";
+import React, {FC} from "react";
+import {Accordion, AccordionDetails, AccordionSummary} from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Grid from "@mui/material/Unstable_Grid2";
 import Stack from "@mui/material/Stack";
-import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import Typography from "@mui/material/Typography";
 import Avatar from "@mui/material/Avatar";
 import {deepPurple} from "@mui/material/colors";
@@ -43,7 +42,7 @@ const AccordionWithTitleCounterIcon: FC<IProps> = ({title,
                     </Stack>
                     {count > 0 && (
                         <Avatar sx={{
-                            width: 24, height: 24, bgcolor: deepPurple[500], fontSize: "12px"
+                            width: 24, height: 24, bgcolor: deepPurple[500], fontSize: "12px",
                         }}>
                             {count}
                         </Avatar>)}
